@@ -1,0 +1,1052 @@
+/* ============================================================
+   Header — 4-tier sticky retail hub header
+   Tier 1: dark utility bar (rotating message + contact)
+   Tier 2: navy main bar (logo · live search · icons)
+   Tier 3: nav row (mega-menu + nested flyout + expert pill)
+   Tier 4: light trust strip (4 proof columns)
+   Compacts on scroll; accordion mega-menu on mobile.
+   ============================================================ */
+
+.headerWrap {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  isolation: isolate;
+}
+
+/* ── Tier 1: Utility bar ── */
+.utility {
+  background: var(--ng-navy-950);
+  overflow: hidden;
+  max-height: 44px;
+  transition:
+    max-height 0.3s ease,
+    opacity 0.25s ease;
+}
+
+.utilityHidden {
+  max-height: 0;
+  opacity: 0;
+}
+
+.utilityInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.utilityMsg {
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ng-on-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: msg-in 0.4s ease both;
+}
+
+@keyframes msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.utilityContact {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex: 0 0 auto;
+}
+
+.utilityLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--ng-on-dark);
+  transition: color 0.2s ease;
+}
+
+.utilityLink:hover {
+  color: var(--ng-accent);
+}
+
+.utilityLink svg {
+  width: 13px;
+  height: 13px;
+  color: var(--ng-accent);
+}
+
+/* ── Tier 2: Main bar ── */
+.mainBar {
+  background: linear-gradient(
+    to right,
+    #ffffff 0%,
+    #e8edf5 18%,
+    #1a2d54 35%,
+    var(--ng-navy-900) 55%,
+    var(--ng-navy-900) 100%
+  );
+  border-bottom: 1px solid var(--ng-line-dark);
+  transition: background 0.25s ease;
+}
+
+.compact {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(232, 237, 245, 0.92) 18%,
+    rgba(26, 45, 84, 0.90) 35%,
+    rgba(16, 34, 74, 0.88) 55%,
+    rgba(16, 34, 74, 0.88) 100%
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 24px rgba(4, 11, 24, 0.35);
+  border-bottom-color: rgba(15, 181, 238, 0.25);
+}
+
+.mainInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+  height: 78px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  transition: height 0.25s ease;
+}
+
+.compact .mainInner {
+  height: 62px;
+}
+
+/* Brand logo (logo1.webp) */
+.brand {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  flex: 0 0 auto;
+  transition: transform 0.25s ease;
+}
+
+.compact .brand {
+  transform: scale(0.9);
+  transform-origin: left center;
+}
+
+.brandLogo {
+  width: auto;
+  height: 52px;
+  object-fit: contain;
+}
+
+@media (max-width: 640px) {
+  .brandLogo {
+    height: 42px;
+  }
+}
+
+/* Search */
+.searchWrap {
+  position: relative;
+  flex: 1;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.searchBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--ng-line-dark);
+  border-radius: 7px;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.searchBox:focus-within {
+  background: var(--ng-white);
+  border-color: var(--ng-accent);
+  box-shadow: 0 0 0 4px rgba(15, 181, 238, 0.25);
+}
+
+.searchIcon {
+  width: 17px;
+  height: 17px;
+  color: var(--ng-on-dark);
+  flex: 0 0 auto;
+  transition: color 0.2s ease;
+}
+
+.searchBox:focus-within .searchIcon {
+  color: var(--ng-accent-deep);
+}
+
+.searchInput {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.9rem;
+  color: var(--ng-white);
+}
+
+.searchInput::placeholder {
+  color: var(--ng-on-dark-deep);
+}
+
+.searchBox:focus-within .searchInput {
+  color: var(--ng-navy-900);
+}
+
+.searchBox:focus-within .searchInput::placeholder {
+  color: var(--ng-muted-2);
+}
+
+/* Typewriter overlay */
+.typewriter {
+  position: absolute;
+  left: 44px;
+  right: 16px;
+  pointer-events: none;
+  font-size: 0.9rem;
+  color: var(--ng-on-dark-deep);
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.searchBox:focus-within .typewriter {
+  color: var(--ng-muted-2);
+}
+
+.typewriterCursor {
+  display: inline-block;
+  width: 1px;
+  height: 1.1em;
+  margin-left: 1px;
+  background: var(--ng-on-dark-deep);
+  animation: tw-blink 500ms step-end infinite;
+}
+
+.searchBox:focus-within .typewriterCursor {
+  background: var(--ng-muted-2);
+}
+
+@keyframes tw-blink {
+  50% { opacity: 0; }
+}
+/* Search dropdown */
+.searchResults {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  padding: 8px;
+  background: var(--ng-white);
+  border: 1px solid var(--ng-line);
+  border-radius: 16px;
+  box-shadow: var(--ng-shadow-lift);
+  animation: mega-in 0.18s ease both;
+}
+
+.searchEmpty {
+  margin: 0;
+  padding: 14px 12px;
+  font-size: 0.85rem;
+  color: var(--ng-muted);
+}
+
+.searchResult {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 12px;
+  border-radius: 10px;
+  transition: background 0.15s ease;
+}
+
+.searchResult:hover {
+  background: var(--ng-accent-soft);
+}
+
+.searchResultLabel {
+  font-family: var(--ng-font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ng-navy-900);
+}
+
+.searchResultGroup {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ng-muted-2);
+}
+
+/* Icon cluster */
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.iconBtn {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--ng-line-dark);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ng-white);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.iconBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--ng-accent);
+}
+
+.iconBtn:active {
+  transform: scale(0.92);
+}
+
+.iconBtn svg {
+  width: 19px;
+  height: 19px;
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  font-family: var(--ng-font-heading);
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--ng-navy-950);
+  background: var(--ng-accent);
+  border-radius: var(--ng-radius-pill);
+  animation: badge-pop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes badge-pop {
+  from {
+    transform: scale(0.4);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.mobileToggle {
+  display: none;
+}
+
+.burger {
+  position: relative;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: background 0.2s ease;
+}
+
+.burger::before,
+.burger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 0.25s ease;
+}
+
+.burger::before {
+  top: -6px;
+}
+
+.burger::after {
+  top: 6px;
+}
+
+.burgerOpen {
+  background: transparent;
+}
+
+.burgerOpen::before {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.burgerOpen::after {
+  transform: translateY(-6px) rotate(-45deg);
+}
+/* ── Tier 3: Nav row ── */
+.navBar {
+  position: relative;
+  background: var(--ng-navy-800);
+  border-bottom: 1px solid var(--ng-line-dark);
+}
+
+.navInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.navMegaWrap {
+  position: static;
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 50px;
+  padding: 0 14px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--ng-on-dark);
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+/* Underline draws in from the left on hover/focus */
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 0;
+  height: 3px;
+  background: var(--ng-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.navLink:hover {
+  color: var(--ng-white);
+}
+
+.navLink:hover::after,
+.navLinkActive::after {
+  transform: scaleX(1);
+}
+
+.navLinkActive {
+  color: var(--ng-white);
+}
+
+.caret {
+  width: 13px;
+  height: 13px;
+  transition: transform 0.25s ease;
+}
+
+.caretUp,
+.rotate {
+  transform: rotate(180deg);
+}
+
+/* Mega menu — full-width panel below the nav row */
+.mega {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background: var(--ng-navy-900);
+  border-bottom: 1px solid var(--ng-line-dark);
+  box-shadow: 0 30px 60px rgba(4, 11, 24, 0.5);
+  animation: mega-in 0.22s ease both;
+}
+
+@keyframes mega-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.megaGrid {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 28px clamp(16px, 3vw, 32px) 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+}
+
+.megaCol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.megaCat {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ng-white);
+}
+
+.megaDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+
+.megaList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.megaLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  font-size: 0.86rem;
+  line-height: 1.35;
+  color: var(--ng-on-dark);
+  border-radius: 8px;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.megaLink:hover,
+.megaLinkActive {
+  background: rgba(15, 181, 238, 0.12);
+  color: var(--ng-white);
+}
+
+.megaLinkArrow {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  color: var(--ng-accent);
+}
+
+.megaLink:hover .megaLinkArrow,
+.megaLinkActive .megaLinkArrow {
+  opacity: 1;
+  transform: none;
+}
+
+/* Nested flyout — hovered service's solutions */
+.nested {
+  border-top: 1px solid var(--ng-line-dark);
+  background: var(--ng-navy-800);
+  animation: nested-in 0.18s ease both;
+}
+
+@keyframes nested-in {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.nestedTitle {
+  margin: 0;
+  font-family: var(--ng-font-heading);
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ng-white);
+}
+
+.nestedTag {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  color: var(--ng-accent);
+}
+
+.nestedList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.nestedLink {
+  padding: 7px 14px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ng-on-dark);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--ng-line-dark);
+  border-radius: var(--ng-radius-pill);
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.nestedLink:hover {
+  background: var(--ng-accent);
+  border-color: var(--ng-accent);
+  color: var(--ng-navy-950);
+}
+
+.nestedCta {
+  display: inline-block;
+  margin-top: 16px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--ng-accent);
+}
+
+.nestedCta:hover {
+  color: var(--ng-cyan-glow);
+}
+
+.megaAll {
+  display: block;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 14px clamp(16px, 3vw, 32px) 22px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ng-accent);
+}
+
+.megaAll:hover {
+  color: var(--ng-cyan-glow);
+}
+
+/* Nav right — utility links + expert pill */
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 0 0 auto;
+}
+
+.tradeLink {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ng-on-dark);
+  transition: color 0.2s ease;
+}
+
+.tradeLink:hover {
+  color: var(--ng-accent);
+}
+
+.expertPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 8px 18px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--ng-navy-950);
+  background: var(--ng-accent);
+  border-radius: 5px;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.expertPill:hover {
+  background: var(--ng-cyan-glow);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(15, 181, 238, 0.35);
+}
+
+.expertPill svg {
+  width: 15px;
+  height: 15px;
+}
+/* ── Tier 4: Trust strip ── */
+.trustStrip {
+  background: var(--ng-cloud);
+  border-bottom: 1px solid var(--ng-line);
+}
+
+.trustInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 18px clamp(16px, 3vw, 32px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: stretch;
+}
+
+.trustItem {
+  --trust-icon-start: #0b1220;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 6px clamp(16px, 2vw, 26px);
+  animation: trust-pop 0.55s var(--ng-ease-out-expo) both;
+}
+
+.trustItem:first-child {
+  padding-left: 0;
+}
+
+/* Thin vertical hairline dividers between the four items (desktop) */
+.trustItem + .trustItem {
+  border-left: 1px solid rgba(11, 18, 32, 0.1);
+}
+
+/* Bold outlined line-art icon, no badge circle */
+.trustIcon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: var(--ng-ink);
+  transition: color 0.25s ease, transform 0.25s var(--ng-ease-out-cubic);
+}
+
+.trustIcon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.trustText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.trustTitle {
+  font-family: var(--ng-font-heading);
+  font-size: 0.84rem;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--ng-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trustSub {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--ng-slate);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Entrance: staggered fade/rise + icon draw-in */
+@keyframes trust-pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Hover (pointer devices only): icon shifts to Signal Blue + bounce */
+@media (hover: hover) {
+  .trustItem:hover .trustIcon,
+  .trustItem:focus-visible .trustIcon {
+    color: var(--ng-accent-blue);
+    animation: trust-bounce 0.4s var(--ng-ease-out-cubic);
+  }
+}
+
+@keyframes trust-bounce {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-3px) scale(1.06);
+  }
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Mobile menu ── */
+.mobileMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  background: var(--ng-navy-900);
+  border-bottom: 1px solid var(--ng-line-dark);
+  box-shadow: var(--ng-shadow-lift);
+  animation: mega-in 0.2s ease both;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 20px 24px;
+}
+
+.mobileParent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 4px;
+  font-family: var(--ng-font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ng-white);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobileGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileSub {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 0 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.mobileCat {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileCatToggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 10px 4px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ng-white);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobileCatToggle .caret {
+  margin-left: auto;
+  color: var(--ng-on-dark-deep);
+}
+
+.mobileLinks {
+  display: flex;
+  flex-direction: column;
+  padding-left: 22px;
+}
+
+.mobileLink {
+  display: block;
+  min-height: 44px;
+  padding: 11px 4px;
+  font-size: 0.9rem;
+  color: var(--ng-on-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mobileLink:hover {
+  color: var(--ng-accent);
+}
+
+.mobileAll {
+  margin-top: 8px;
+  font-family: var(--ng-font-heading);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ng-accent);
+}
+
+.mobileCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  margin-top: 16px;
+  padding: 12px 20px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--ng-navy-950);
+  background: var(--ng-accent);
+  border-radius: var(--ng-radius-pill);
+}
+
+.mobileCta:hover {
+  background: var(--ng-cyan-glow);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .nav,
+  .navRight {
+    display: none;
+  }
+
+  .mobileToggle {
+    display: grid;
+  }
+
+  .mobileMenu {
+    display: block;
+  }
+
+  .trustStrip {
+    display: block;
+  }
+
+  .trustInner {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 16px;
+    padding: 16px clamp(16px, 3vw, 32px);
+  }
+
+  .trustItem {
+    padding: 4px clamp(12px, 2vw, 18px);
+  }
+
+  /* remove hairline dividers on the 2×2 mobile grid */
+  .trustItem:first-child {
+    padding-left: 0;
+  }
+
+  .trustItem + .trustItem {
+    border-left: none;
+    padding-left: clamp(12px, 2vw, 18px);
+  }
+
+  .trustIcon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .searchWrap {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .utilityMsg {
+    display: none;
+  }
+
+  .utilityContact {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .mainInner {
+    height: 66px;
+    gap: 12px;
+  }
+
+  .compact .mainInner {
+    height: 58px;
+  }
+
+  .wordmark {
+    font-size: 1.2rem;
+  }
+
+  .searchWrap {
+    display: none;
+  }
+
+  .icons {
+    margin-left: auto;
+  }
+}

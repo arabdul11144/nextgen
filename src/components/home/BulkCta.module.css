@@ -1,0 +1,287 @@
+/* ============================================================
+   Bulk & corporate CTA band + logo marquee
+   ============================================================ */
+
+.section {
+  background: var(--ng-navy-900);
+  padding: var(--ng-row) 0;
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+
+/* ── Collage ── */
+.collage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+  aspect-ratio: 4 / 3;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(4, 11, 24, 0.25);
+}
+
+.cell {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  /* White tile surface — the contained garment sits centred on white, so
+     the letterbox/padding around the product photo reads as clean padding
+     rather than empty dark space. */
+  background: var(--ng-white, #ffffff);
+  isolation: isolate;
+}
+
+/* ── Tile shapes — each tile has one prominent diagonal cut that
+      alternates direction between tiles (top row + bottom row), so
+      the centre of the grid forms a folded chevron. The outer
+      corners stay subtly rounded via the collage's overflow clip. ── */
+.cell1 {
+  /* top-left: right edge cuts away top, toward centre of the grid */
+  clip-path: polygon(0 0, 76% 0, 100% 100%, 0 100%);
+}
+
+.cell2 {
+  /* top-right: left edge cuts away top, mirror of cell1 */
+  clip-path: polygon(24% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.cell3 {
+  /* bottom-left: right edge cuts away bottom — sawtooth reversed */
+  clip-path: polygon(0 0, 100% 0, 76% 100%, 0 100%);
+}
+
+.cell4 {
+  /* bottom-right: left edge cuts away bottom, mirror of cell3 */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 24% 100%);
+}
+
+/* ── Image layers for crossfade ──
+   Fit = contain so the ENTIRE full-body garment is always visible
+   (head to foot) and never cropped by the fixed-size cell, regardless
+   of viewport. Width/height 100% keep it filling the cell as much as
+   possible without cropping; object-position center keeps the photo
+   centred within the cell's letterbox. The white `.cell` background
+   shows through as intentional padding. */
+.photo {
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s var(--ng-ease-out-cubic, cubic-bezier(0.22, 0.61, 0.36, 1));
+}
+
+.visible {
+  opacity: 1;
+}
+
+.fadeIn {
+  opacity: 0;
+  animation: ng-collage-fade-in 0.7s ease-in-out forwards;
+}
+
+.fadeOut {
+  opacity: 1;
+  animation: ng-collage-fade-out 0.7s ease-in-out forwards;
+}
+
+@keyframes ng-collage-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ng-collage-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ── Hover effects ── */
+.cell:hover .photo {
+  transform: scale(1.04);
+}
+
+.cellHover {
+  box-shadow: 0 16px 36px rgba(4, 11, 24, 0.45);
+  z-index: 2;
+}
+
+/* ── Vignette overlay ── */
+.vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(11, 18, 32, 0.05) 0%,
+    transparent 45%,
+    rgba(11, 18, 32, 0.35) 100%
+  );
+  border-radius: inherit;
+}
+
+/* ── Category chip — bottom-centred ──
+   Positioned along the bottom edge of each tile, horizontally centred.
+   The dark pill + blur scrim keep the label fully legible against the
+   white tile and any garment passing behind it (object-position stays
+   `center`, so the crop fix is untouched). */
+.chip,
+.chipTl,
+.chipTr,
+.chipBl,
+.chipBr {
+  position: absolute;
+  bottom: clamp(12px, 1.6vw, 16px);
+  left: 50%;
+  transform: translateX(-50%);
+  top: auto;
+  right: auto;
+  z-index: 2;
+  padding: 5px 11px;
+  background: rgba(11, 18, 32, 0.82);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #ffffff;
+  white-space: nowrap;
+  pointer-events: none;
+  box-shadow: 0 4px 14px rgba(4, 11, 24, 0.45);
+}
+
+/* ── Copy ── */
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--ng-font-heading);
+  font-size: var(--ng-fs-h2);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: var(--ng-white);
+  text-wrap: balance;
+}
+
+.paragraph {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.7;
+  color: var(--ng-on-dark);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 14px 28px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: var(--ng-accent-blue);
+  border-radius: var(--ng-radius-4);
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.cta:hover {
+  background: #0c43b8;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(21, 94, 239, 0.35);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .collage {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+/* ── Mobile (< 768px) ── */
+@media (max-width: 767px) {
+  .collage {
+    gap: 10px;
+    border-radius: 14px;
+    box-shadow: 0 16px 40px rgba(4, 11, 24, 0.2);
+  }
+
+  .cell {
+    border-radius: 14px;
+  }
+
+  .chip,
+  .chipTl,
+  .chipTr,
+  .chipBl,
+  .chipBr {
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: auto;
+    right: auto;
+    padding: 3px 8px;
+    font-size: 0.6rem;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .fadeIn,
+  .fadeOut {
+    animation: none;
+  }
+
+  .fadeIn {
+    opacity: 1;
+  }
+
+  .fadeOut {
+    opacity: 0;
+  }
+
+  .photo {
+    transition: none;
+  }
+
+  .cell:hover .photo {
+    transform: none;
+  }
+}

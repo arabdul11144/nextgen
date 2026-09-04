@@ -1,0 +1,66 @@
+/* NewsletterForm — footer newsletter capture */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ng-text-muted);
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.input {
+  flex: 1 1 180px;
+  min-height: 48px;
+  padding: 12px 16px;
+  font-size: 0.92rem;
+  color: var(--ng-sand);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--ng-line-dark);
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.input::placeholder {
+  color: rgba(185, 192, 201, 0.6);
+}
+
+.input:focus {
+  border-color: var(--ng-orange);
+}
+
+.button {
+  min-height: 48px;
+  padding: 12px 22px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--ng-ink);
+  background: var(--ng-gold);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.button:hover {
+  background: #e0a800;
+}
+
+.button:active {
+  transform: scale(0.97);
+}

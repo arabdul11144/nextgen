@@ -1,0 +1,120 @@
+/* TrustBar — Harveys-style rotating announcement strip */
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  min-height: 40px;
+}
+
+.rotator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.arrow {
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: var(--ng-text-muted);
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.arrow:hover {
+  color: var(--ng-white);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.arrow svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Message slides up + fades on every change (key remount restarts it) */
+.message {
+  margin: 0;
+  min-width: 260px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ng-sand);
+  animation: trust-slide 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes trust-slide {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.messageLink {
+  color: var(--ng-gold);
+  transition: color 0.2s ease;
+}
+
+.messageLink:hover {
+  color: var(--ng-white);
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: 8px;
+}
+
+.contactItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--ng-text-muted);
+  white-space: nowrap;
+  transition: color 0.2s ease;
+}
+
+.contactItem:hover {
+  color: var(--ng-gold);
+}
+
+.contactIcon {
+  width: 13px;
+  height: 13px;
+  color: var(--ng-orange);
+}
+
+@media (max-width: 1024px) {
+  .contact {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .bar {
+    padding: 0 12px;
+  }
+
+  .message {
+    min-width: 0;
+    font-size: 0.74rem;
+  }
+}

@@ -1,0 +1,26 @@
+.section {
+  padding-top: var(--space-24);
+  padding-bottom: var(--space-24);
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-top: var(--space-32);
+    padding-bottom: var(--space-32);
+  }
+}
+
+.dark {
+  background: var(--color-obsidian);
+  color: var(--color-text-inverse);
+}
+
+.graphite {
+  background: var(--color-graphite);
+  color: var(--color-text-inverse);
+}
+
+.warmWhite {
+  background: var(--color-warm-white);
+  color: var(--color-text-primary);
+}

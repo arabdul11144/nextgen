@@ -1,0 +1,70 @@
+/* ToastHost — slide-in confirmations, bottom-right */
+
+.region {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: min(360px, calc(100vw - 40px));
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--ng-ink-2);
+  color: var(--ng-sand);
+  border: 1px solid var(--ng-line-dark);
+  border-left: 3px solid var(--ng-orange);
+  border-radius: 14px;
+  box-shadow: var(--ng-shadow-lift);
+  animation: toast-in 0.45s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+.dot {
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: var(--ng-orange);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--ng-font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.message {
+  margin: 2px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ng-text-muted);
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .region {
+    right: 12px;
+    bottom: 12px;
+    max-width: calc(100vw - 24px);
+  }
+}

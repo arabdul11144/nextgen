@@ -1,0 +1,14 @@
+/* Reveal — one-shot scroll entrance */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.shown {
+  opacity: 1;
+  transform: none;
+}

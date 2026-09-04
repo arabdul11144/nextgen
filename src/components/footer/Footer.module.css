@@ -1,0 +1,332 @@
+/* ============================================================
+   Footer — dense dark navy footer
+   1. Slim gradient service-highlights bar
+   2. 4-column footer body (brand / help / legal / newsletter)
+   3. Slim copyright bar
+   ============================================================ */
+
+.footer {
+  background: var(--ng-navy-950);
+  color: var(--ng-on-dark);
+}
+
+/* ── 1. Service highlights bar ── */
+.highlights {
+  background: linear-gradient(
+    90deg,
+    var(--ng-navy-800) 0%,
+    var(--ng-navy-700) 50%,
+    var(--ng-navy-800) 100%
+  );
+  border-top: 1px solid var(--ng-line-dark);
+  border-bottom: 1px solid var(--ng-line-dark);
+}
+
+.highlightsInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.highlight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 16px;
+  border-right: 1px solid var(--ng-line-dark);
+}
+
+.highlight:first-child {
+  border-left: 1px solid var(--ng-line-dark);
+}
+
+.highlightIcon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: rgba(15, 181, 238, 0.14);
+  color: var(--ng-accent);
+}
+
+.highlightIcon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.highlightText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.highlightTitle {
+  font-family: var(--ng-font-heading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--ng-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.highlightSub {
+  font-size: 0.7rem;
+  line-height: 1.3;
+  color: var(--ng-on-dark-deep);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── 2. Main footer grid ── */
+.main {
+  padding: 56px 0 48px;
+}
+
+.mainInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.3fr;
+  gap: 40px;
+}
+
+.colBrand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.wordmark {
+  font-family: var(--ng-font-heading);
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.01em;
+}
+
+.wordLight {
+  color: var(--ng-white);
+}
+
+.wordAccent {
+  color: var(--ng-accent);
+}
+
+.wordTagline {
+  margin-top: 3px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ng-on-dark-deep);
+}
+
+.blurb {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--ng-on-dark);
+}
+
+.contactBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contactRow {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--ng-on-dark);
+  transition: color 0.2s ease;
+}
+
+a.contactRow:hover {
+  color: var(--ng-accent);
+}
+
+.contactIcon {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: var(--ng-accent);
+}
+
+.socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.social {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--ng-line-dark);
+  border-radius: 50%;
+  color: var(--ng-on-dark);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.social:hover {
+  background: var(--ng-accent);
+  border-color: var(--ng-accent);
+  color: var(--ng-navy-950);
+  transform: translateY(-2px);
+}
+
+.social svg {
+  width: 16px;
+  height: 16px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.colTitle {
+  font-family: var(--ng-font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ng-white);
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.link {
+  display: inline-block;
+  padding: 6px 0;
+  font-size: 0.85rem;
+  color: var(--ng-on-dark);
+  transition:
+    color 0.2s ease,
+    padding-left 0.2s ease;
+}
+
+.link:hover {
+  color: var(--ng-accent);
+  padding-left: 6px;
+}
+
+.colNews {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.newsSub {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--ng-on-dark);
+}
+
+/* ── 3. Copyright bar ── */
+.bottom {
+  border-top: 1px solid var(--ng-line-dark);
+  padding: 20px 0;
+}
+
+.bottomInner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.copy {
+  font-size: 0.76rem;
+  color: var(--ng-on-dark-deep);
+}
+
+.policy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.76rem;
+}
+
+.policyLink {
+  color: var(--ng-on-dark-deep);
+  transition: color 0.2s ease;
+}
+
+.policyLink:hover {
+  color: var(--ng-accent);
+}
+
+.policyDivider {
+  color: var(--ng-line-dark);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .mainInner {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+
+  .highlightsInner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .highlight:nth-child(2) {
+    border-right: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .mainInner {
+    grid-template-columns: 1fr;
+  }
+
+  .highlightsInner {
+    grid-template-columns: 1fr;
+  }
+
+  .highlight,
+  .highlight:first-child {
+    border: none;
+    border-bottom: 1px solid var(--ng-line-dark);
+  }
+
+  .bottomInner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,76 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+  border-radius: var(--radius-input);
+  cursor: pointer;
+  transition:
+    background var(--duration-fast) ease,
+    border-color var(--duration-fast) ease,
+    color var(--duration-fast) ease;
+  white-space: nowrap;
+  padding: var(--space-3) var(--space-6);
+  min-height: 44px;
+}
+
+/* Primary — Safety Orange fill */
+.primary {
+  background: var(--color-accent-orange);
+  color: var(--color-paper);
+  border-color: var(--color-accent-orange);
+}
+
+.primary:hover {
+  background: var(--color-accent-orange-active);
+  border-color: var(--color-accent-orange-active);
+}
+
+.primary:active {
+  background: var(--color-accent-orange-active);
+}
+
+/* Secondary — outline */
+.secondary {
+  background: transparent;
+  color: var(--color-text-primary);
+  border-color: var(--color-border-light);
+}
+
+.secondary:hover {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: var(--color-text-primary);
+}
+
+/* Secondary on dark backgrounds */
+.onDark {
+  color: var(--color-text-inverse);
+  border-color: var(--color-border-dark);
+}
+
+.onDark:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--color-text-inverse);
+}
+
+/* Disabled state */
+.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Arrow icon */
+.arrow {
+  transition: transform var(--duration-fast) ease;
+}
+
+.button:hover .arrow {
+  transform: translateX(4px);
+}

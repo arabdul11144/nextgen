@@ -1,0 +1,62 @@
+/* ============================================================
+   BrandMarquee — dark-gradient brand-lines band above footer
+   Deep navy-to-slate gradient, gradient accent bar, white text
+   ============================================================ */
+
+.section {
+  position: relative;
+  overflow: hidden;
+  margin: 24px 0;
+  background: linear-gradient(
+    180deg,
+    #0f172a 0%,
+    #1e293b 50%,
+    #0f172a 100%
+  );
+}
+
+/* Top accent bar — gradient from brand cyan through gold to crimson */
+.accentBar {
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--ng-accent-sky) 15%,
+    var(--ng-accent-blue) 35%,
+    var(--ng-accent-gold) 65%,
+    var(--ng-accent-crimson) 85%,
+    transparent 100%
+  );
+}
+
+.inner {
+  padding: 40px 0 44px;
+}
+
+/* ---- heading ---- */
+.heading {
+  margin: 0 0 28px;
+  text-align: center;
+  font-family: var(--ng-font-heading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.4;
+}
+
+/* ---- responsive ---- */
+@media (max-width: 768px) {
+  .inner {
+    padding: 32px 0 36px;
+  }
+
+  .heading {
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    margin-bottom: 20px;
+    padding-inline: 20px;
+  }
+}

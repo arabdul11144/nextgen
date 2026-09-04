@@ -1,0 +1,154 @@
+/* TeamEstimator — hero quick-estimate widget */
+
+.widget {
+  padding: 22px 24px 24px;
+  background: var(--ng-ink-2);
+  border: 1px solid var(--ng-line-dark);
+  border-radius: var(--ng-radius-panel);
+  box-shadow: var(--ng-shadow-lift);
+  max-width: 460px;
+}
+
+.head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: var(--ng-font-heading);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ng-gold);
+}
+
+.hint {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--ng-text-muted);
+}
+
+.stepperRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stepBtn {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ng-sand);
+  background: transparent;
+  border: 1px solid var(--ng-line-dark);
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.stepBtn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: var(--ng-orange);
+}
+
+.stepBtn:active {
+  transform: scale(0.94);
+}
+
+/* Number scale-bounces on every change (key remount restarts it) */
+.count {
+  min-width: 64px;
+  text-align: center;
+  font-family: var(--ng-font-heading);
+  font-size: 2.4rem;
+  font-weight: 900;
+  line-height: 1;
+  color: var(--ng-white);
+  font-variant-numeric: tabular-nums;
+  animation: count-bounce 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes count-bounce {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.28);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.tier {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ng-gold);
+}
+
+.estimate {
+  margin: 14px 0 16px;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ng-text-muted);
+}
+
+.estimate strong {
+  color: var(--ng-white);
+  font-family: var(--ng-font-heading);
+}
+
+.submit {
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 20px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--ng-white);
+  background: var(--ng-orange);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.submit:hover {
+  background: #e64d15;
+}
+
+.submit:active {
+  transform: scale(0.98);
+}
+
+.widgetLink {
+  display: inline-block;
+  margin-top: 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ng-sand);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(243, 238, 228, 0.4);
+  transition: text-decoration-color 0.2s ease;
+}
+
+.widgetLink:hover {
+  text-decoration-color: var(--ng-gold);
+}

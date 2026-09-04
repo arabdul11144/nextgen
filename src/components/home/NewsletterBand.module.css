@@ -1,0 +1,167 @@
+/* ============================================================
+   Newsletter band — calm breather before the footer
+   ============================================================ */
+
+.section {
+  background: var(--ng-surface-2);
+  padding: var(--ng-row) 0;
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--ng-font-heading);
+  font-size: var(--ng-fs-h2);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: var(--ng-navy-900);
+  text-wrap: balance;
+}
+
+.sub {
+  margin: 0;
+  max-width: 48ch;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--ng-muted);
+}
+
+.form {
+  width: 100%;
+  max-width: 480px;
+  margin-top: 10px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ng-muted);
+}
+
+.row {
+  display: flex;
+  gap: 8px;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 52px;
+  padding: 0 18px;
+  border: 1.5px solid var(--ng-line);
+  border-radius: var(--ng-radius-pill);
+  background: var(--ng-surface);
+  font-size: 0.92rem;
+  color: var(--ng-ink-text);
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.input:focus {
+  border-color: var(--ng-accent);
+  background: var(--ng-white);
+  box-shadow: 0 0 0 4px rgba(15, 181, 238, 0.18);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 52px;
+  padding: 0 22px;
+  border: none;
+  border-radius: var(--ng-radius-pill);
+  background: var(--ng-accent);
+  color: var(--ng-navy-950);
+  font-family: var(--ng-font-heading);
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.button:hover {
+  background: var(--ng-cyan-glow);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(15, 181, 238, 0.35);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.button svg {
+  width: 17px;
+  height: 17px;
+}
+
+/* ── Media ── */
+.media {
+  position: relative;
+  border-radius: var(--ng-radius-lg);
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: var(--ng-surface);
+}
+
+.photo {
+  object-fit: cover;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(4, 11, 24, 0.08) 0%,
+    transparent 40%
+  );
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+
+  .media {
+    aspect-ratio: 16 / 8;
+  }
+}
+
+@media (max-width: 480px) {
+  .row {
+    flex-direction: column;
+  }
+
+  .button {
+    justify-content: center;
+  }
+}

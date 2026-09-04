@@ -1,0 +1,36 @@
+/* TagChip — clipped-corner care-label pill with a colored dot */
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 16px 7px 13px;
+  background: rgba(16, 21, 27, 0.06);
+  color: var(--ng-ink);
+  clip-path: polygon(
+    0 0,
+    calc(100% - 11px) 0,
+    100% 11px,
+    100% 100%,
+    0 100%
+  );
+  font-family: var(--ng-font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.dark {
+  background: rgba(255, 255, 255, 0.09);
+  color: var(--ng-sand);
+}
+
+.dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}

@@ -1,0 +1,337 @@
+/* ============================================================
+   About / proof — dark Ink brand statement band (brief Section 3)
+   ============================================================ */
+
+.section {
+  position: relative;
+  background: var(--ng-ink);
+  padding: clamp(72px, 10vw, 120px) 0;
+  overflow: hidden;
+}
+
+/* Subtle animated gradient mesh — barely visible */
+.mesh {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(40% 55% at 18% 12%, rgba(21, 94, 239, 0.16), transparent 70%),
+    radial-gradient(45% 60% at 85% 85%, rgba(124, 58, 237, 0.14), transparent 70%);
+  animation: about-mesh 16s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes about-mesh {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(-1.5%, 1.2%) scale(1.06);
+  }
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+}
+
+/* ── Media player with gradient border frame ── */
+.mediaWrap {
+  position: relative;
+  border-radius: var(--ng-radius-6);
+  padding: 1px; /* border thickness */
+  background: linear-gradient(135deg, var(--ng-accent-blue), var(--ng-accent-sky));
+  box-shadow: 0 30px 70px rgba(4, 11, 24, 0.55);
+}
+
+/* Slow colour travel around the border */
+.mediaWrap::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: var(--ng-radius-6);
+  background: linear-gradient(135deg, var(--ng-accent-blue), var(--ng-accent-sky));
+  filter: blur(14px);
+  opacity: 0.35;
+  animation: about-border-glow 6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes about-border-glow {
+  0% {
+    opacity: 0.25;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(1.02);
+  }
+}
+
+.player {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: calc(var(--ng-radius-6) - 1px);
+  overflow: hidden;
+  background: var(--ng-ink);
+}
+
+.frame {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.frameActive {
+  opacity: 1;
+}
+
+.frameImg {
+  object-fit: cover;
+}
+
+.playerScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 55%,
+    rgba(11, 18, 32, 0.6) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Pill glass control bar ── */
+.controls {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 3;
+}
+
+.controlsBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: rgba(11, 18, 32, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--ng-radius-pill);
+  backdrop-filter: blur(10px);
+}
+
+.control {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: var(--ng-radius-pill);
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.control:hover {
+  background: var(--ng-accent-blue);
+  transform: scale(1.05);
+}
+
+.control svg {
+  width: 17px;
+  height: 17px;
+}
+
+.frameCount {
+  font-family: var(--ng-font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.85);
+  padding: 6px 10px;
+}
+
+/* ── Story copy ── */
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--ng-font-heading);
+  font-size: var(--ng-fs-h2);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+  text-wrap: balance;
+}
+
+.paragraph {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: #b9c4d8;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 6px;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 26px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: var(--ng-accent-blue);
+  border-radius: var(--ng-radius-4);
+  transition:
+    background 0.25s ease,
+    transform 0.15s ease,
+    box-shadow 0.25s ease;
+}
+
+.cta:hover {
+  background: #0c43b8;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(21, 94, 239, 0.35);
+}
+
+.ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--ng-accent-sky);
+  border-bottom: 2px solid var(--ng-accent-sky);
+  padding-bottom: 2px;
+  transition: gap 0.2s ease;
+}
+
+.ghost:hover {
+  gap: 12px;
+}
+
+/* ── Stats row: elevated cards with accent left-borders ── */
+.stats {
+  margin-top: clamp(40px, 5vw, 68px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.stat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 26px 24px;
+  background: #0e1626;
+  border: 1px solid rgba(148, 178, 220, 0.12);
+  border-radius: var(--ng-radius-6);
+  overflow: hidden;
+}
+
+.statAccent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+}
+
+.statIcon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+}
+
+.statIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.statValue {
+  font-family: var(--ng-font-heading);
+  font-size: 2.1rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #8da2bd;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .mediaWrap {
+    order: -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cta {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .stats {
+    gap: 12px;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .mesh,
+  .mediaWrap::before {
+    animation: none;
+  }
+}

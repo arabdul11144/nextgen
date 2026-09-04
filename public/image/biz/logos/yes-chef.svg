@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 80" fill="#ffffff">
+  <g>
+    <rect x="14" y="14" width="30" height="56" rx="2" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+    <line x1="17" y1="42" x2="41" y2="42" stroke="#ffffff" stroke-width="1.5"/>
+    <line x1="17" y1="26" x2="41" y2="26" stroke="#ffffff" stroke-width="1.5"/>
+    <circle cx="22" cy="50" r="2.5" fill="#ffffff" opacity="0.7"/>
+    <circle cx="32" cy="64" r="2.5" fill="#ffffff" opacity="0.7"/>
+    <circle cx="26" cy="18" r="2" fill="#ffffff" opacity="0.7"/>
+    <text x="54" y="34" font-family="Archivo,Inter,system-ui,sans-serif" font-size="24" font-weight="800" letter-spacing="0.05em" fill="#ffffff">YES CHEF</text>
+    <text x="54" y="52" font-family="Archivo,Inter,system-ui,sans-serif" font-size="8" font-weight="500" letter-spacing="0.3em" fill="#ffffff" opacity="0.55">HOSPITALITY WEAR</text>
+  </g>
+</svg>

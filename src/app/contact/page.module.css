@@ -1,0 +1,134 @@
+/* ============================================================
+   Contact / Request a Quote Page
+   ============================================================ */
+
+/* Hero */
+.hero {
+  background: var(--color-graphite);
+  color: var(--color-text-inverse);
+  padding-top: var(--space-24);
+  padding-bottom: var(--space-16);
+}
+
+@media (min-width: 768px) {
+  .hero {
+    padding-top: var(--space-32);
+    padding-bottom: var(--space-24);
+  }
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 700px;
+}
+
+.heroContent :global(.label-technical) {
+  color: var(--color-accent-orange);
+}
+
+.heroSubhead {
+  color: var(--color-text-inverse);
+  opacity: 0.85;
+  line-height: var(--lh-body);
+  max-width: 56ch;
+}
+
+/* Body */
+.body {
+  padding-top: var(--space-24);
+  padding-bottom: var(--space-24);
+}
+
+@media (min-width: 768px) {
+  .body {
+    padding-top: var(--space-32);
+    padding-bottom: var(--space-32);
+  }
+}
+
+.bodyGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-16);
+}
+
+@media (min-width: 1024px) {
+  .bodyGrid {
+    grid-template-columns: 1.6fr 1fr;
+    gap: var(--space-24);
+  }
+}
+
+.formColumn {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  max-width: 640px;
+}
+
+.formColumn :global(.label-technical) {
+  color: var(--color-accent-orange-active);
+}
+
+.formIntro {
+  color: var(--color-text-muted-light);
+  line-height: var(--lh-body);
+  margin-bottom: var(--space-6);
+}
+
+/* Details */
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+@media (min-width: 1024px) {
+  .details {
+    padding-left: var(--space-8);
+    border-left: 1px solid var(--color-border-light);
+  }
+}
+
+.detailBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.detailBlock :global(.label-technical) {
+  color: var(--color-accent-orange-active);
+}
+
+.detailTitle {
+  font-family: var(--font-display);
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  line-height: var(--lh-h3);
+}
+
+.detailText {
+  color: var(--color-text-muted-light);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+.detailLink {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-primary);
+}
+
+.detailLink span {
+  display: inline-block;
+  transition: transform var(--duration-fast) ease;
+}
+
+.detailLink:hover span {
+  transform: translateX(4px);
+}

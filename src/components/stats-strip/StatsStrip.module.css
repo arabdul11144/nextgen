@@ -1,0 +1,38 @@
+/* StatsStrip — large count-up figures with per-stat accents */
+
+.row {
+  display: flex;
+  justify-content: center;
+  gap: clamp(2rem, 6vw, 5rem);
+  flex-wrap: wrap;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 170px;
+}
+
+.number {
+  font-family: var(--ng-font-heading);
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+.suffix {
+  font-size: 0.6em;
+  font-weight: 800;
+}
+
+.label {
+  font-family: var(--ng-font-body);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ng-text-soft);
+  text-align: center;
+}

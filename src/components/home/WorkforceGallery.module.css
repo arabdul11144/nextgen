@@ -1,0 +1,220 @@
+/* ============================================================
+   WorkforceGallery — "Empowering PNG's Workforce".
+   Hover-expand industry photo panels. Panel 3 is wide by default;
+   hovering any panel grows it while the rest shrink. On mobile the
+   panels stack as full-width cards with captions always visible.
+   ============================================================ */
+
+.section {
+  width: 100%;
+  padding: clamp(48px, 6vw, 84px) 0;
+  background: var(--ng-cloud);
+}
+
+/* ── Centered heading block ── */
+.header {
+  max-width: 920px;
+  margin: 0 auto clamp(28px, 4vw, 44px);
+  padding: 0 clamp(16px, 3vw, 32px);
+  text-align: center;
+}
+
+.heading {
+  margin: 8px 0 16px;
+  font-family: var(--ng-font-heading);
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: var(--ng-accent-blue);
+  text-wrap: balance;
+}
+
+.paragraph {
+  margin: 0;
+  font-size: clamp(0.95rem, 1.6vw, 1.06rem);
+  line-height: 1.7;
+  color: var(--ng-slate);
+}
+
+.paragraph strong {
+  font-weight: 800;
+  color: var(--ng-ink);
+}
+
+/* ── Edge-to-edge hover-expand row ── */
+.gallery {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.panel {
+  position: relative;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0;
+  height: clamp(320px, 38vw, 460px);
+  min-width: 0;
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+  outline: none;
+  transition: flex-grow 0.42s var(--ng-ease-out-cubic);
+}
+
+/* default-featured (panel 3) is wide; hovered panel grows to match */
+.panel.featured {
+  flex-grow: 2;
+}
+
+.panel:focus-visible {
+  z-index: 5;
+  box-shadow: 0 0 0 3px var(--ng-accent-blue);
+}
+
+.photo {
+  object-fit: cover;
+  transform: scale(1.001);
+  transition: transform 0.6s var(--ng-ease-out-cubic);
+}
+
+.panel:hover .photo {
+  transform: scale(1.04);
+}
+
+/* scrim: transparent at ~40% → near-black at the bottom */
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(11, 18, 32, 0) 40%,
+    rgba(8, 12, 20, 0.86) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+/* caption block: only visible on the featured (grown) panel on desktop */
+.overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: clamp(16px, 2vw, 26px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s ease, transform 0.35s var(--ng-ease-out-cubic);
+}
+
+.featured .scrim {
+  opacity: 1;
+}
+
+.featured .overlay {
+  opacity: 1;
+  transform: none;
+}
+
+.catName {
+  font-family: var(--ng-font-heading);
+  font-size: clamp(1rem, 1.6vw, 1.3rem);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  border-radius: 999px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.panel:hover .explore,
+.explore:hover {
+  background: var(--panel-accent, var(--ng-accent-blue));
+  border-color: var(--panel-accent, var(--ng-accent-blue));
+  color: #ffffff;
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.5);
+}
+
+.exploreArrow {
+  transition: transform 0.25s var(--ng-ease-out-cubic);
+}
+
+.explore:hover .exploreArrow {
+  transform: translateX(3px);
+}
+
+/* ── Responsive: stack as full-width cards, captions always on ── */
+@media (max-width: 768px) {
+  .gallery {
+    flex-direction: column;
+    gap: 14px;
+    padding: 0 clamp(14px, 4vw, 28px);
+  }
+
+  .panel,
+  .panel.featured {
+    flex-grow: 1;
+    flex-basis: auto;
+    height: clamp(220px, 34vw, 260px);
+    border-radius: 16px;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .scrim,
+  .panel .scrim,
+  .panel.featured .scrim {
+    opacity: 1;
+  }
+
+  .overlay,
+  .panel .overlay,
+  .panel.featured .overlay {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ── Reduced motion: instant sizing, caption fades only ── */
+@media (prefers-reduced-motion: reduce) {
+  .panel {
+    transition: none;
+  }
+
+  .overlay {
+    transition: opacity 0.2s ease;
+  }
+
+  .scrim {
+    transition: opacity 0.2s ease;
+  }
+}

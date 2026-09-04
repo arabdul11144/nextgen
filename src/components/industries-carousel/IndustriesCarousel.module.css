@@ -1,0 +1,211 @@
+/* IndustriesCarousel — swipeable scroll-snap carousel */
+
+.carousel {
+  width: 100%;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.counter {
+  font-family: var(--ng-font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--ng-text-soft);
+}
+
+.arrows {
+  display: flex;
+  gap: 10px;
+}
+
+.arrow {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  color: var(--ng-ink);
+  background: var(--ng-white);
+  border: 1px solid var(--ng-line-light);
+  border-radius: 50%;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.arrow svg {
+  width: 20px;
+  height: 20px;
+}
+
+.arrow:hover:not(:disabled) {
+  background: var(--ng-orange);
+  border-color: var(--ng-orange);
+  color: var(--ng-white);
+}
+
+.arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.viewport {
+  display: flex;
+  column-gap: 18px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  /* generous negative margins so card shadows aren't clipped */
+  margin-inline: -4px;
+  padding: 4px;
+  scrollbar-width: none;
+}
+
+.viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.card {
+  flex: 0 0 auto;
+  width: min(272px, 82vw);
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  background: var(--ng-white);
+  border: 1px solid var(--ng-line-light);
+  border-radius: var(--ng-radius-card);
+  overflow: hidden;
+  text-decoration: none;
+  transition:
+    transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--ng-shadow-lift);
+}
+
+.imageWrap {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.card:hover .image {
+  transform: scale(1.06);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(16, 21, 27, 0) 40%,
+    rgba(16, 21, 27, 0.55) 100%
+  );
+}
+
+.index {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--ng-white);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 18px 20px;
+}
+
+.name {
+  font-family: var(--ng-font-heading);
+  font-size: 1.08rem;
+  font-weight: 800;
+  line-height: 1.15;
+  color: var(--ng-ink);
+}
+
+.desc {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--ng-text-soft);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.cardLink {
+  margin-top: auto;
+  padding-top: 6px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ng-orange);
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 22px;
+}
+
+.dot {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+}
+
+.dot::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(16, 21, 27, 0.22);
+  transition:
+    background 0.2s ease,
+    width 0.2s ease,
+    height 0.2s ease;
+}
+
+.dot:hover::after {
+  background: rgba(16, 21, 27, 0.45);
+}
+
+.dotActive::after {
+  width: 10px;
+  height: 10px;
+  background: var(--ng-orange);
+}

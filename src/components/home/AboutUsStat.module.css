@@ -1,0 +1,321 @@
+/* ============================================================
+   AboutUsStat — merged "About Us" + "Trusted Partner" stats
+   (Section A). Shared light contour-textured background spanning
+   the full width. Left narrative half + right stats showcase half
+   (bracket-framed big number, sub-heading, sentence, 3 secondary
+   stats). Stacks vertically on mobile.
+   ============================================================ */
+
+.section {
+  position: relative;
+  width: 100%;
+  padding: clamp(88px, 11vw, 128px) 0;
+  background-color: var(--ng-cloud);
+
+  /* Faint light-blue contour-line topographic texture — decorative,
+     kept very subtle so it never reduces text contrast. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520' viewBox='0 0 520 520'%3E%3Cg fill='none' stroke='%23155eef' stroke-opacity='0.05' stroke-width='1.5'%3E%3Cpath d='M-40 60 C 140 10, 340 10, 560 70'/%3E%3Cpath d='M-40 150 C 140 100, 340 104, 560 170'/%3E%3Cpath d='M-40 250 C 150 204, 330 210, 560 280'/%3E%3Cpath d='M-40 360 C 150 316, 330 322, 560 390'/%3E%3Cpath d='M-40 470 C 160 424, 320 434, 580 500'/%3E%3Cpath d='M-40 90 C 130 44, 350 42, 600 120' stroke-opacity='0.03'/%3E%3Cpath d='M-40 210 C 150 158, 340 160, 600 236' stroke-opacity='0.04'/%3E%3Cpath d='M-40 430 C 140 384, 350 390, 600 464' stroke-opacity='0.04'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* Soft veil preserving text contrast over the texture */
+.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    rgba(244, 246, 249, 0.6),
+    rgba(244, 246, 249, 0.25)
+  );
+}
+
+.inner {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 32px);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: clamp(32px, 6vw, 80px);
+  align-items: center;
+}
+
+/* ── Left: narrative half ── */
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-family: var(--ng-font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ng-accent-blue);
+}
+
+.eyebrowDash {
+  width: 26px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--ng-accent-blue);
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--ng-font-heading);
+  font-size: var(--ng-fs-h2);
+  font-weight: 900;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: var(--ng-ink);
+  text-wrap: balance;
+}
+
+.paragraph {
+  margin: 0;
+  font-size: clamp(0.98rem, 1.6vw, 1.08rem);
+  line-height: 1.7;
+  color: var(--ng-slate);
+}
+
+/* pill CTA — established site style */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 24px;
+  border-radius: 999px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: var(--ng-accent-blue);
+  box-shadow: 0 12px 26px -12px rgba(21, 94, 239, 0.6);
+  transition: transform 0.25s var(--ng-ease-out-cubic), box-shadow 0.25s ease;
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 34px -14px rgba(21, 94, 239, 0.7);
+}
+
+.cta span {
+  transition: transform 0.25s var(--ng-ease-out-cubic);
+}
+
+.cta:hover span {
+  transform: translateX(3px);
+}
+
+/* ── Right: stats showcase half ── */
+.right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border-left: 1px solid rgba(11, 18, 32, 0.08);
+  padding-left: clamp(24px, 4vw, 48px);
+}
+
+/* ── Corner-bracket frame around the big number ── */
+.frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 2.5vw, 34px) clamp(20px, 3vw, 44px);
+}
+
+.bracket {
+  position: absolute;
+  width: clamp(16px, 2.2vw, 26px);
+  height: clamp(16px, 2.2vw, 26px);
+  border: 3px solid var(--ng-accent-blue);
+  transform: scale(0);
+  opacity: 0;
+}
+
+.bracketTL {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+  transform-origin: left top;
+}
+
+.bracketTR {
+  top: 0;
+  right: 0;
+  border-left: none;
+  border-bottom: none;
+  transform-origin: right top;
+}
+
+.bracketBL {
+  bottom: 0;
+  left: 0;
+  border-right: none;
+  border-top: none;
+  transform-origin: left bottom;
+}
+
+.bracketBR {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+  transform-origin: right bottom;
+}
+
+/* bracket draw-in, staggered per corner, gated on section entering view */
+.frameIn .bracketTL {
+  animation: ng-bracket-in 0.4s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  animation-delay: 0ms;
+}
+
+.frameIn .bracketTR {
+  animation: ng-bracket-in 0.4s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  animation-delay: 90ms;
+}
+
+.frameIn .bracketBL {
+  animation: ng-bracket-in 0.4s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  animation-delay: 180ms;
+}
+
+.frameIn .bracketBR {
+  animation: ng-bracket-in 0.4s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+  animation-delay: 270ms;
+}
+
+@keyframes ng-bracket-in {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* big count-up number */
+.headline {
+  font-family: var(--ng-font-heading);
+  font-size: clamp(3rem, 6.5vw, 6.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--ng-accent-blue);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Sub-heading + supporting sentence ── */
+.headlineHeading {
+  margin: 20px 0 0;
+  font-family: var(--ng-font-heading);
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ng-ink);
+  max-width: 26ch;
+  text-wrap: balance;
+}
+
+.headlineSub {
+  margin: 14px 0 0;
+  max-width: 56ch;
+  font-size: clamp(0.98rem, 1.8vw, 1.08rem);
+  line-height: 1.7;
+  color: var(--ng-slate);
+}
+
+/* ── Secondary stats ── */
+.statRow {
+  margin-top: clamp(36px, 5vw, 52px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 3vw, 40px);
+  width: 100%;
+  align-items: start;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.statNum {
+  font-family: var(--ng-font-heading);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--ng-accent-blue);
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  font-size: clamp(0.8rem, 1.7vw, 0.95rem);
+  font-weight: 500;
+  color: var(--ng-ink);
+  letter-spacing: 0.01em;
+}
+
+/* ── Responsive: stack vertically ── */
+@media (max-width: 900px) {
+  .section {
+    padding: 80px 0;
+  }
+
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: left;
+  }
+
+  .right {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .left {
+    gap: 16px;
+  }
+
+  .frame {
+    max-width: 340px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .headlineHeading {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .statRow {
+    gap: 10px;
+  }
+
+  .statNum {
+    font-size: clamp(1.7rem, 6.5vw, 2.4rem);
+  }
+
+  .statLabel {
+    font-size: 0.72rem;
+  }
+}

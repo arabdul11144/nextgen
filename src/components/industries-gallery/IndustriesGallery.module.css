@@ -1,0 +1,116 @@
+.strip {
+  display: flex;
+  gap: 12px;
+  height: 460px;
+}
+
+.panel {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: var(--radius-panel);
+  transition: flex 300ms ease;
+}
+
+.panel.active {
+  flex: 2.4;
+}
+
+.imageLink {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 300ms ease;
+}
+
+.panel:hover .image {
+  transform: scale(1.04);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 31, 61, 0.85) 0%,
+    rgba(10, 31, 61, 0) 55%
+  );
+  transition: opacity 300ms ease;
+}
+
+.label {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 14px;
+  color: var(--color-white);
+  white-space: nowrap;
+  transition: all 300ms ease;
+}
+
+.active .label {
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+}
+
+.explore {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+
+.exploreVisible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.explorePill {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-button);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-small);
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.explorePill:hover {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+@media (max-width: 768px) {
+  .strip {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .panel {
+    flex: 1;
+    height: 220px;
+    flex-basis: 220px;
+  }
+
+  .panel.active {
+    flex: 1;
+  }
+}

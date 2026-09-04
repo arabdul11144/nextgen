@@ -1,0 +1,37 @@
+/* HeroRotator — side image slot with a strict opacity crossfade.
+   Each slide is an absolutely-positioned stage that perfectly overlaps
+   the rest inside the slot (same inset), so only a clean opacity fade
+   happens between the current and the previous slide — no slide/translate
+   smear, no lingering partial frame. The outgoing slide decays to
+   opacity 0 and visibility hidden after the transition. */
+.slot {
+  position: relative;
+  height: 100%;
+  min-height: 560px;
+  overflow: hidden;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 600ms ease, visibility 600ms;
+  will-change: opacity;
+}
+
+.stage.enter {
+  opacity: 1;
+  visibility: visible;
+}
+
+.stage.leave {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.image,
+.staticImage {
+  object-fit: contain;
+  object-position: center bottom;
+}

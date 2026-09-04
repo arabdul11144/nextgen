@@ -1,0 +1,321 @@
+/* ============================================================
+   Complete Uniform Range showcase — two-column dark-navy section.
+   Left: rotating 2×2 grid of category images (white tiles,
+   full-garment "contain" fit). Right: condensed text copy.
+   Each tile cycles independently through a pool of 8 images.
+   ============================================================ */
+
+.section {
+  width: 100%;
+  padding: clamp(72px, 9vw, 120px) 0;
+  background:
+    radial-gradient(120% 140% at 85% 0%, #0c1f3c 0%, #081528 55%, #040b18 100%);
+}
+
+.inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+}
+
+/* ── Two-column layout: grid (left) · text (right) ── */
+.layout {
+  display: grid;
+  grid-template-columns: 47fr 49fr;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+}
+
+/* ── Left column — rotating photo grid ── */
+.gridCol {
+  min-width: 0;
+}
+
+/* Subtle depth under the whole grid block (not per tile) */
+.cards {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: clamp(14px, 1.8vw, 20px);
+  filter: drop-shadow(0 22px 34px rgba(4, 11, 24, 0.45));
+}
+
+/* ── Individual tile ── */
+.card {
+  position: relative;
+  display: block;
+  border-radius: var(--ng-radius-lg, 20px);
+  overflow: hidden;
+  /* White tile surface — the contained garment sits centred on white,
+     so the letterbox/padding around the product photo reads as clean
+     padding rather than empty dark space. */
+  background: var(--ng-white, #ffffff);
+  cursor: pointer;
+  isolation: isolate;
+  text-decoration: none;
+  aspect-ratio: 4 / 5;
+  box-shadow:
+    0 0 0 1px rgba(4, 11, 24, 0.06),
+    0 14px 30px -18px rgba(4, 11, 24, 0.5);
+  transition: box-shadow 0.35s ease, transform 0.35s var(--ng-ease-out-cubic);
+}
+
+.card:hover {
+  box-shadow:
+    0 0 0 1px rgba(4, 11, 24, 0.06),
+    0 26px 50px -22px rgba(4, 11, 24, 0.6);
+  transform: translateY(-4px);
+}
+
+/* Consistent aspect ratio for every tile so the grid never reflows */
+.cardPos0,
+.cardPos1,
+.cardPos2,
+.cardPos3 {
+  aspect-ratio: 4 / 5;
+}
+
+/* ── Media area: full garment, contained, padded & centred ── */
+.media {
+  position: absolute;
+  inset: clamp(12px, 1.4vw, 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity var(--ng-dur-base, 400ms) ease-in-out;
+}
+
+.cardImg {
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s var(--ng-ease-out-cubic);
+}
+
+.card:hover .cardImg {
+  transform: scale(1.04);
+}
+
+/* ── Crossfade during a swap ── */
+.mediaFade {
+  opacity: 0;
+}
+
+/* ── Category chip (bottom-centre) — travels with the image ──
+   Positioned along the bottom edge, horizontally centred. It sits just
+   above the title `.caption` so the two stacked labels stay legible and
+   never overlap. The navy pill reads clearly on the white tile. */
+.chip {
+  position: absolute;
+  bottom: clamp(54px, 7.5vw, 66px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--ng-navy-800, #0c1f3c);
+  color: #ffffff;
+  font-family: var(--ng-font-heading);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1;
+  box-shadow: 0 4px 12px rgba(4, 11, 24, 0.25);
+  white-space: nowrap;
+}
+
+/* ── Caption title — bottom-centre, travels with the image ── */
+.caption {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(10px, 1.4vw, 16px);
+  transform: translateX(-50%);
+  z-index: 3;
+  max-width: calc(100% - 24px);
+  text-align: center;
+  transition: opacity var(--ng-dur-base, 400ms) ease-in-out;
+}
+
+.captionLabel {
+  display: inline-block;
+  padding: 7px 14px;
+  border-radius: var(--ng-radius-6, 6px);
+  background: rgba(8, 21, 40, 0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  color: #ffffff;
+  font-family: var(--ng-font-heading);
+  font-size: clamp(0.78rem, 1.1vw, 0.92rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+}
+
+.card:hover .media,
+.card:hover .caption {
+  /* keep full opacity on hover; only the crossfade class drops it */
+}
+
+/* ── Right column — text ── */
+.textCol {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: flex-start;
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  font-family: var(--ng-font-heading);
+  font-size: var(--ng-fs-eyebrow, 0.72rem);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  color: var(--ng-accent, #0fb5ee);
+}
+
+.heading {
+  margin: 0 0 18px;
+  font-family: var(--ng-font-heading);
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  font-weight: 900;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+  max-width: 14ch;
+}
+
+.intro {
+  margin: 0 0 16px;
+  font-size: clamp(0.95rem, 1.5vw, 1.02rem);
+  line-height: 1.65;
+  color: var(--ng-on-dark, #c7d4e8);
+  max-width: 44ch;
+}
+
+.body {
+  margin: 0 0 32px;
+  font-size: clamp(0.9rem, 1.4vw, 0.98rem);
+  line-height: 1.65;
+  color: var(--ng-muted-2, #8da4c6);
+  max-width: 44ch;
+}
+
+.viewAll {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 0 26px;
+  border-radius: 999px;
+  background: var(--ng-accent-blue, #155eef);
+  font-family: var(--ng-font-heading);
+  font-size: 0.86rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  box-shadow: 0 12px 26px -12px rgba(21, 94, 239, 0.7);
+  transition: background 0.25s ease, transform 0.25s ease, gap 0.25s ease;
+}
+
+.viewAll span {
+  transition: transform 0.25s ease;
+}
+
+.viewAll:hover {
+  background: var(--ng-accent-strong, #0d97cb);
+  transform: translateY(-2px);
+  gap: 14px;
+}
+
+.viewAll:hover span {
+  transform: translateX(3px);
+}
+
+/* ── Reduced motion: kill fade/hover transitions ── */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+    transform: none !important;
+  }
+
+  .cardImg {
+    transition: none;
+    transform: none !important;
+  }
+
+  .media {
+    transition: none;
+  }
+
+  .caption {
+    transition: none;
+  }
+}
+
+/* ── Responsive: stacked, grid first ── */
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .textCol {
+    order: 2;
+  }
+
+  .gridCol {
+    order: 1;
+  }
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .section {
+    padding: clamp(52px, 8vw, 80px) 0;
+  }
+
+  .inner {
+    padding: 0 clamp(14px, 4vw, 20px);
+  }
+
+  .cards {
+    gap: 10px;
+  }
+
+  .cardPos0,
+  .cardPos1,
+  .cardPos2,
+  .cardPos3 {
+    aspect-ratio: 3 / 4;
+  }
+
+  .heading {
+    font-size: clamp(1.45rem, 6vw, 1.8rem);
+  }
+
+  .chip {
+    font-size: 0.58rem;
+    padding: 4px 9px;
+    bottom: clamp(46px, 12vw, 54px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .captionLabel {
+    font-size: 0.7rem;
+    padding: 5px 10px;
+  }
+
+  .viewAll {
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
+  }
+}

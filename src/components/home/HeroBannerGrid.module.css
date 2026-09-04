@@ -1,0 +1,102 @@
+/* ============================================================
+   HeroBannerGrid — full-width hero tile band.
+   Preserves the established 2×2 grid spacing, gutters and
+   responsive breakpoints. Tiles have sharp square corners
+   (no border-radius) per the banner swap brief.
+   ============================================================ */
+
+.section {
+  width: 100%;
+  background: var(--ng-ink);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: clamp(14px, 2vw, 24px);
+  width: 100%;
+  padding: clamp(16px, 3vw, 32px);
+}
+
+/* Shared tile chrome — sharp corners, no radius, cover fill. */
+.topLeft,
+.topRight,
+.bottomLeft,
+.bottomRight {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0;
+  background: var(--ng-navy-800);
+  isolation: isolate;
+}
+
+/* Per-tile aspect ratios (match the 720×480 / 720×360 outputs). */
+.topLeft,
+.topRight {
+  aspect-ratio: 3 / 2; /* 720×480 */
+}
+
+.bottomLeft,
+.bottomRight {
+  aspect-ratio: 2 / 1; /* 720×360 */
+}
+
+/* Static tile image — cover, sharp edges. */
+.frameStatic {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Carousel cross-fade frames — absolutely positioned = no layout shift. */
+.frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition-property: opacity;
+  transition-timing-function: ease;
+  will-change: opacity;
+}
+
+.isActive {
+  opacity: 1;
+  z-index: 1;
+}
+
+.isFaded {
+  opacity: 0;
+}
+
+/* ── Responsive: one grid cell per row below tablet ── */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+    padding: clamp(14px, 3vw, 24px) clamp(16px, 3vw, 32px);
+  }
+
+  .topLeft,
+  .topRight,
+  .bottomLeft,
+  .bottomRight {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    padding: clamp(12px, 3vw, 20px) clamp(12px, 3vw, 20px);
+  }
+
+  .topLeft,
+  .topRight,
+  .bottomLeft,
+  .bottomRight {
+    aspect-ratio: 4 / 3;
+  }
+}

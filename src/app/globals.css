@@ -1,0 +1,548 @@
+/* ============================================================
+   NextGen Solutions PNG — Design System Foundation
+   ============================================================
+   Based on the design specification Parts 2, 3, 16.
+   All tokens defined here; components consume via var().
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. Design Tokens (Part 16)
+   ------------------------------------------------------------ */
+:root {
+  /* — Color — */
+  --color-obsidian: #0b0d0f;
+  --color-warm-white: #f5f3ee;
+  --color-graphite: #1b2024;
+  --color-paper: #ffffff;
+  --color-white: #ffffff;
+
+  /* Text */
+  --color-text-primary: #12141a;
+  --color-text-inverse: #f5f3ee;
+  --color-text-muted-light: #5c6066;
+  --color-text-muted-dark: #9aa0a6;
+
+  /* Borders */
+  --color-border-light: #dedad0;
+  --color-border-dark: #2a3036;
+
+  /* Accent — functional, not decorative */
+  --color-accent-orange: #ff6a00;
+  --color-accent-orange-active: #e35e00;
+  --color-accent-yellow: #f4c430;
+  --color-accent-blue: #287bff;
+
+  /* ==========================================================
+     Corporate (Blue) Theme — the primary site accent
+     ========================================================== */
+  --color-primary: #1c7fc4;
+  --color-primary-dark: #12539b;
+  --color-primary-hover: #12539b;
+  --accent-gradient: linear-gradient(
+    135deg,
+    #bfe3f2 0%,
+    #2b8fd1 60%,
+    #12539b 100%
+  );
+  --color-navy: #0a1f3d;
+  --color-navy-text: #12274a;
+  --color-text-body: #4a5568;
+  --color-bg-light: #f5f8fb;
+  --color-border: #1c7fc4;
+  --color-border-neutral: #e2e8f0;
+  --shadow-card: 0 4px 20px rgba(18, 39, 74, 0.08);
+  --shadow-elevated: 0 12px 32px rgba(18, 39, 74, 0.16);
+  --radius-button: 9999px;
+  --radius-panel: 8px;
+
+  /* Semantic */
+  --color-success: #2e9e5b;
+  --color-error: #d6432e;
+
+  /* — Typography — */
+  --font-display: var(--font-display), "Space Grotesk", system-ui, sans-serif;
+  --font-body: var(--font-body), "Inter", system-ui, sans-serif;
+
+  /* Type scale — fluid clamp for display/H1/H2, fixed for the rest */
+  --fs-display: clamp(2.75rem, 6vw, 6rem);
+  --fs-h1: clamp(2.25rem, 5vw, 4rem);
+  --fs-h2: clamp(1.75rem, 3.5vw, 2.5rem);
+  --fs-h3: clamp(1.375rem, 2.5vw, 1.75rem);
+  --fs-h4: 1.25rem;
+  --fs-body: 1.0625rem;
+  --fs-small: 0.875rem;
+  --fs-caption: 0.75rem;
+  --fs-label: 0.75rem;
+
+  /* Line heights */
+  --lh-display: 0.95;
+  --lh-h1: 1;
+  --lh-h2: 1.1;
+  --lh-h3: 1.2;
+  --lh-h4: 1.3;
+  --lh-body: 1.6;
+  --lh-small: 1.5;
+  --lh-caption: 1.4;
+
+  /* Letter spacing */
+  --ls-display: -0.02em;
+  --ls-h1: -0.01em;
+  --ls-h2: -0.01em;
+  --ls-h3: 0;
+  --ls-body: 0;
+  --ls-caption: 0.02em;
+  --ls-label: 0.08em;
+
+  /* — Spacing (4px base) — */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* — Border radius — */
+  --radius-input: 2px;
+  --radius-card: 4px;
+  --radius-modal: 8px;
+  --radius-pill: 999px;
+
+  /* — Shadows (flat design, used sparingly) — */
+  --shadow-card: 0 1px 2px rgba(11, 13, 15, 0.06);
+  --shadow-elevated: 0 8px 24px rgba(11, 13, 15, 0.12);
+
+  /* — Breakpoints (for reference; use in @media) — */
+  /* --bp-mobile: 0px;
+     --bp-tablet: 768px;
+     --bp-desktop: 1024px;
+     --bp-wide: 1440px; */
+
+  /* — Motion — */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 600ms;
+
+  /* — Containers — */
+  --container-max: 1440px;
+  --container-margin-mobile: 20px;
+  --container-margin-tablet: 48px;
+  --container-margin-desktop: 24px;
+
+  /* — Z-index scale — */
+  --z-nav: 100;
+  --z-mega-menu: 110;
+  --z-drawer: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+}
+
+/* ------------------------------------------------------------
+   2. CSS Reset & Base
+   ------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text-primary);
+  background: var(--color-warm-white);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* ------------------------------------------------------------
+   3. Typography
+   ------------------------------------------------------------ */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: var(--lh-h1);
+  letter-spacing: var(--ls-h1);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  line-height: var(--lh-h2);
+  letter-spacing: var(--ls-h2);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-h3);
+  letter-spacing: var(--ls-h3);
+}
+
+h4 {
+  font-family: var(--font-body);
+  font-size: var(--fs-h4);
+  line-height: var(--lh-h4);
+}
+
+p {
+  max-width: 65ch;
+}
+
+/* Technical label — uppercase monospace-style label */
+.label-technical {
+  font-family: var(--font-display);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+
+/* Caption */
+.caption {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  font-weight: 500;
+  line-height: var(--lh-caption);
+  letter-spacing: var(--ls-caption);
+}
+
+/* Numbers / stats */
+.stat-number {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Corporate stat counter row (used by StatsCounter) */
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  min-width: 160px;
+}
+
+.stat-number {
+  font-size: 3.25rem;
+  color: var(--color-navy-text);
+}
+
+.stat-suffix {
+  color: var(--color-primary);
+}
+
+.stat-label {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--color-text-body);
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .stat-number {
+    font-size: 4rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   4. Focus & Accessibility
+   ------------------------------------------------------------ */
+:focus-visible {
+  outline: 2px solid var(--color-accent-orange);
+  outline-offset: 2px;
+}
+
+/* Reduced motion — disable all transform-based animation */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   5. Selection
+   ------------------------------------------------------------ */
+::selection {
+  background: var(--color-accent-orange);
+  color: var(--color-paper);
+}
+
+/* ------------------------------------------------------------
+   6. NextGen Retail-Hub Design Tokens (homepage + header/footer)
+   Palette: deep corporate navy base, energetic cyan accent, one
+   hot accent per category, PNG-flag-inspired gold & red threads,
+   graphite industrial grey. Backward-compatible --ng-* names are
+   kept so older css modules still resolve.
+   ------------------------------------------------------------ */
+:root {
+  /* Legacy aliases (brand navy identity) */
+  --ng-ink: #081528;
+  --ng-ink-2: #0c1f3c;
+  --ng-blue: #1c7fc4;
+  --ng-gradient: linear-gradient(
+    135deg,
+    #12539b 0%,
+    #1c7fc4 55%,
+    #2b8fd1 100%
+  );
+  --ng-orange: #ff5a1f;
+  --ng-gold: #f4b620;
+  --ng-blue-accent: var(--ng-blue);
+  --ng-plum: #9c2236;
+  --ng-sand: #f2f6fa;
+  --ng-white: #ffffff;
+  --ng-text-soft: #4a5a75;
+  --ng-text-muted: #b9c4d4;
+  --ng-line-dark: rgba(148, 178, 220, 0.14);
+  --ng-line-light: rgba(8, 21, 40, 0.12);
+  --ng-shadow-soft: 0 6px 18px rgba(8, 21, 40, 0.1);
+  --ng-shadow-lift: 0 18px 40px rgba(8, 21, 40, 0.22);
+  --ng-radius-card: 18px;
+  --ng-radius-panel: 24px;
+  --ng-font-heading: var(--font-archivo), "Archivo", "Space Grotesk",
+    system-ui, sans-serif;
+  --ng-font-body: var(--font-body), "Inter", system-ui, sans-serif;
+
+  /* 6.1 Deep corporate navy scale — header, footer, dark bands */
+  --ng-navy-950: #040b18;
+  --ng-navy-900: #081528;
+  --ng-navy-800: #0c1f3c;
+  --ng-navy-700: #123060;
+  --ng-navy-600: #17407e;
+
+  /* 6.2 Bright energetic accent — cyan/blue for links & pills */
+  --ng-accent: #0fb5ee;
+  --ng-accent-strong: #0d97cb;
+  --ng-accent-deep: #0a6eb4;
+  --ng-accent-ink: #042941;
+  --ng-accent-soft: #e2f6fe;
+  --ng-cyan-glow: #59d9ff;
+
+  /* 6.3 Category accents — one per major service family */
+  --ng-safety: #ff5a1f; /* workwear & hi-vis (PNG red thread) */
+  --ng-safety-deep: #c73f0c;
+  --ng-burgundy: #9c2236; /* corporate / hospitality */
+  --ng-burgundy-deep: #711524;
+  --ng-forest: #0f7a6a; /* agriculture / outdoor */
+  --ng-forest-deep: #0a584d;
+  --ng-gold: #f4b620; /* branding / merch (PNG gold thread) */
+  --ng-gold-deep: #9c6a00;
+  --ng-graphite: #4a5565; /* industrial / energy */
+
+  /* 6.4 Neutrals */
+  --ng-surface: #f1f4f8; /* light blue-grey section surface */
+  --ng-surface-2: #ffffff;
+  --ng-ink-text: #0c1a33;
+  --ng-muted: #56647c;
+  --ng-muted-2: #8794ab;
+  --ng-line: #e0e6ef;
+  --ng-on-dark: #c7d4e8;
+  --ng-on-dark-deep: #8da4c6;
+
+  /* 6.5 Semantic */
+  --ng-success: #177a4b;
+  --ng-success-bg: #e3f4ec;
+  --ng-error: #c52e2e;
+  --ng-error-bg: #fdecec;
+  --ng-star: #f5a800;
+
+  /* 6.6 Type scale — merchandised, dense, confident */
+  --ng-fs-hero: clamp(2.3rem, 5vw, 4.1rem);
+  --ng-fs-h2: clamp(1.55rem, 3vw, 2.35rem);
+  --ng-fs-h3: clamp(1.15rem, 1.9vw, 1.5rem);
+  --ng-fs-body: 1rem;
+  --ng-fs-small: 0.8125rem;
+  --ng-fs-caption: 0.75rem;
+  --ng-fs-eyebrow: 0.72rem;
+
+  /* 6.7 Spacing + shape */
+  --ng-row: clamp(58px, 7vw, 92px); /* vertical rhythm between sections */
+  --ng-row-sm: clamp(44px, 5vw, 64px);
+  --ng-radius: 16px;
+  --ng-radius-lg: 22px;
+  --ng-radius-pill: 999px;
+
+  /* ==========================================================
+     6.8 Modern Design System (homepage redesign brief)
+     Richer multi-accent palette, sharpened radius scale, refined
+     motion. New sections consume these; legacy --ng-* kept above
+     for backward compatibility.
+     ========================================================== */
+  --ng-ink: #0b1220;          /* primary text / dark section bg */
+  --ng-slate: #334155;        /* secondary text */
+  --ng-cloud: #f4f6f9;        /* light section bg */
+  --ng-surface-white: #ffffff;
+
+  /* Accent palette — rotate one dominant accent per section */
+  --ng-accent-blue: #155eef;  /* primary CTA / links / focus */
+  --ng-accent-sky: #38bdf8;   /* secondary accent */
+  --ng-accent-orange: #ff5a1f;/* high-vis industry (mining/construction) */
+  --ng-accent-emerald: #10b981;/* trust / quality / guarantees */
+  --ng-accent-gold: #f5a623;  /* premium / craftsmanship */
+  --ng-accent-crimson: #e11d48;/* PNG flag energy — badges / "New" */
+  --ng-accent-teal: #0f766e;  /* healthcare / hospitality */
+  --ng-accent-violet: #7c3aed;/* corporate / education */
+
+  /* Sharp radius system (near-rectilinear) */
+  --ng-radius-2: 2px;
+  --ng-radius-4: 4px;
+  --ng-radius-6: 6px;
+
+  /* Focus ring — 2px Signal Blue, offset 2px */
+  --ng-focus: 2px solid var(--ng-accent-blue);
+
+  /* Refined motion */
+  --ng-ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --ng-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ng-dur-fast: 250ms;
+  --ng-dur-base: 400ms;
+  --ng-dur-slow: 600ms;
+
+  /* Type — H1/H2 jumps, tight tracking */
+  --ng-fs-h1: clamp(2rem, 5.5vw, 4rem);
+  --ng-fs-h2: clamp(1.75rem, 3.5vw, 2.75rem);
+  --ng-fs-h3: clamp(1.2rem, 2vw, 1.5rem);
+  --ng-body-line: 1.6;
+  --ng-max-line: 65ch;
+}
+
+/* ------------------------------------------------------------
+   7. Global utilities + motion keyframes
+   ------------------------------------------------------------ */
+
+/* Shared page shell (1280px content rail, fluid gutters) */
+.ng-shell {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+}
+
+/* Uppercase, letter-spaced eyebrow label above section headings */
+.ng-eyebrow {
+  font-family: var(--ng-font-heading);
+  font-size: var(--ng-fs-eyebrow);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+/* Skeleton shimmer — animated placeholder matching component shape */
+.ng-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: #e3e9f1;
+}
+
+.ng-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.7),
+    transparent
+  );
+  animation: ng-shimmer 1.35s ease-in-out infinite;
+}
+
+@keyframes ng-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* Slow continuous Ken Burns drift for hero imagery (~18s loop) */
+@keyframes ng-kenburns {
+  from {
+    transform: scale(1) translate(0, 0);
+  }
+  to {
+    transform: scale(1.09) translate(-1.4%, 1.1%);
+  }
+}
+
+/* Continuous logo marquee — translate the doubled track by half */
+@keyframes ng-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

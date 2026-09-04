@@ -1,0 +1,291 @@
+/* ============================================================
+   CustomizationHub — "Branding & Customization Hub" split section
+   (Redesign). Cloud-tinted band framing a header + two elevated
+   accent-topped cards flanking a centre "product stage" that
+   auto-advances through the customization hub images with a
+   clipped horizontal slide. Arrows overlay the stage inner edges;
+   dots sit centred beneath the stage.
+   ============================================================ */
+
+.section {
+  width: 100%;
+  padding: clamp(88px, 10vw, 128px) 0;
+  background: var(--ng-cloud);
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 32px);
+}
+
+/* ── Section header ── */
+.header {
+  max-width: 640px;
+  margin: 0 auto clamp(36px, 5vw, 56px);
+  text-align: center;
+}
+
+.eyebrow {
+  margin: 0 0 12px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ng-accent-blue);
+}
+
+.intro {
+  margin: 0;
+  font-size: clamp(0.98rem, 1.8vw, 1.12rem);
+  line-height: 1.65;
+  color: var(--ng-slate);
+  text-wrap: balance;
+}
+
+/* ── Three-column layout ── */
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.34fr) minmax(0, 1fr);
+  align-items: stretch;
+  gap: clamp(16px, 2.2vw, 28px);
+}
+
+/* ── Elevated text cards ── */
+.cardCol {
+  display: flex;
+}
+
+.card {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  background: #ffffff;
+  border-radius: var(--ng-radius-6);
+  box-shadow:
+    0 1px 2px rgba(11, 18, 32, 0.04),
+    0 14px 34px -20px rgba(11, 18, 32, 0.28);
+  padding: clamp(34px, 4.4vw, 52px) clamp(24px, 3vw, 36px);
+  overflow: hidden;
+}
+
+/* colored 4px top accent bar */
+.accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--acc);
+}
+
+.cardBlue {
+  --acc: var(--ng-accent-blue);
+}
+
+.cardTeal {
+  --acc: var(--ng-accent-teal);
+}
+
+.cardTitle {
+  margin: 0 0 12px;
+  font-family: var(--ng-font-heading);
+  font-size: clamp(1.08rem, 2vw, 1.32rem);
+  font-weight: 900;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ng-ink);
+}
+
+.cardBody {
+  margin: 0 0 22px;
+  font-size: clamp(0.92rem, 1.6vw, 1rem);
+  line-height: 1.7;
+  color: var(--ng-slate);
+  text-wrap: pretty;
+}
+
+/* CTA — bold accent underline link with a nudge-right arrow */
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--acc);
+  border-bottom: 2px solid var(--acc);
+  padding-bottom: 3px;
+  transition: gap 0.25s ease;
+}
+
+.cardLink span {
+  transition: transform 0.25s ease;
+}
+
+.cardLink:hover span {
+  transform: translateX(3px);
+}
+
+/* ── Centre "product stage" ── */
+.stageCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--ng-radius-6);
+  isolation: isolate;
+  box-shadow:
+    0 1px 2px rgba(11, 18, 32, 0.05),
+    0 22px 44px -26px rgba(11, 18, 32, 0.4);
+
+  /* Smooth radial backdrop — extra stops avoid banding */
+  background:
+    radial-gradient(120% 120% at 50% 30%, #ffffff 0%, #f3f8fe 40%, #e2eefb 72%, #cfdff5 100%);
+}
+
+.skeleton {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* ── Clipped horizontal slide rail ── */
+.rail {
+  position: absolute;
+  inset: 0;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: clamp(26px, 4vw, 44px);
+  transition: transform 0.45s ease-in-out;
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* ── Overlaid prev/next arrows ── */
+.arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ng-ink);
+  box-shadow: 0 6px 18px -6px rgba(11, 18, 32, 0.45);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.arrow:hover {
+  background: #ffffff;
+  color: var(--ng-accent-blue);
+  box-shadow: 0 12px 26px -10px rgba(11, 18, 32, 0.5);
+  transform: translateY(calc(-50% - 3px));
+}
+
+.arrow:active {
+  transform: translateY(calc(-50% + 1px)) scale(0.94);
+}
+
+.arrow svg {
+  transition: transform 0.2s ease;
+}
+
+.arrowLeft {
+  left: clamp(10px, 2vw, 20px);
+}
+
+.arrowRight {
+  right: clamp(10px, 2vw, 20px);
+}
+
+.arrowLeft:hover svg {
+  transform: translateX(-2px);
+}
+
+.arrowRight:hover svg {
+  transform: translateX(2px);
+}
+
+/* ── Dot indicators (centred beneath the stage) ── */
+.dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  min-height: 14px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(86, 100, 124, 0.55);
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.dot:hover {
+  border-color: var(--ng-accent-blue);
+}
+
+.dot:active {
+  transform: scale(0.78);
+}
+
+.dotActive {
+  width: 15px;
+  height: 15px;
+  background: var(--ng-accent-blue);
+  border-color: var(--ng-accent-blue);
+}
+
+/* ── Responsive: stack cards + stage on mobile ── */
+@media (max-width: 900px) {
+  .columns {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  .stage {
+    aspect-ratio: 4 / 3;
+  }
+
+  .card {
+    padding: clamp(30px, 6vw, 40px) clamp(22px, 5vw, 30px);
+  }
+}

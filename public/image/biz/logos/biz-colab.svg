@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 80" fill="#ffffff">
+  <g>
+    <path d="M20 8 L38 24 L38 56 L20 56 L20 8 Z" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+    <path d="M24 26 L34 22 L34 42 L24 46 Z" fill="#ffffff" opacity="0.55"/>
+    <text x="50" y="34" font-family="Archivo,Inter,system-ui,sans-serif" font-size="24" font-weight="800" letter-spacing="0.05em" fill="#ffffff">BIZ CO.LAB</text>
+    <text x="50" y="52" font-family="Archivo,Inter,system-ui,sans-serif" font-size="8" font-weight="500" letter-spacing="0.3em" fill="#ffffff" opacity="0.55">CUSTOM SOLUTIONS</text>
+  </g>
+</svg>

@@ -1,0 +1,145 @@
+/* ============================================================
+   Section B — full-bleed "Find a Distributor" banner.
+   Background photo + scrim, centred brand-blue pin icon, heading,
+   paragraph on a low-opacity blue band, pill CTA. Light parallax.
+   ============================================================ */
+
+.section {
+  position: relative;
+  width: 100%;
+  min-height: clamp(320px, 42vw, 420px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* ── Background photo + scrim ── */
+.media {
+  position: absolute;
+  inset: -24px 0;
+  z-index: 0;
+}
+
+.photo {
+  object-fit: cover;
+  /* parallax-safe base transform */
+  transform: translate3d(0, 0, 0) scale(1.12);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(8, 21, 40, 0.35) 0%,
+    rgba(8, 21, 40, 0.25) 50%,
+    rgba(8, 21, 40, 0.45) 100%
+  );
+}
+
+/* ── Centered content ── */
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: clamp(32px, 5vw, 56px) clamp(16px, 4vw, 32px);
+  max-width: 760px;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  color: #ffffff;
+  background: var(--ng-accent-blue);
+  box-shadow: 0 14px 30px -12px rgba(21, 94, 239, 0.8);
+}
+
+.icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--ng-font-heading);
+  font-size: clamp(1.7rem, 4.2vw, 2.8rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+  text-wrap: balance;
+  text-shadow: 0 2px 10px rgba(8, 21, 40, 0.5);
+}
+
+/* translucent brand-blue band that hugs the paragraph */
+.band {
+  margin: 0;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background: rgba(21, 94, 239, 0.28);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  font-size: clamp(0.95rem, 1.6vw, 1.05rem);
+  line-height: 1.6;
+  color: #ffffff;
+  max-width: 30ch;
+  text-shadow: 0 1px 6px rgba(8, 21, 40, 0.4);
+}
+
+/* pill CTA */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 6px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-family: var(--ng-font-heading);
+  font-size: 0.94rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: var(--ng-accent-blue);
+  box-shadow: 0 14px 30px -12px rgba(8, 21, 40, 0.7);
+  transition: transform 0.25s var(--ng-ease-out-cubic), box-shadow 0.25s ease;
+}
+
+.cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -14px rgba(8, 21, 40, 0.8);
+}
+
+.cta span {
+  transition: transform 0.25s var(--ng-ease-out-cubic);
+}
+
+.cta:hover span {
+  transform: translateX(3px);
+}
+
+/* ── Mobile ── */
+@media (max-width: 900px) {
+  .section {
+    min-height: clamp(280px, 60vw, 320px);
+  }
+
+  .cta {
+    width: auto;
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+}
+
+/* ── Reduced motion: no parallax helper needed, but keep photo static ── */
+@media (prefers-reduced-motion: reduce) {
+  .photo {
+    transform: translate3d(0, 0, 0) scale(1.12);
+  }
+}

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brand Lines Marquee — NextGen Solutions PNG</title>
+<style>
+  /* ============================================================
+     Brand Lines We Carry &amp; Finish for PNG Teams — Marquee
+     Self-contained, SVG-based, retina-crisp, seamless loop.
+     ============================================================ */
+  :root {
+    --accent-sky: #38bdf8;
+    --accent-blue: #155eef;
+    --accent-gold: #f5a623;
+    --accent-crimson: #e11d48;
+    --bg-top: #0f172a;
+    --bg-mid: #1e293b;
+    --text-dim: rgba(255, 255, 255, 0.6);
+    --marquee-gap: 80px;
+    --logo-height: 56px;
+    --loop-duration: 35s;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Archivo", "Inter", system-ui, -apple-system, sans-serif;
+    background: #06070a;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .brand-marquee {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 50%, var(--bg-top) 100%);
+    padding: 52px 0 56px;
+  }
+
+  /* Top accent bar — single gradient line, consistent palette */
+  .brand-marquee::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      var(--accent-sky) 15%,
+      var(--accent-blue) 35%,
+      var(--accent-gold) 65%,
+      var(--accent-crimson) 85%,
+      transparent 100%);
+  }
+
+  .brand-marquee__heading {
+    margin: 0 0 32px;
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  /* ---- viewport: clips track + applies edge-fade gradient mask ---- */
+  .brand-marquee__viewport {
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg,
+      transparent 0%, rgba(0,0,0,0.08) 4%, rgba(0,0,0,0.4) 8%,
+      #000 14%, #000 86%,
+      rgba(0,0,0,0.4) 92%, rgba(0,0,0,0.08) 96%, transparent 100%);
+    mask-image: linear-gradient(90deg,
+      transparent 0%, rgba(0,0,0,0.08) 4%, rgba(0,0,0,0.4) 8%,
+      #000 14%, #000 86%,
+      rgba(0,0,0,0.4) 92%, rgba(0,0,0,0.08) 96%, transparent 100%);
+  }
+
+  /* ---- track: doubled set, constant-speed linear loop ---- */
+  .brand-marquee__track {
+    display: flex;
+    align-items: center;
+    gap: var(--marquee-gap);
+    padding-right: var(--marquee-gap);
+    width: max-content;
+    animation: marquee-scroll var(--loop-duration) linear infinite;
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  .brand-marquee__track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-scroll {
+    from { transform: translateZ(0) translateX(0); }
+    to   { transform: translateZ(0) translateX(-50%); }
+  }
+
+  /* ---- logo ---- */
+  .brand-marquee__logo {
+    height: var(--logo-height);
+    flex: 0 0 auto;
+    opacity: 0.7;
+    transition: opacity 0.35s cubic-bezier(0.33, 1, 0.68, 1),
+                transform 0.35s cubic-bezier(0.33, 1, 0.68, 1);
+    transform: scale(1);
+  }
+
+  .brand-marquee__logo:hover {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+
+  /* ---- responsive ---- */
+  @media (max-width: 768px) {
+    .brand-marquee { --marquee-gap: 56px; --logo-height: 44px; --loop-duration: 28s; padding: 40px 0 44px; }
+    .brand-marquee__heading { font-size: 0.7rem; letter-spacing: 0.16em; padding: 0 20px; margin-bottom: 24px; }
+  }
+
+  @media (max-width: 480px) {
+    .brand-marquee { --marquee-gap: 40px; --logo-height: 36px; --loop-duration: 22s; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand-marquee__track { animation: none; }
+  }
+</style>
+</head>
+<body>
+  <section class="brand-marquee">
+    <p class="brand-marquee__heading">Brand Lines We Carry &amp; Finish for PNG Teams</p>
+    <div class="brand-marquee__viewport">
+      <div class="brand-marquee__track" aria-label="Trusted partner brand logos">
+
+        <!-- Biz Collection -->
+        <svg class="brand-marquee__logo" viewBox="0 0 280 80" role="img" aria-label="Biz Collection">
+          <g fill="#ffffff">
+            <path d="M28 8 L40 14 L52 8 L52 22 C52 32 46 40 40 44 C34 40 28 32 28 22 Z" stroke="#ffffff" stroke-width="2.5" fill="none"/>
+            <path d="M36 20 L40 28 L48 16" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <text x="62" y="26" font-family="Archivo,Inter,system-ui,sans-serif" font-size="20" font-weight="700" letter-spacing="0.04em">BIZ COLLECTION</text>
+            <text x="62" y="41" font-family="Archivo,Inter,system-ui,sans-serif" font-size="8" font-weight="500" letter-spacing="0.26em" opacity="0.55">BY BIZ COLLECTION</text>
+          </g>
+        </svg>
+
+        <!-- Syzmik -->
+        <svg class="brand-marquee__logo" viewBox="0 0 200 80" role="img" aria-label="Syzmik">
+          <g fill="#ffffff">
+            <path d="M20 16 C20 12 24 10 28 12 L38 18 C42 20 42 26 38 28 L30 32 C26 34 22 32 20 28" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <path d="M38 52 C38 56 34 58 30 56 L20 50 C16 48 16 42 20 40 L28 36 C32 34 36 36 38 40" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <text x="52" y="38" font-family="Archivo,Inter,system-ui,sans-serif" font-size="28" font-weight="800" letter-spacing="0.06em">SYZMIK</text>
+            <text x="52" y="54" font-family="Archivo,Inter,system-ui,sans-serif" font-size="8" font-weight="500" letter-spacing="0.3em" opacity="0.55">WORKWEAR</text>
+          </g>
+        </svg>
+
+        <!-- Yes Chef -->
+        <svg class="brand-marquee__logo" viewBox="0 0 240 80" role="img" aria-label="Yes Chef">
+          <g fill="#ffffff">
+            <rect x="14" y="14" width="30" height="56" rx="2" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+            <line x1="17" y1="42" x2="41" y2="42" stroke="#ffffff" stroke-width="1.5"/>
+            <line x1="17" y1="26" x2="41" y2="26" stroke="#ffffff" stroke-width="1.5"/>
+            <circle cx="22" cy="50" r="2.5" fill="#ffffff" opacity="0.7"/>
+            <circle cx="32" cy="64" r="2.5" fill="#ffffff" opacity="0.7"/>
+            <circle cx="26" cy="18" r="2" fill="#ffffff" opacity="0.7"/>
+            <text x="54" y="34" font-family="Archivo,Inter,system-ui,sans-serif" font-size="24" font-weight="800" letter-spacing="0.05em">YES CHEF</text>
+            <text x="54" y="52" font-family="Archivo,Inter,system-ui,sans-serif" font-size="8" font-weight="500" letter-spacing="0.3em" opacity="0.55">HOSPITALITY WEAR</text>
+          </g>
+        </svg>
+
+        <!-- Bizcare -->
+        <svg class="brand-marquee__logo" viewBox="0 0 220 80" role="img" aria-label="Bizcare">
+          <g fill="#ffffff">
+            <path d="M20 8 L34 14 L48 8 L48 20 C48 30 42 38 34 42 C26 38 20 30 20 20 Z" stroke="#ffffff" stroke-width="2.5" fill="none"/>
+            <line x1="34" y1="16" x2="34" y2="32" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="26" y1="24" x2="42" y2="24" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+            <text x="56" y="34" font-family="Archivo,Inter,system-ui,sans-serif" font-size="25" font-weight="800" letter-spacing="0.05em">BIZCARE</text>
+          </g>
+        </svg>
+
+        <!-- Biz Co.Lab -->
+        <svg class="brand-marquee__logo" viewBox="0 0 250 80" role="img" aria-label="Biz Co.Lab">
+          <g fill="#ffffff">
+            <path d="M20 8 L38 24 L38 56 L20 56 L20 8 Z" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+            <path d="M24 26 L34 22 L34 42 L24 46 Z" fill="#ffffff" opacity="0.55"/>
+            <text x="50" y="34" font-family="Archivo,Inter,system-ui,sans-serif" font-size="24" font-weight="800" letter-spacing="0.05em">BIZ CO.LAB</text>
+            <text x="50" y="52" font-family="Archivo,Inter,system-ui,sans-serif" font-size="8" font-weight="500" letter-spacing="0.3em" opacity="0.55">CUSTOM SOLUTIONS</text>
+          </g>
+        </svg>
+
+        <!-- Bizcorporates -->
+        <svg class="brand-marquee__logo" viewBox="0 0 280 80" role="img" aria-label="Bizcorporates">
+          <g fill="#ffffff">
+            <rect x="14" y="14" width="28" height="30" rx="2" stroke="#ffffff" stroke-width="2.5" fill="none"/>
+            <rect x="18" y="18" width="6" height="5" rx="1" fill="#ffffff" opacity="0.5"/>
+            <rect x="28" y="18" width="6" height="5" rx="1" fill="#ffffff" opacity="0.5"/>
+            <rect x="18" y="28" width="6" height="5" rx="1" fill="#ffffff" opacity="0.5"/>
+            <rect x="28" y="28" width="6" height="5" rx="1" fill="#ffffff" opacity="0.5"/>
+            <rect x="24" y="34" width="8" height="10" rx="1" stroke="#ffffff" stroke-width="1.5" fill="none"/>
+            <path d="M10 44 L10 52 L46 52 L46 44" stroke="#ffffff" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <text x="54" y="30" font-family="Archivo,Inter,system-ui,sans-serif" font-size="22" font-weight="800" letter-spacing="0.04em">BIZCORPORATES</text>
+            <text x="54" y="46" font-family="Archivo,Inter,system-ui,sans-serif" font-size="8" font-weight="500" letter-spacing="0.3em" opacity="0.55">CORPORATE UNIFORMS</text>
+          </g>
+        </svg>
+
+        <!-- ============ DOUBLED SET FOR SEAMLESS LOOP ============ -->
+
+        <!-- Biz Collection -->
+        <svg class="brand-marquee__logo" viewBox="0 0 280 80" role="img" aria-label="Biz Collection">
+          <g fill="#ffffff">
+            <path d="M28 8 L40 14 L52 8 L52 22 C52 32 46 40 40 44 C34 40 28 32 28 22 Z" stroke="#ffffff" stroke-width="2.5" fill="none"/>
+            <path d="M36 20 L40 28 L48 16" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <text x="62" y="26" font-family="Archivo,Inter,system-ui,sans-serif" font-size="20" font-weight="700" letter-spacing="0.04em">BIZ COLLECTION</text>
+            <text x="62" y="41" font-family="Archivo,Inter,system-ui,sans-serif" font-size="8" font-weight="500" letter-spacing="0.26em" opacity="0.55">BY BIZ COLLECTION</text>
+          </g>
+        </svg>
+
+        <!-- Syzmik -->
+        <svg class="brand-marquee__logo" viewBox="0 0 200 80" role="img" aria-label="Syzmik">
+          <g fill="#ffffff">
+            <path d="M20 16 C20 12 24 10 28 12 L38 18 C42 20 42 26 38 28 L30 32 C26 34 22 32 20 28" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <path d="M38 52 C38 56 34 58 30 56 L20 50 C16 48 16 42 20 40 L28 36 C32 34 36 36 38 40" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+            <text x="52" y="38" font-family="Archivo,Inter,system-ui,sans-serif" font-size="28" font-weight="800" letter-spacing="0.06em">SYZMIK</text>
+            <text x="52" y="54" font-family="Archivo,Inter,system-ui,sans-serif" font-size="8" font-weight="500" letter-spacing="0.3em" opacity="0.55">WORKWEAR</text>
+          </g>
+        </svg>
+
+        <!-- Yes Chef -->
+        <svg class="brand-marquee__logo" viewBox="0 0 240 80" role="img" aria-label="Yes Chef">
+          <g fill="#ffffff">
+            <rect x="14" y="14" width="30" height="56" rx="2" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+            <line x1="17" y1="42" x2="41" y2="42" stroke="#ffffff" stroke-width="1.5"/>
+            <line x1="17" y1="26" x2="41" y2="26" stroke="#ffffff" stroke-width="1.5"/>
+            <circle cx="22" cy="50" r="2.5" fill="#ffffff" opacity="0.7"/>
+            <circle cx="32" cy="64" r="2.5" fill="#ffffff" opacity="0.7"/>
+            <circle cx="26" cy="18" r="2" fill="#ffffff" opacity="0.7"/>
+            <text x="54" y="34" font-family="Archivo,Inter,system-ui,sans-serif" font-size="24" font-weight="800" letter-spacing="0.05em">YES CHEF</text>
+            <text x="54" y="52" font-family="Archivo,Inter,system-ui,sans-serif" font-size="8" font-weight="500" letter-spacing="0.3em" opacity="0.55">HOSPITALITY WEAR</text>
+          </g>
+        </svg>
+
+        <!-- Bizcare -->
+        <svg class="brand-marquee__logo" viewBox="0 0 220 80" role="img" aria-label="Bizcare">
+          <g fill="#ffffff">
+            <path d="M20 8 L34 14 L48 8 L48 20 C48 30 42 38 34 42 C26 38 20 30 20 20 Z" stroke="#ffffff" stroke-width="2.5" fill="none"/>
+            <line x1="34" y1="16" x2="34" y2="32" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="26" y1="24" x2="42" y2="24" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+            <text x="56" y="34" font-family="Archivo,Inter,system-ui,sans-serif" font-size="25" font-weight="800" letter-spacing="0.05em">BIZCARE</text>
+          </g>
+        </svg>
+
+        <!-- Biz Co.Lab -->
+        <svg class="brand-marquee__logo" viewBox="0 0 250 80" role="img" aria-label="Biz Co.Lab">
+          <g fill="#ffffff">
+            <path d="M20 8 L38 24 L38 56 L20 56 L20 8 Z" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+            <path d="M24 26 L34 22 L34 42 L24 46 Z" fill="#ffffff" opacity="0.55"/>
+            <text x="50" y="34" font-family="Archivo,Inter,system-ui,sans-serif" font-size="24" font-weight="800" letter-spacing="0.05em">BIZ CO.LAB</text>
+            <text x="50" y="52" font-family="Archivo,Inter,system-ui,sans-serif" font-size="8" font-weight="500" letter-spacing="0.3em" opacity="0.55">CUSTOM SOLUTIONS</text>
+          </g>
+        </svg>
+
+        <!-- Bizcorporates -->
+        <svg class="brand-marquee__logo" viewBox="0 0 280 80" role="img" aria-label="Bizcorporates">
+          <g fill="#ffffff">
+            <rect x="14" y="14" width="28" height="30" rx="2" stroke="#ffffff" stroke-width="2.5" fill="none"/>
+            <rect x="18" y="18" width="6" height="5" rx="1" fill="#ffffff" opacity="0.5"/>
+            <rect x="28" y="18" width="6" height="5" rx="1" fill="#ffffff" opacity="0.5"/>
+            <rect x="18" y="28" width="6" height="5" rx="1" fill="#ffffff" opacity="0.5"/>
+            <rect x="28" y="28" width="6" height="5" rx="1" fill="#ffffff" opacity="0.5"/>
+            <rect x="24" y="34" width="8" height="10" rx="1" stroke="#ffffff" stroke-width="1.5" fill="none"/>
+            <path d="M10 44 L10 52 L46 52 L46 44" stroke="#ffffff" stroke-width="2" stroke-linecap="round" fill="none"/>
+            <text x="54" y="30" font-family="Archivo,Inter,system-ui,sans-serif" font-size="22" font-weight="800" letter-spacing="0.04em">BIZCORPORATES</text>
+            <text x="54" y="46" font-family="Archivo,Inter,system-ui,sans-serif" font-size="8" font-weight="500" letter-spacing="0.3em" opacity="0.55">CORPORATE UNIFORMS</text>
+          </g>
+        </svg>
+
+      </div>
+    </div>
+  </section>
+</body>
+</html>
