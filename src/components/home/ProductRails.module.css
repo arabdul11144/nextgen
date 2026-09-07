@@ -1,6 +1,6 @@
 /* ============================================================
    Product rails — "Shop the collections" (enterprise catalogue).
-   Static 4-up category grids, uniform contained imagery, single
+   Static 5-up category grids, uniform contained imagery, single
    primary CTA colour, B2B section dividers and a segmented
    quick-jump control. No carousel, no partial cards, no arrows.
    ============================================================ */
@@ -174,7 +174,7 @@
 /* ── Static grid: no peeking cards ── */
 .cards {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: clamp(16px, 2vw, 26px);
 }
 

@@ -99,7 +99,7 @@ function Card({ item }: { item: RailItem }) {
             src={item.image}
             alt={item.alt}
             fill
-            sizes="(max-width: 640px) 74vw, (max-width: 1280px) 34vw, 22vw"
+            sizes="(max-width: 640px) 74vw, (max-width: 1023px) 34vw, 18vw"
             className={styles.photo}
           />
           {item.hoverImage && (
@@ -107,7 +107,7 @@ function Card({ item }: { item: RailItem }) {
               src={item.hoverImage}
               alt=""
               fill
-              sizes="(max-width: 640px) 74vw, (max-width: 1280px) 34vw, 22vw"
+              sizes="(max-width: 640px) 74vw, (max-width: 1023px) 34vw, 18vw"
               className={styles.photoCross}
               aria-hidden="true"
             />
@@ -156,9 +156,9 @@ function Rail({ rail }: { rail: ProductRail }) {
         </Link>
       </header>
 
-      {/* Static 4-up grid of full cards — no partial cards, no arrows */}
+      {/* Static 5-up grid of full cards — one row per range, no partial cards */}
       <div className={styles.cards}>
-        {rail.items.map((item, i) => (
+        {rail.items.slice(0, 5).map((item, i) => (
           <Reveal key={item.title} delay={i * 50}>
             <Card item={item} />
           </Reveal>

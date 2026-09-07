@@ -1,102 +1,388 @@
 /* ============================================================
-   HeroBannerGrid — full-width hero tile band.
-   Preserves the established 2×2 grid spacing, gutters and
-   responsive breakpoints. Tiles have sharp square corners
-   (no border-radius) per the banner swap brief.
+   HeroBannerGrid — full-width rotating hero stage.
    ============================================================ */
 
 .section {
+  position: relative;
   width: 100%;
+  max-width: 100vw;
+  overflow: hidden;
   background: var(--ng-ink);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: clamp(14px, 2vw, 24px);
-  width: 100%;
-  padding: clamp(16px, 3vw, 32px);
-}
-
-/* Shared tile chrome — sharp corners, no radius, cover fill. */
-.topLeft,
-.topRight,
-.bottomLeft,
-.bottomRight {
+/* ── Stage ── */
+.stage {
+  --rot: 4500ms;
+  --fade: 700ms;
   position: relative;
+  width: 100%;
+  /* Cap to the visible viewport under the sticky header so the stage
+     (and its thumbnail rail) never extends past the bottom of the
+     screen on short viewports. */
+  height: min(clamp(360px, 58vw, 760px), calc(100svh - 132px));
   overflow: hidden;
-  border-radius: 0;
   background: var(--ng-navy-800);
   isolation: isolate;
 }
 
-/* Per-tile aspect ratios (match the 720×480 / 720×360 outputs). */
-.topLeft,
-.topRight {
-  aspect-ratio: 3 / 2; /* 720×480 */
+.stage:focus-visible {
+  outline: var(--ng-focus);
+  outline-offset: -4px;
 }
 
-.bottomLeft,
-.bottomRight {
-  aspect-ratio: 2 / 1; /* 720×360 */
-}
-
-/* Static tile image — cover, sharp edges. */
-.frameStatic {
+/* ── Slides: stacked, cross-fading ── */
+.slide {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   display: block;
-}
-
-/* Carousel cross-fade frames — absolutely positioned = no layout shift. */
-.frame {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition-property: opacity;
-  transition-timing-function: ease;
-  will-change: opacity;
+  transition: opacity var(--fade) ease;
+  will-change: opacity, transform;
 }
 
-.isActive {
+.slideActive {
   opacity: 1;
   z-index: 1;
+  animation: ng-ken-burns var(--rot) linear forwards;
 }
 
-.isFaded {
+@keyframes ng-ken-burns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+
+/* ── Overlay chrome (counter, play/pause, arrows) ── */
+.counter {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 4;
+  padding: 6px 10px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+  color: var(--ng-white);
+  background: rgba(8, 21, 40, 0.55);
+  border: 1px solid var(--ng-line-light);
+  border-radius: var(--ng-radius-4);
+  backdrop-filter: blur(4px);
+}
+
+.playToggle {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--ng-line-light);
+  border-radius: var(--ng-radius-pill);
+  background: rgba(8, 21, 40, 0.55);
+  color: var(--ng-white);
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.playToggle:hover {
+  background: var(--ng-accent-blue);
+  transform: scale(1.06);
+}
+
+/* ── Arrows: hidden by default, fade in on hover or focus-within ── */
+.arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--ng-line-light);
+  border-radius: var(--ng-radius-pill);
+  background: rgba(8, 21, 40, 0.55);
+  color: var(--ng-white);
+  cursor: pointer;
   opacity: 0;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+  transition: opacity 0.25s ease, background 0.2s ease, transform 0.2s ease;
 }
 
-/* ── Responsive: one grid cell per row below tablet ── */
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
-    padding: clamp(14px, 3vw, 24px) clamp(16px, 3vw, 32px);
-  }
+.arrowPrev {
+  left: 16px;
+  transform: translateY(-50%);
+}
 
-  .topLeft,
-  .topRight,
-  .bottomLeft,
-  .bottomRight {
-    aspect-ratio: 16 / 9;
+.arrowNext {
+  right: 16px;
+  transform: translateY(-50%);
+}
+
+.stage:hover .arrow,
+.stage:focus-within .arrow {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.stage:focus-within .arrowPrev,
+.stage:hover .arrowPrev {
+  transform: translateY(-50%);
+}
+
+.arrow:hover {
+  background: var(--ng-accent-blue);
+  transform: translateY(-50%) scale(1.08) !important;
+}
+
+.arrow:active {
+  transform: translateY(-50%) scale(0.94) !important;
+}
+
+/* ── Dot pagination with time-remaining progress fill ── */
+.dots {
+  position: absolute;
+  left: 50%;
+  bottom: 68px;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(8, 21, 40, 0.45);
+  border: 1px solid var(--ng-line-light);
+  border-radius: var(--ng-radius-pill);
+  backdrop-filter: blur(4px);
+}
+
+.dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  overflow: hidden;
+  border: none;
+  border-radius: var(--ng-radius-pill);
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  transition: width 0.25s var(--ng-ease-out-cubic), background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.dot:hover {
+  background: var(--ng-white);
+  transform: scaleY(1.4);
+}
+
+.dotActive {
+  width: 34px;
+  background: var(--ng-accent-blue);
+}
+
+.dotFill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--ng-white);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: ng-dot-progress var(--rot) linear forwards;
+}
+
+.dotFillIdle {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--ng-white);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+@keyframes ng-dot-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
   }
 }
 
-@media (max-width: 480px) {
-  .grid {
-    padding: clamp(12px, 3vw, 20px) clamp(12px, 3vw, 20px);
+/* ── Thumbnail rail ── */
+.thumbRail {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  gap: 8px;
+  padding: 6px;
+  background: rgba(8, 21, 40, 0.5);
+  border: 1px solid var(--ng-line-light);
+  border-radius: var(--ng-radius-6);
+  backdrop-filter: blur(4px);
+}
+
+.thumb {
+  position: relative;
+  flex: 0 0 auto;
+  width: 56px;
+  height: 40px;
+  padding: 0;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: var(--ng-radius-2);
+  background: var(--ng-navy-800);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.thumb img {
+  object-fit: cover;
+}
+
+.thumb:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.thumbActive {
+  opacity: 1;
+  border-color: var(--ng-accent-blue);
+}
+
+.thumbActive:hover {
+  opacity: 1;
+}
+
+/* ── Visually hidden live region ── */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── PNG-flag tri-colour stripe directly below the hero ── */
+.flagStripe {
+  display: flex;
+  width: 100%;
+  height: 7px;
+  pointer-events: none;
+}
+
+.flagStripeSeg {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.flagStripeBlack {
+  background: #000000;
+}
+
+.flagStripeRed {
+  background: #c8102e;
+}
+
+.flagStripeYellow {
+  background: #fdb913;
+}
+
+/* ── Responsive: compact controls on narrow viewports ── */
+@media (max-width: 640px) {
+  /* Keep the stage landscape ≈ the 3:2 source banners so object-fit: cover
+     never crops the left/right edges of the baked-in design. */
+  .stage {
+    height: min(clamp(200px, 62vw, 440px), calc(100svh - 120px));
   }
 
-  .topLeft,
-  .topRight,
-  .bottomLeft,
-  .bottomRight {
-    aspect-ratio: 4 / 3;
+  .counter {
+    top: 12px;
+    left: 12px;
+    padding: 5px 8px;
+    font-size: 0.7rem;
+  }
+
+  .playToggle {
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .arrow svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .arrowPrev {
+    left: 10px;
+  }
+
+  .arrowNext {
+    right: 10px;
+  }
+
+  .dots {
+    bottom: 60px;
+    transform: translateX(-50%);
+  }
+
+  .thumbRail {
+    max-width: calc(100% - 24px);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .thumbRail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .thumb {
+    width: 46px;
+    height: 32px;
+  }
+}
+
+/* ── Reduced motion: no autoplay, no Ken Burns, nav stays live ── */
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .slideActive {
+    transition: none;
+    animation: none;
+  }
+
+  .dotFill {
+    animation: none;
+  }
+
+  .arrow,
+  .playToggle {
+    transition: none;
   }
 }

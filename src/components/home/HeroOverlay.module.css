@@ -1,0 +1,796 @@
+/* ============================================================
+   HeroOverlay — per-slide promotional overlays for the rotating
+   hero carousel. Adds logo, headlines, icon feature rows, CTA
+   buttons and full-width bottom info strips on the LEFT side of
+   each banner (the right side keeps the baked-in product imagery).
+
+   Palette (exact brand tones, PNG-flag inspired):
+     navy #0B1F3A · red #C8102E · orange #F15A24 · yellow #FDB913
+   Every interactive element gets a smooth (0.2s ease) hover that
+   scales / brightens / shifts state. Fully responsive and stacked
+   vertically on narrow viewports.
+   ============================================================ */
+
+.overlay {
+  --hero-navy: #0b1f3a;
+  --hero-red: #c8102e;
+  --hero-orange: #f15a24;
+  --hero-yellow: #fdb913;
+  --hero-black: #000000;
+  --hero-white: #ffffff;
+  --hero-gray: #4a5364;
+
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: clamp(58px, 7vw, 72px) clamp(16px, 3vw, 44px) 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--hero-navy);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+.overlayActive {
+  opacity: 1;
+  visibility: visible;
+}
+
+.overlay :is(a, button) {
+  pointer-events: auto;
+}
+
+/* Subtle white scrim on the left so text keeps contrast over the photo */
+.overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.86) 0%,
+    rgba(255, 255, 255, 0.58) 36%,
+    rgba(255, 255, 255, 0) 64%
+  );
+}
+
+/* ── Main content column (left) ── */
+.main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vw, 12px);
+  max-width: clamp(430px, 44vw, 560px);
+  padding-bottom: clamp(88px, 8vw, 108px);
+  overflow: hidden;
+}
+
+/* ── Logo block ── */
+.logo {
+  display: inline-flex;
+}
+
+.logo img {
+  width: clamp(118px, 12vw, 160px);
+  height: auto;
+  object-fit: contain;
+}
+
+.logoDivider {
+  width: min(340px, 100%);
+  height: 2px;
+  margin: 2px 0 0;
+  background: linear-gradient(90deg, var(--hero-navy), transparent 85%);
+}
+
+/* "PROTECT • EQUIP • BRAND • SUPPLY" label row */
+.labelRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 2px;
+  font-family: var(--ng-font-heading);
+  font-size: clamp(0.58rem, 0.9vw, 0.74rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--hero-navy);
+  text-transform: uppercase;
+}
+
+.labelWord {
+  display: inline-flex;
+  align-items: center;
+}
+
+.labelDot {
+  width: 6px;
+  height: 6px;
+  margin: 0 9px;
+  border-radius: 50%;
+  background: var(--hero-orange);
+  flex: 0 0 auto;
+}
+
+/* ── Slide 1 top-right badge ── */
+.badge {
+  position: absolute;
+  top: clamp(58px, 7vw, 72px);
+  right: clamp(16px, 3vw, 44px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--hero-white);
+  border: 2px solid var(--hero-navy);
+  border-radius: var(--ng-radius-pill);
+  box-shadow: 0 6px 18px rgba(11, 31, 58, 0.18);
+}
+
+.badgeText {
+  font-family: var(--ng-font-heading);
+  font-size: clamp(0.58rem, 0.85vw, 0.7rem);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  color: var(--hero-navy);
+  text-align: left;
+  max-width: 150px;
+}
+
+.badgeText strong {
+  color: var(--hero-red);
+}
+
+.badgeIcon {
+  display: inline-flex;
+  color: var(--hero-red);
+  flex: 0 0 auto;
+}
+
+/* ── Headline ── */
+.headline {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  font-family: var(--ng-font-heading);
+  font-size: clamp(1.7rem, 3.4vw, 3.15rem);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.headlineLine {
+  display: block;
+  color: var(--hero-navy);
+}
+
+.headlineLineRed {
+  color: var(--hero-red);
+}
+
+.headlineLineOrange {
+  color: var(--hero-orange);
+}
+
+/* ── Small 3-color divider + solid accent bars ── */
+.stripeRow {
+  display: flex;
+}
+
+.stripeSeg {
+  width: 50px;
+  height: 6px;
+}
+
+.stripeBlack {
+  background: var(--hero-black);
+}
+
+.stripeRed {
+  background: var(--hero-red);
+}
+
+.stripeYellow {
+  background: var(--hero-yellow);
+}
+
+.accentBar {
+  width: 80px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--hero-orange);
+}
+
+/* ── Subheading / body ── */
+.subhead {
+  margin: 0;
+  font-family: var(--ng-font-heading);
+  font-size: clamp(0.95rem, 1.5vw, 1.18rem);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--hero-navy);
+}
+
+.subhead strong {
+  color: var(--hero-red);
+}
+
+.body {
+  margin: 0;
+  font-size: clamp(0.78rem, 1.05vw, 0.92rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--hero-gray);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Feature icon rows ── */
+.featureRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(94px, 1fr));
+  gap: 10px clamp(8px, 1.2vw, 14px);
+  margin-top: 2px;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.featureIcon {
+  display: inline-flex;
+  color: var(--hero-red);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.featureIconOrange {
+  color: var(--hero-orange);
+}
+
+.featureIconNavy {
+  color: var(--hero-navy);
+}
+
+.featureIconYellow {
+  color: var(--hero-yellow);
+}
+
+.featureIcon svg {
+  width: clamp(20px, 1.7vw, 24px);
+  height: clamp(20px, 1.7vw, 24px);
+}
+
+.feature:hover .featureIcon {
+  transform: scale(1.1) translateY(-1px);
+  color: var(--hero-orange);
+}
+
+.featureTitle {
+  font-family: var(--ng-font-heading);
+  font-size: clamp(0.62rem, 0.85vw, 0.74rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  color: var(--hero-navy);
+}
+
+.featureSub {
+  font-size: clamp(0.6rem, 0.78vw, 0.7rem);
+  line-height: 1.4;
+  color: var(--hero-gray);
+}
+
+/* ── Buttons + links ── */
+.buttonRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(10px, 1.4vw, 18px);
+  margin-top: auto;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 11px 22px;
+  font-family: var(--ng-font-heading);
+  font-size: clamp(0.72rem, 0.95vw, 0.84rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  border-radius: var(--ng-radius-pill);
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease,
+    border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 22px rgba(11, 31, 58, 0.22);
+}
+
+/* filled red */
+.btnRed {
+  color: var(--hero-white);
+  background: var(--hero-red);
+}
+
+.btnRed:hover {
+  background: #a20d23;
+}
+
+/* filled navy */
+.btnNavy {
+  color: var(--hero-white);
+  background: var(--hero-navy);
+}
+
+.btnNavy:hover {
+  background: #123158;
+}
+
+/* filled orange */
+.btnOrange {
+  color: var(--hero-white);
+  background: var(--hero-orange);
+}
+
+.btnOrange:hover {
+  background: #d04e17;
+}
+
+/* outlined navy (fills navy on hover, text turns white) */
+.btnOutline {
+  color: var(--hero-navy);
+  background: transparent;
+  border-color: var(--hero-navy);
+}
+
+.btnOutline:hover {
+  background: var(--hero-navy);
+  color: var(--hero-white);
+}
+
+/* outlined slate (globe link: fills light gray on hover) */
+.btnGlobe {
+  color: var(--hero-navy);
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(11, 31, 58, 0.35);
+}
+
+.btnGlobe:hover {
+  background: #e8e9ec;
+  border-color: var(--hero-navy);
+}
+
+/* text link — arrow slides right on hover, underline slides in */
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  padding-bottom: 4px;
+  font-family: var(--ng-font-heading);
+  font-size: clamp(0.7rem, 0.95vw, 0.84rem);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  color: var(--hero-navy);
+  cursor: pointer;
+}
+
+.textLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.2s ease;
+}
+
+.textLink:hover::after {
+  transform: scaleX(1);
+}
+
+.textLinkArrow {
+  display: inline-flex;
+  transition: transform 0.2s ease;
+}
+
+.textLink:hover .textLinkArrow {
+  transform: translateX(4px);
+}
+
+/* ── Bottom info / stats band (full-width block rendered below the hero) ── */
+.strip {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;
+  padding: 14px clamp(16px, 3vw, 40px) 12px;
+  background: rgba(255, 255, 255, 0.96);
+  border-top: 1px solid rgba(11, 31, 58, 0.12);
+  border-bottom: 1px solid rgba(11, 31, 58, 0.12);
+}
+
+.stripGrid {
+  flex: 1 1 auto;
+  max-width: 1280px;
+  display: grid;
+  gap: clamp(10px, 1.6vw, 24px);
+}
+
+.stripCol5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.stripCol6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.stripItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.stripIcon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: var(--hero-red);
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.stripOrange .stripIcon {
+  color: var(--hero-orange);
+}
+
+.stripItem:hover .stripIcon {
+  transform: scale(1.12);
+  color: var(--hero-orange);
+}
+
+.stripText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.stripTitle {
+  font-family: var(--ng-font-heading);
+  font-size: clamp(0.62rem, 0.85vw, 0.74rem);
+  font-weight: 800;
+  line-height: 1.3;
+  color: var(--hero-navy);
+}
+
+.stripSub {
+  font-size: clamp(0.56rem, 0.72vw, 0.66rem);
+  line-height: 1.35;
+  color: var(--hero-gray);
+}
+
+/* ── Slide 3 right-side vertical icon list ── */
+.rightList {
+  position: absolute;
+  top: 50%;
+  right: clamp(16px, 3vw, 44px);
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1.1vw, 14px);
+  max-width: 280px;
+  padding: clamp(12px, 1.6vw, 18px);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(11, 31, 58, 0.14);
+  border-radius: var(--ng-radius-panel);
+  backdrop-filter: blur(6px);
+}
+
+.vItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.vIcon {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--ng-radius-pill);
+  background: var(--hero-white);
+  border: 2px solid var(--hero-navy);
+  color: var(--hero-navy);
+  transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
+}
+
+.vIcon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.vItem:hover .vIcon {
+  transform: scale(1.08);
+  color: var(--hero-orange);
+  border-color: var(--hero-orange);
+}
+
+.vText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.vTitle {
+  font-family: var(--ng-font-heading);
+  font-size: clamp(0.66rem, 0.9vw, 0.78rem);
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  color: var(--hero-navy);
+}
+
+.vSub {
+  font-size: clamp(0.58rem, 0.78vw, 0.68rem);
+  line-height: 1.35;
+  color: var(--hero-gray);
+}
+
+/* ── Responsive ── */
+@media (max-width: 1023px) {
+  .strip {
+    min-height: 80px;
+  }
+
+  .stripCol6 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .rightList {
+    top: auto;
+    right: clamp(14px, 2.6vw, 28px);
+    transform: none;
+    bottom: calc(116px);
+    max-width: 230px;
+  }
+
+  .vIcon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .vIcon svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media (max-width: 640px) {
+  .overlay {
+    padding: clamp(48px, 14vw, 56px) 14px 0;
+  }
+
+  .main {
+    gap: 6px;
+    max-width: 100%;
+    padding-bottom: 64px;
+  }
+
+  .logo img {
+    width: 92px;
+  }
+
+  .badge {
+    top: auto;
+    right: 12px;
+    bottom: 132px;
+    padding: 8px 10px;
+    gap: 7px;
+  }
+
+  .badgeText {
+    display: none;
+  }
+
+  .headline {
+    font-size: clamp(1.3rem, 7.2vw, 2rem);
+  }
+
+  .subhead {
+    font-size: 0.9rem;
+  }
+
+  .body {
+    font-size: 0.78rem;
+    -webkit-line-clamp: 2;
+  }
+
+  .featureRow {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px 6px;
+  }
+
+  .featureIcon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .featureTitle {
+    font-size: clamp(0.54rem, 1.6vw, 0.62rem);
+    letter-spacing: 0.02em;
+  }
+
+  .featureSub {
+    display: none;
+  }
+
+  .buttonRow {
+    margin-top: auto;
+  }
+
+  .btn {
+    min-height: 40px;
+    padding: 9px 16px;
+    font-size: 0.72rem;
+  }
+
+  .textLink {
+    font-size: 0.72rem;
+  }
+
+  .rightList {
+    position: static;
+    transform: none;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 6px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 7px;
+    padding: 10px 12px;
+  }
+
+  .vIcon {
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+  }
+
+  .vIcon svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .vSub {
+    display: none;
+  }
+
+  .vTitle {
+    font-size: 0.62rem;
+  }
+
+  .strip {
+    min-height: 0;
+    padding: 8px 8px;
+    justify-content: stretch;
+  }
+
+  .stripGrid {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .stripGrid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .stripItem {
+    flex: 0 0 auto;
+    min-width: 150px;
+    gap: 7px;
+  }
+
+  .stripTitle {
+    font-size: 0.62rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .stripSub {
+    display: none;
+  }
+}
+
+/* ── Short viewport heights: compact so bottom content never clips ── */
+@media (max-height: 720px) {
+  .overlay {
+    padding-top: clamp(40px, 5vw, 52px);
+  }
+
+  .main {
+    gap: 8px;
+    padding-bottom: clamp(76px, 7vw, 92px);
+  }
+
+  .headline {
+    font-size: clamp(1.5rem, 2.6vw, 2.3rem);
+  }
+
+  .subhead {
+    font-size: 0.95rem;
+  }
+
+  .body {
+    display: none;
+  }
+
+  .featureSub {
+    display: none;
+  }
+
+  .buttonRow {
+    gap: 10px;
+  }
+
+  .rightList {
+    gap: 8px;
+    padding: 12px 14px;
+    max-width: 240px;
+  }
+
+  .vIcon {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+
+  .vIcon svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .vSub {
+    display: none;
+  }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .overlay :is(a, button, .featureIcon, .stripIcon, .vIcon, .textLinkArrow) {
+    transition: none;
+  }
+}
