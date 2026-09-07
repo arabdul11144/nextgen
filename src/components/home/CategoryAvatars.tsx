@@ -7,46 +7,27 @@ import { CATEGORY_AVATARS } from "@/data/home-content";
 import styles from "./CategoryAvatars.module.css";
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 26 },
+  hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0 },
 };
 
 /**
- * "Explore by Category" — circular avatar grid on a white mesh gradient.
- * Soft colour blobs drift behind the content; circular portrait tiles
- * with accent hover ring, zoom, and shadow lift.
+ * "Explore by Category" — clean card grid on a warm surface.
+ * Each card has a circular avatar cut-out, accent-colored name,
+ * and a "View collection" link with arrow hover animation.
  */
 export function CategoryAvatars() {
   return (
     <section className={styles.section}>
-      {/* White mesh gradient — soft colour blobs */}
-      <div className={styles.mesh} aria-hidden="true">
-        <span className={`${styles.blob} ${styles.blobBlue}`} />
-        <span className={`${styles.blob} ${styles.blobOrange}`} />
-        <span className={`${styles.blob} ${styles.blobViolet}`} />
-        <span className={`${styles.blob} ${styles.blobEmerald}`} />
-        <span className={`${styles.blob} ${styles.blobGold}`} />
-      </div>
-
-      {/* Gentle wave transition into the section */}
-      <span className={styles.edgeTop} aria-hidden="true">
-        <svg viewBox="0 0 1440 40" preserveAspectRatio="none">
-          <path
-            d="M0 40 L0 26 C 240 6, 480 34, 720 22 C 960 10, 1200 30, 1440 18 L1440 40 Z"
-            fill="var(--ng-cloud)"
-          />
-        </svg>
-      </span>
-
       <div className={styles.inner}>
         <motion.div
           className={styles.head}
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <p className="ng-eyebrow" style={{ color: "#155eef" }}>
+          <p className="ng-eyebrow" style={{ color: "var(--ng-accent-coral)" }}>
             Shop by Profession
           </p>
           <h2 className={styles.title}>Explore by Category</h2>
@@ -61,14 +42,14 @@ export function CategoryAvatars() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.1 }}
-          transition={{ staggerChildren: 0.07 }}
+          transition={{ staggerChildren: 0.06 }}
         >
           {CATEGORY_AVATARS.map((cat) => (
             <motion.div
               key={cat.name}
               className={styles.item}
               variants={itemVariants}
-              transition={{ duration: 0.45, ease: "easeOut" }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               <Link
                 href={cat.href}
@@ -82,27 +63,6 @@ export function CategoryAvatars() {
                 aria-label={`${cat.name} — view collection`}
               >
                 <span className={styles.stage}>
-                  {/* Accent radial glow behind the circle on hover */}
-                  <span className={styles.glow} aria-hidden="true" />
-                  {/* Soft light halo just outside the circle */}
-                  <span className={styles.halo} aria-hidden="true" />
-
-                  {/* Animated accent ring — draws itself on hover/focus */}
-                  <svg
-                    className={styles.ring}
-                    viewBox="0 0 200 200"
-                    aria-hidden="true"
-                    focusable="false"
-                  >
-                    <circle
-                      cx="100"
-                      cy="100"
-                      r="98"
-                      className={styles.ringCircle}
-                    />
-                  </svg>
-
-                  {/* Cut-out circular portrait */}
                   <span className={styles.avatarBox}>
                     <Image
                       src={cat.image}
@@ -114,7 +74,6 @@ export function CategoryAvatars() {
                   </span>
                 </span>
 
-                {/* Caption below the circle */}
                 <span className={styles.meta}>
                   <span className={styles.catName}>{cat.name}</span>
                   <span className={styles.viewLink}>
@@ -122,8 +81,8 @@ export function CategoryAvatars() {
                     <svg
                       className={styles.arrow}
                       viewBox="0 0 24 24"
-                      width="14"
-                      height="14"
+                      width="13"
+                      height="13"
                       aria-hidden="true"
                       focusable="false"
                     >
@@ -151,16 +110,6 @@ export function CategoryAvatars() {
           ))}
         </motion.div>
       </div>
-
-      {/* Gentle wave transition out of the section */}
-      <span className={styles.edgeBottom} aria-hidden="true">
-        <svg viewBox="0 0 1440 40" preserveAspectRatio="none">
-          <path
-            d="M0 0 L0 12 C 240 32, 480 4, 720 16 C 960 28, 1200 8, 1440 20 L1440 0 Z"
-            fill="var(--ng-ink)"
-          />
-        </svg>
-      </span>
     </section>
   );
 }

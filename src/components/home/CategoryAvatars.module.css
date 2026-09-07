@@ -1,134 +1,31 @@
 /* ============================================================
-   Category avatars — circular portrait grid on a white mesh
-   gradient background. Soft colour blobs drift behind content;
-   light text treatment; tightened vertical rhythm.
-   ============================================================ */
+   CategoryAvatars — Clean card grid (redesign)
+    Refined grid with square cards, consistent rounded corners,
+    subtle hover effects. No more wave transitions.
+    ============================================================ */
 
 .section {
   position: relative;
-  background: #fbfcfe;
-  padding: clamp(44px, 6vw, 72px) 0;
+  background: var(--ng-surface-warm);
+  padding: var(--section-padding) 0;
   overflow: hidden;
-  isolation: isolate;
-}
-
-/* ── Mesh gradient — soft colour blobs ── */
-.mesh {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.12;
-  will-change: transform;
-}
-
-.blobBlue {
-  width: 520px;
-  height: 520px;
-  top: -8%;
-  left: -6%;
-  background: var(--ng-accent-blue);
-  animation: ng-blob-drift 26s ease-in-out infinite alternate;
-}
-
-.blobOrange {
-  width: 440px;
-  height: 440px;
-  bottom: -10%;
-  right: -4%;
-  background: var(--ng-accent-orange);
-  animation: ng-blob-drift 22s ease-in-out infinite alternate-reverse;
-}
-
-.blobViolet {
-  width: 380px;
-  height: 380px;
-  top: 4%;
-  left: 42%;
-  background: var(--ng-accent-violet);
-  opacity: 0.08;
-  animation: ng-blob-drift 30s ease-in-out infinite alternate;
-}
-
-.blobEmerald {
-  width: 340px;
-  height: 340px;
-  top: 30%;
-  right: 14%;
-  background: var(--ng-accent-emerald);
-  opacity: 0.09;
-  animation: ng-blob-drift 24s ease-in-out infinite alternate-reverse;
-}
-
-.blobGold {
-  width: 300px;
-  height: 300px;
-  bottom: 8%;
-  left: 12%;
-  background: var(--ng-accent-gold);
-  opacity: 0.10;
-  animation: ng-blob-drift 28s ease-in-out infinite alternate;
-}
-
-@keyframes ng-blob-drift {
-  from {
-    transform: translate(0, 0) scale(1);
-  }
-  to {
-    transform: translate(18px, -12px) scale(1.06);
-  }
-}
-
-/* Wave edges — gentle transitions into/out of the section */
-.edgeTop,
-.edgeBottom {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  z-index: 1;
-  pointer-events: none;
-  line-height: 0;
-}
-
-.edgeTop {
-  top: 0;
-  height: 28px;
-}
-
-.edgeBottom {
-  bottom: 0;
-  height: 28px;
-}
-
-.edgeTop svg,
-.edgeBottom svg {
-  display: block;
-  width: 100%;
-  height: 100%;
 }
 
 .inner {
   position: relative;
-  z-index: 1;
-  max-width: 1320px;
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 clamp(20px, 4vw, 40px);
+  padding: 0 var(--container-padding);
 }
 
-/* ── Header block — tightened ── */
+/* ── Header block ── */
 .head {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   text-align: center;
-  margin-bottom: clamp(20px, 3vw, 36px);
+  margin-bottom: clamp(32px, 4vw, 48px);
 }
 
 .title {
@@ -136,182 +33,135 @@
   font-family: var(--ng-font-heading);
   font-size: var(--ng-fs-h2);
   font-weight: 900;
-  line-height: 1.05;
+  line-height: 1.1;
   letter-spacing: -0.015em;
-  color: var(--ng-ink);
+  color: var(--ng-text-primary);
   text-wrap: balance;
 }
 
 .sub {
   margin: 0;
-  max-width: 52ch;
+  max-width: 48ch;
   font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--ng-slate);
+  line-height: 1.65;
+  color: var(--ng-text-secondary);
 }
 
-/* ── Grid: 6 columns, tightened gaps ── */
+/* ── Grid: 6 columns ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: clamp(20px, 3vw, 32px) clamp(12px, 2vw, 20px);
+  gap: clamp(16px, 2.5vw, 24px);
 }
 
 .item {
   width: 100%;
 }
 
-/* ── Tile: circular avatar + ring + caption below ── */
+/* ── Tile: card with image + caption ── */
 .tile {
-  --cat-accent: #155eef;
-  --avatar-size: 190px;
+  --cat-accent: var(--ng-accent-blue);
 
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  isolation: isolate;
+  padding: clamp(16px, 2vw, 24px) clamp(10px, 1.5vw, 16px);
+  background: var(--ng-white);
+  border: 1px solid var(--ng-line);
+  border-radius: var(--ng-radius-lg);
+  transition:
+    transform 0.3s var(--ng-ease-out-cubic),
+    box-shadow 0.3s var(--ng-ease-out-cubic),
+    border-color 0.3s ease;
 }
 
-/* Square stage the avatar + ring share — fluid so columns never overflow */
+.tile:hover,
+.tile:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: var(--ng-shadow-lift);
+  border-color: color-mix(in srgb, var(--cat-accent) 30%, transparent);
+}
+
+/* Stage — circular avatar */
 .stage {
   position: relative;
-  width: min(100%, var(--avatar-size));
+  width: min(100%, 140px);
   aspect-ratio: 1 / 1;
 }
 
-/* Soft white/light halo just outside the circle */
-.halo {
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  z-index: 0;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
-  pointer-events: none;
-}
-
-/* Accent radial glow behind the hovered circle */
-.glow {
-  position: absolute;
-  inset: -26px;
-  border-radius: 50%;
-  z-index: 0;
-  background: radial-gradient(circle, var(--cat-accent) 0%, rgba(255, 255, 255, 0) 70%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.tile:hover .glow,
-.tile:focus-visible .glow,
-.tile:active .glow {
-  opacity: 0.28;
-}
-
-/* Accent-tinted shadow for lift on hover/focus/active */
-.tile:hover .stage,
-.tile:focus-visible .stage,
-.tile:active .stage {
-  filter: drop-shadow(0 18px 28px -8px var(--cat-accent));
-}
-
-/* Accent progress ring — draws itself on hover/focus/active */
-.ring {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
-  z-index: 3;
-  pointer-events: none;
-}
-
-.ringCircle {
-  fill: none;
-  stroke: var(--cat-accent);
-  stroke-width: 5;
-  stroke-linecap: round;
-  stroke-dasharray: 615.8;
-  stroke-dashoffset: 615.8;
-  transition: stroke-dashoffset 0.3s var(--ng-ease-out-cubic);
-}
-
-.tile:hover .ringCircle,
-.tile:focus-visible .ringCircle,
-.tile:active .ringCircle {
-  stroke-dashoffset: 0;
-}
-
-/* Square circle clip for the cut-out portrait */
 .avatarBox {
   position: absolute;
-  inset: 6px;
+  inset: 0;
   border-radius: 50%;
   overflow: hidden;
-  background: #ffffff;
-  transition: transform 0.45s var(--ng-ease-out-cubic);
+  background: var(--ng-surface);
+  transition: transform 0.4s var(--ng-ease-out-cubic);
 }
 
 .tile:hover .avatarBox,
-.tile:focus-visible .avatarBox,
-.tile:active .avatarBox {
-  transform: scale(1.06);
+.tile:focus-visible .avatarBox {
+  transform: scale(1.05);
 }
 
 .avatar {
   object-fit: cover;
 }
 
-/* ── Caption below the circle ── */
+/* Hide ring, glow, halo from old design */
+.ring,
+.glow,
+.halo {
+  display: none;
+}
+
+/* ── Caption below ── */
 .meta {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
-  margin-top: 16px;
+  gap: 4px;
+  margin-top: 14px;
   padding: 0 2px;
   max-width: 100%;
 }
 
 .catName {
   font-family: var(--ng-font-heading);
-  font-size: clamp(0.88rem, 1.3vw, 0.98rem);
+  font-size: clamp(0.82rem, 1.2vw, 0.92rem);
   font-weight: 700;
   line-height: 1.25;
   color: var(--cat-accent);
   text-wrap: balance;
 }
 
-/* "View collection" — muted gray, brightens to accent on hover */
 .viewLink {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   font-family: var(--ng-font-heading);
-  font-size: 0.74rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: var(--ng-muted);
-  transition: color 0.25s ease;
+  color: var(--ng-text-muted);
+  transition: color 0.2s ease;
 }
 
 .arrow {
   flex: none;
-  transition: transform 0.25s var(--ng-ease-out-cubic);
+  transition: transform 0.2s var(--ng-ease-out-cubic);
 }
 
 .tile:hover .viewLink,
-.tile:focus-visible .viewLink,
-.tile:active .viewLink {
+.tile:focus-visible .viewLink {
   color: var(--cat-accent);
 }
 
 .tile:hover .arrow,
-.tile:focus-visible .arrow,
-.tile:active .arrow {
+.tile:focus-visible .arrow {
   transform: translateX(3px);
 }
 
@@ -325,39 +175,28 @@
 @media (max-width: 640px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px 10px;
+    gap: 12px 8px;
   }
 
   .tile {
-    --avatar-size: 116px;
+    --avatar-size: 100px;
+    padding: 12px 8px;
   }
 
-  .edgeTop,
-  .edgeBottom {
-    height: 20px;
+  .stage {
+    width: 100px;
   }
 
   .meta {
-    margin-top: 12px;
-    gap: 4px;
+    margin-top: 10px;
+    gap: 3px;
   }
 
   .catName {
-    font-size: 0.78rem;
+    font-size: 0.72rem;
   }
 
   .viewLink {
-    font-size: 0.64rem;
-  }
-
-  .blob {
-    filter: blur(60px);
-  }
-}
-
-/* Respect reduced-motion: freeze the ambient blob drift */
-@media (prefers-reduced-motion: reduce) {
-  .blob {
-    animation: none;
+    font-size: 0.6rem;
   }
 }
