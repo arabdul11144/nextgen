@@ -1,25 +1,60 @@
 /* ============================================================
-   Footer — dense dark navy footer
-   1. Slim gradient service-highlights bar
-   2. 4-column footer body (brand / help / legal / newsletter)
-   3. Slim copyright bar
+   Footer — dense dark navy footer, "Industrial Momentum" finish.
+   1. Top gradient fade + faint watermark
+   2. Service-highlights trust strip (glow icon badges + divider ticks)
+   3. 4-column footer body (brand / help / legal / newsletter)
+   4. Slim copyright bar
    ============================================================ */
 
 .footer {
-  background: var(--ng-navy-950);
-  color: var(--ng-on-dark);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--im-navy, #0a1a2f);
+  color: var(--im-on-dark, #c7d4e8);
 }
 
-/* ── 1. Service highlights bar ── */
+/* top navy→transparent fade into the preceding dark section */
+.fadeTop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(10, 26, 47, 0) 0%, rgba(4, 11, 24, 0) 35%, rgba(4, 11, 24, 0.4) 100%);
+  border-top: 1px solid rgba(13, 27, 42, 0.8);
+}
+
+/* faint diagonal watermark in the bottom right */
+.watermark {
+  position: absolute;
+  z-index: 0;
+  bottom: clamp(-18px, -2vw, 6px);
+  right: clamp(6px, 2vw, 20px);
+  font-family: var(--ng-font-heading);
+  font-size: clamp(3.4rem, 9vw, 7.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: rgba(198, 215, 238, 0.04);
+  user-select: none;
+  pointer-events: none;
+  transform: rotate(-6deg);
+}
+
+.watermarkAccent {
+  color: rgba(33, 92, 246, 0.08);
+}
+
+/* ── 1. Service highlights trust strip ── */
 .highlights {
-  background: linear-gradient(
-    90deg,
-    var(--ng-navy-800) 0%,
-    var(--ng-navy-700) 50%,
-    var(--ng-navy-800) 100%
-  );
-  border-top: 1px solid var(--ng-line-dark);
-  border-bottom: 1px solid var(--ng-line-dark);
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(15, 36, 64, 0.9) 0%, rgba(15, 36, 64, 0.45) 50%, rgba(15, 36, 64, 0.9) 100%);
+  border-top: 1px solid rgba(120, 155, 200, 0.12);
+  border-bottom: 1px solid rgba(120, 155, 200, 0.12);
 }
 
 .highlightsInner {
@@ -31,26 +66,50 @@
 }
 
 .highlight {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 18px 16px;
-  border-right: 1px solid var(--ng-line-dark);
+  padding: 20px 16px;
 }
 
-.highlight:first-child {
-  border-left: 1px solid var(--ng-line-dark);
+/* fading divider ticks between highlight cells */
+.highlight::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  height: 34px;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, rgba(180, 200, 230, 0.35) 50%, transparent 100%);
 }
 
+.highlight:last-child::after {
+  display: none;
+}
+
+/* glow icon badge */
 .highlightIcon {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   flex: 0 0 auto;
-  border-radius: 50%;
-  background: rgba(15, 181, 238, 0.14);
-  color: var(--ng-accent);
+  border-radius: 14px;
+  background: rgba(33, 92, 246, 0.12);
+  border: 1px solid rgba(33, 92, 246, 0.32);
+  color: var(--im-blue, #215cf6);
+  box-shadow: 0 0 18px rgba(33, 92, 246, 0.25);
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s var(--im-ease);
+}
+
+.highlight:hover .highlightIcon {
+  background: var(--im-blue, #215cf6);
+  border-color: var(--im-blue, #215cf6);
+  color: #ffffff;
+  box-shadow: 0 8px 22px rgba(33, 92, 246, 0.4);
+  transform: translateY(-3px);
 }
 
 .highlightIcon svg {
@@ -61,7 +120,7 @@
 .highlightText {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
   min-width: 0;
 }
 
@@ -78,7 +137,7 @@
 .highlightSub {
   font-size: 0.7rem;
   line-height: 1.3;
-  color: var(--ng-on-dark-deep);
+  color: var(--im-on-dark-muted, #8da4c6);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -86,6 +145,8 @@
 
 /* ── 2. Main footer grid ── */
 .main {
+  position: relative;
+  z-index: 1;
   padding: 56px 0 48px;
 }
 
@@ -123,7 +184,7 @@
 }
 
 .wordAccent {
-  color: var(--ng-accent);
+  color: var(--im-blue, #215cf6);
 }
 
 .wordTagline {
@@ -132,14 +193,14 @@
   font-weight: 700;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--ng-on-dark-deep);
+  color: var(--im-on-dark-muted, #8da4c6);
 }
 
 .blurb {
   margin: 0;
   font-size: 0.86rem;
   line-height: 1.6;
-  color: var(--ng-on-dark);
+  color: var(--im-on-dark, #c7d4e8);
 }
 
 .contactBlock {
@@ -154,12 +215,12 @@
   gap: 9px;
   font-size: 0.82rem;
   line-height: 1.45;
-  color: var(--ng-on-dark);
+  color: var(--im-on-dark, #c7d4e8);
   transition: color 0.2s ease;
 }
 
 a.contactRow:hover {
-  color: var(--ng-accent);
+  color: var(--im-blue, #215cf6);
 }
 
 .contactIcon {
@@ -167,7 +228,7 @@ a.contactRow:hover {
   height: 15px;
   flex: 0 0 auto;
   margin-top: 2px;
-  color: var(--ng-accent);
+  color: var(--im-blue, #215cf6);
 }
 
 .socials {
@@ -181,26 +242,53 @@ a.contactRow:hover {
   place-items: center;
   width: 38px;
   height: 38px;
-  border: 1px solid var(--ng-line-dark);
+  border: 1px solid rgba(120, 155, 200, 0.22);
   border-radius: 50%;
-  color: var(--ng-on-dark);
+  color: var(--im-on-dark, #c7d4e8);
   transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.15s ease;
-}
-
-.social:hover {
-  background: var(--ng-accent);
-  border-color: var(--ng-accent);
-  color: var(--ng-navy-950);
-  transform: translateY(-2px);
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s var(--im-ease),
+    box-shadow 0.25s ease;
 }
 
 .social svg {
   width: 16px;
   height: 16px;
+}
+
+/* brand-colour fills on hover */
+.social:hover {
+  transform: translateY(-3px);
+}
+
+.social:hover:nth-child(1) {
+  background: #1877f2;
+  border-color: #1877f2;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(24, 119, 242, 0.35);
+}
+
+.social:hover:nth-child(2) {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(220, 39, 67, 0.35);
+}
+
+.social:hover:nth-child(3) {
+  background: #000000;
+  border-color: #000000;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.social:hover:nth-child(4) {
+  background: #0a66c2;
+  border-color: #0a66c2;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(10, 102, 194, 0.35);
 }
 
 .col {
@@ -209,7 +297,11 @@ a.contactRow:hover {
   gap: 16px;
 }
 
+/* column headings with accent tick mark */
 .colTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--ng-font-heading);
   font-size: 0.72rem;
   font-weight: 800;
@@ -218,25 +310,67 @@ a.contactRow:hover {
   color: var(--ng-white);
 }
 
+.colTick {
+  width: 9px;
+  height: 9px;
+  background: var(--im-yellow, #ffc72c);
+  border-radius: 2px;
+  transform: skewX(-18deg);
+  box-shadow: 0 0 10px rgba(255, 199, 44, 0.55);
+  flex: 0 0 auto;
+}
+
 .links {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
+/* animated arrow links */
 .link {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   padding: 6px 0;
   font-size: 0.85rem;
-  color: var(--ng-on-dark);
-  transition:
-    color 0.2s ease,
-    padding-left 0.2s ease;
+  color: var(--im-on-dark, #c7d4e8);
+  transition: color 0.2s ease;
+}
+
+.linkText {
+  position: relative;
+}
+
+.linkText::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -3px;
+  height: 2px;
+  background: var(--im-yellow, #ffc72c);
+  transition: right 0.3s var(--im-ease);
+}
+
+.linkArrow {
+  font-size: 0.8rem;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.25s ease, transform 0.3s var(--im-ease);
+  color: var(--im-yellow, #ffc72c);
 }
 
 .link:hover {
-  color: var(--ng-accent);
-  padding-left: 6px;
+  color: var(--im-blue, #215cf6);
+}
+
+.link:hover .linkText::after {
+  right: 0;
+}
+
+.link:hover .linkArrow {
+  opacity: 1;
+  transform: translateX(2px);
 }
 
 .colNews {
@@ -249,12 +383,14 @@ a.contactRow:hover {
   margin: 0;
   font-size: 0.82rem;
   line-height: 1.55;
-  color: var(--ng-on-dark);
+  color: var(--im-on-dark, #c7d4e8);
 }
 
 /* ── 3. Copyright bar ── */
 .bottom {
-  border-top: 1px solid var(--ng-line-dark);
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid rgba(120, 155, 200, 0.12);
   padding: 20px 0;
 }
 
@@ -271,7 +407,7 @@ a.contactRow:hover {
 
 .copy {
   font-size: 0.76rem;
-  color: var(--ng-on-dark-deep);
+  color: var(--im-on-dark-muted, #8da4c6);
 }
 
 .policy {
@@ -282,16 +418,32 @@ a.contactRow:hover {
 }
 
 .policyLink {
-  color: var(--ng-on-dark-deep);
+  color: var(--im-on-dark-muted, #8da4c6);
+  position: relative;
   transition: color 0.2s ease;
 }
 
+.policyLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -2px;
+  height: 1px;
+  background: var(--im-yellow, #ffc72c);
+  transition: right 0.3s var(--im-ease);
+}
+
 .policyLink:hover {
-  color: var(--ng-accent);
+  color: var(--im-yellow, #ffc72c);
+}
+
+.policyLink:hover::after {
+  right: 0;
 }
 
 .policyDivider {
-  color: var(--ng-line-dark);
+  color: rgba(120, 155, 200, 0.25);
 }
 
 /* ── Responsive ── */
@@ -305,8 +457,13 @@ a.contactRow:hover {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .highlight:nth-child(2) {
-    border-right: none;
+  .highlight:nth-child(2)::after {
+    display: none;
+  }
+
+  .highlight:nth-child(2),
+  .highlight:nth-child(4) {
+    border-left: 1px solid rgba(120, 155, 200, 0.1);
   }
 }
 
@@ -320,9 +477,14 @@ a.contactRow:hover {
   }
 
   .highlight,
-  .highlight:first-child {
+  .highlight:nth-child(2),
+  .highlight:nth-child(4) {
     border: none;
-    border-bottom: 1px solid var(--ng-line-dark);
+    border-bottom: 1px solid rgba(120, 155, 200, 0.1);
+  }
+
+  .highlight::after {
+    display: none;
   }
 
   .bottomInner {

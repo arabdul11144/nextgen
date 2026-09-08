@@ -22,57 +22,57 @@ interface SectorData {
 
 const SECTOR_META: Record<string, SectorData> = {
   mining: {
-    image: "/image/workforce/miningandenergy.webp",
+    image: "/image/sector/sec_mining.jpeg",
     accent: "#ff5a1f",
     highlights: ["AS/NZS 4602.1 Hi-Vis", "FR Flame Retardant", "Heavy-Duty Coveralls", "Reflective Tape"],
   },
   construction: {
-    image: "/image/workforce/constructionandinfrastructure.webp",
+    image: "/image/sector/sec_construction.jpeg",
     accent: "#e11d48",
     highlights: ["Day/Night Class D/N", "Weatherproof Jackets", "Site Safety Vests", "Crew Branding"],
   },
   "logistics-transport": {
-    image: "/image/workforce/constructionandinfrastructure.webp",
+    image: "/image/sector/sec_logistics.jpeg",
     accent: "#38bdf8",
     highlights: ["Reinforced Trousers", "Breathable Work Polos", "Fleet Outerwear", "ID Badging"],
   },
   "energy-utilities": {
-    image: "/image/workforce/miningandenergy.webp",
+    image: "/image/sector/sec_energy.jpeg",
     accent: "#f5a623",
     highlights: ["Arc-Flash Rated", "Anti-Static Fabrics", "Substation Hi-Vis", "Waterproof Shells"],
   },
   "hospitality-tourism": {
-    image: "/image/workforce/hospitalityservice.webp",
+    image: "/image/sector/sec_hospitality.jpeg",
     accent: "#0f766e",
     highlights: ["Front-of-House Suiting", "Breathable Chef Jackets", "Coordinated Aprons", "Resort Polos"],
   },
   "agriculture-fisheries": {
-    image: "/image/qualitycraftmanship.webp",
+    image: "/image/sector/sec_agriculture.jpeg",
     accent: "#10b981",
     highlights: ["UPF 50+ Sun Protection", "Heavy-Duty Canvas", "Water-Repellent Gear", "Field PPE"],
   },
   healthcare: {
-    image: "/image/workforce/healthcareandmedical.webp",
+    image: "/image/sector/sec_healthcare.jpeg",
     accent: "#38bdf8",
     highlights: ["Anti-Microbial Scrubs", "Sterile Lab Coats", "Theatre Uniforms", "Department Colours"],
   },
   education: {
-    image: "/image/workforce/educationandschool.webp",
+    image: "/image/sector/sec_education.jpeg",
     accent: "#7c3aed",
     highlights: ["School Crest Embroidery", "Durable School Uniforms", "Sports Kits", "House Polos"],
   },
   corporate: {
-    image: "/image/banners/hero44.png",
+    image: "/image/sector/sec_corporate_sector.jpeg",
     accent: "#155eef",
     highlights: ["Tailored Executive Suiting", "Wrinkle-Resistant Shirts", "Silk Scarves & Ties", "Embroidered Blazers"],
   },
   security: {
-    image: "/image/uniform/securityuniforms.webp",
+    image: "/image/sector/sec_security.jpeg",
     accent: "#1e3a8a",
     highlights: ["Tactical Patrol Gear", "Epaulettes & Badges", "Weatherproof Parkas", "Hi-Vis Enforcement"],
   },
   sports: {
-    image: "/image/pngwonderers/newkits.webp",
+    image: "/image/sector/sec_sports.jpeg",
     accent: "#f5a623",
     highlights: ["Full-Colour Sublimation", "Matchday Jerseys", "Training Warm-ups", "Custom Numbering"],
   },
@@ -163,7 +163,7 @@ export default function IndustryPage() {
           <div className={styles.grid}>
             {industries.map((ind) => {
               const meta = SECTOR_META[ind.slug] || {
-                image: "/image/workforce/miningandenergy.webp",
+                image: "/image/sector/sec_mining.jpeg",
                 accent: "var(--ng-accent-blue)",
                 highlights: ["High-durability build", "Custom logo embroidery", "Trade bulk pricing"],
               };

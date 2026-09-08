@@ -1,12 +1,12 @@
 /* ============================================================
-   Product rails — "Shop the collections" (enterprise catalogue).
-   Static 5-up category grids, uniform contained imagery, single
-   primary CTA colour, B2B section dividers and a segmented
-   quick-jump control. No carousel, no partial cards, no arrows.
+   Product rails — "Shop the collections" ("Industrial Momentum").
+   Segmented sliding-thumb tab control, crossfading tinted zone
+   per range, two-tone product cards with animated badges, quick
+   view, and a morphing Add-to-quote button.
    ============================================================ */
 
 .section {
-  background: var(--ng-surface-2);
+  background: var(--im-surface, #ffffff);
   padding: clamp(48px, 7vw, 96px) 0;
 }
 
@@ -20,9 +20,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-align: center;
-  margin-bottom: clamp(40px, 6vw, 64px);
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+
+.headRule {
+  width: 84px;
+  margin: 2px 0;
 }
 
 .sectionTitle {
@@ -32,7 +37,7 @@
   font-weight: 900;
   line-height: 1.05;
   letter-spacing: -0.015em;
-  color: var(--ng-navy-900);
+  color: var(--im-ink, #0d1b2a);
   text-wrap: balance;
 }
 
@@ -41,71 +46,97 @@
   max-width: 52ch;
   font-size: var(--ng-fs-body);
   line-height: 1.6;
-  color: var(--ng-muted);
+  color: var(--im-slate, #4b5768);
 }
 
-/* ── Quick-jump: segmented control ── */
+/* ── Segmented control with sliding thumb ── */
 .tabs {
+  position: relative;
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0;
+  gap: 4px;
   margin-top: 24px;
-  padding: 4px;
-  background: var(--ng-surface);
+  padding: 5px;
+  background: var(--im-offwhite, #f6f8fb);
   border: 1px solid var(--ng-line);
-  border-radius: var(--ng-radius-6);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 2px rgba(13, 27, 42, 0.05);
 }
 
 .tab {
-  padding: 10px 20px;
+  position: relative;
   border: none;
-  border-radius: var(--ng-radius-4);
+  border-radius: 999px;
   background: transparent;
   font-family: var(--ng-font-heading);
   font-size: 0.8rem;
   font-weight: 800;
-  letter-spacing: 0.02em;
-  color: var(--ng-muted);
+  letter-spacing: 0.01em;
+  color: var(--im-slate, #4b5768);
   cursor: pointer;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: color 0.25s var(--im-ease);
 }
 
-.tab:hover {
-  color: var(--ng-navy-900);
+.tabLabel {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 22px;
+  white-space: nowrap;
+}
+
+.tabThumb {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--im-blue, #215cf6);
+  box-shadow: 0 6px 16px rgba(33, 92, 246, 0.35);
 }
 
 .tabActive {
-  background: var(--ng-white);
-  color: var(--ng-accent-blue);
-  box-shadow: 0 2px 6px rgba(8, 21, 40, 0.14);
+  color: #ffffff;
 }
 
-/* ── Category block ── */
+.tabActive .tabLabel {
+  color: #ffffff;
+}
+
+.tab:hover:not(.tabActive) {
+  color: var(--im-ink, #0d1b2a);
+}
+
+/* ── Crossfading tinted zone belt ── */
+.belt {
+  border-radius: 28px;
+  padding: clamp(20px, 3vw, 32px) clamp(10px, 2vw, 22px);
+  transition: background 0.3s ease;
+}
+
+.beltInner {
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
 .rail {
-  margin-bottom: clamp(48px, 6vw, 80px);
+  --rail-accent: var(--im-blue);
+  --rail-tint: #eef2f9;
   scroll-margin-top: 24px;
 }
 
-.rail:last-child {
-  margin-bottom: 0;
-}
-
-/* Category divider: accent tab + heading block + right-aligned View all */
+/* ── Rail heading ── */
 .railHead {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
   padding-bottom: 16px;
-  margin-bottom: 24px;
+  margin-bottom: clamp(20px, 3vw, 28px);
   position: relative;
 }
 
-/* hairline rule under the divider, above the grid */
 .railHead::after {
   content: "";
   position: absolute;
@@ -113,7 +144,8 @@
   right: 0;
   bottom: 0;
   height: 1px;
-  background: var(--ng-line);
+  background: linear-gradient(90deg, var(--rail-accent), transparent 70%);
+  opacity: 0.5;
 }
 
 .railHeadingBlock {
@@ -123,8 +155,7 @@
   min-width: 0;
 }
 
-/* Accent left-edge tab — the category label with real B2B weight.
-   Accent color is reserved for this divider only, never the CTAs. */
+/* Accent left-edge tab */
 .eyebrowTab {
   align-self: flex-start;
   display: inline-flex;
@@ -133,12 +164,12 @@
   font-family: var(--ng-font-heading);
   font-size: var(--ng-fs-eyebrow);
   font-weight: 800;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   line-height: 1.2;
-  color: var(--ng-white);
-  background: var(--rail-accent, var(--ng-accent-blue));
-  border-radius: 0 var(--ng-radius-4) var(--ng-radius-4) 0;
+  color: #ffffff;
+  background: var(--rail-accent, var(--im-blue));
+  border-radius: 0 999px 999px 0;
 }
 
 .railTitle {
@@ -148,7 +179,7 @@
   font-weight: 900;
   line-height: 1.12;
   letter-spacing: -0.01em;
-  color: var(--ng-navy-900);
+  color: var(--im-ink, #0d1b2a);
   text-wrap: balance;
 }
 
@@ -160,53 +191,70 @@
   font-family: var(--ng-font-heading);
   font-size: 0.84rem;
   font-weight: 800;
-  color: var(--ng-accent-blue);
+  color: var(--im-blue, #215cf6);
   border-bottom: 2px solid currentColor;
   padding-bottom: 3px;
   margin-bottom: 2px;
   transition: gap 0.2s ease;
 }
 
+.viewAllArrow {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.3s var(--im-ease-spring);
+}
+
 .viewAll:hover {
   gap: 12px;
 }
 
-/* ── Static grid: no peeking cards ── */
+.viewAll:hover .viewAllArrow {
+  transform: translateX(4px);
+}
+
+/* ── Grid ── */
 .cards {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: clamp(16px, 2vw, 26px);
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* ── Product cards ── */
+.cardCell {
+  margin: 0;
+}
+
+/* ── Two-tone product card ── */
 .card {
-  --ctl-accent: var(--ng-accent-blue);
+  --ctl-accent: var(--im-blue);
   display: flex;
   flex-direction: column;
-  background: var(--ng-white);
+  background: var(--im-surface, #ffffff);
   border: 1px solid var(--ng-line);
-  border-radius: var(--ng-radius-card);
+  border-radius: var(--im-radius-card, 18px);
   overflow: hidden;
-  box-shadow: var(--ng-shadow-soft);
+  box-shadow: var(--im-shadow-card);
   transition:
-    transform 0.3s var(--ng-ease-out-cubic),
-    box-shadow 0.3s var(--ng-ease-out-cubic);
+    transform 0.35s var(--im-ease),
+    box-shadow 0.35s var(--im-ease);
   will-change: transform;
+  height: 100%;
 }
 
 .card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--ng-shadow-lift);
+  transform: translateY(-8px);
+  box-shadow: var(--im-shadow-lift);
 }
 
-/* media — fixed 4:5 stage, images contained & centred on a tinted mat
-   so portrait product shots AND wide promo banners all show whole and
-   uniform (no cropping, coherent row). */
+/* media — consistent 4:3 crop zone, image fills edge-to-edge (no
+   oversized placeholder / empty tinted space around the photo) */
 .media {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 4 / 3;
   overflow: hidden;
-  background: var(--ng-surface);
+  background: var(--rail-tint, #eef2f9);
   border-bottom: 1px solid var(--ng-line);
 }
 
@@ -217,53 +265,57 @@
 }
 
 .photo {
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
-  padding: 12px;
-  transition: transform 0.6s var(--ng-ease-out-cubic), opacity 0.4s ease;
+  transition: transform 0.6s var(--im-ease), opacity 0.4s ease;
 }
 
 .photoCross {
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
-  padding: 12px;
   opacity: 0;
   transition: opacity 0.4s ease;
 }
 
 .card:hover .photo {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
 .card:hover .photoCross {
-  opacity: 0.45;
+  opacity: 0.4;
 }
 
-/* Slim outlined pill badge — refined, not a discount sticker */
-.badge {
+/* Quick-view magnifier button — reveals on hover */
+.quickView {
   position: absolute;
   top: 12px;
-  left: 12px;
+  right: 12px;
   z-index: 3;
-  padding: 4px 10px;
-  font-family: var(--ng-font-heading);
-  font-size: 0.6rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ng-accent-blue);
-  background: var(--ng-white);
-  border: 1px solid color-mix(in srgb, var(--ng-accent-blue) 45%, transparent);
-  border-radius: var(--ng-radius-pill);
-  box-shadow: 0 3px 10px rgba(8, 21, 40, 0.12);
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--im-ink, #0d1b2a);
+  box-shadow: 0 2px 8px rgba(13, 27, 42, 0.12);
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 0.25s var(--im-ease), transform 0.25s var(--im-ease);
+  pointer-events: none;
 }
 
-.badgeNew {
-  color: var(--ng-accent-crimson);
-  border-color: color-mix(in srgb, var(--ng-accent-crimson) 50%, transparent);
+.card:hover .quickView {
+  opacity: 1;
+  transform: none;
 }
 
-/* subtle "View" affordance over the lower media on hover */
+.quickView svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* lower reveal CTA */
 .revealCta {
   position: absolute;
   inset: auto 0 0 0;
@@ -271,12 +323,10 @@
   display: flex;
   justify-content: center;
   padding: 10px;
-  background: linear-gradient(180deg, transparent 0%, rgba(4, 11, 24, 0.6) 100%);
+  background: linear-gradient(180deg, transparent 0%, rgba(10, 26, 47, 0.6) 100%);
   opacity: 0;
   transform: translateY(8px);
-  transition:
-    opacity 0.25s ease,
-    transform 0.25s ease;
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .card:hover .revealCta {
@@ -290,12 +340,10 @@
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.03em;
-  color: var(--ng-white);
-  background: var(--ng-accent-blue);
+  color: #ffffff;
+  background: var(--im-blue, #215cf6);
   border-radius: var(--ng-radius-pill);
-  transition:
-    filter 0.2s ease,
-    transform 0.15s ease;
+  transition: filter 0.2s ease, transform 0.15s ease;
 }
 
 .revealCta a:hover {
@@ -303,6 +351,7 @@
   transform: translateY(-1px);
 }
 
+/* body — white info zone */
 .cardBody {
   display: flex;
   flex-direction: column;
@@ -312,25 +361,48 @@
 }
 
 .cardTitle {
+  position: relative;
   margin: 0;
   font-family: var(--ng-font-heading);
   font-size: 0.95rem;
   font-weight: 800;
   line-height: 1.3;
-  color: var(--ng-navy-900);
+  color: var(--im-ink, #0d1b2a);
+  padding-bottom: 4px;
+}
+
+/* accent underline draws in under the title on hover */
+.cardTitle::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background: var(--im-orange, #ff5a1f);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s var(--im-ease);
+}
+
+.card:hover .cardTitle::after {
+  transform: scaleX(1);
+}
+
+.cardTitle a {
+  color: inherit;
 }
 
 .cardTitle a:hover {
-  color: var(--ng-accent-blue);
+  color: var(--im-blue, #215cf6);
 }
 
 .spec {
   margin: 0;
   font-size: var(--ng-fs-small);
-  color: var(--ng-muted);
+  color: var(--im-slate, #4b5768);
 }
 
-/* B2B micro-label reinforcing procurement positioning */
 .bulkNote {
   margin: 0;
   display: flex;
@@ -339,14 +411,14 @@
   font-size: var(--ng-fs-caption);
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: var(--ng-muted);
+  color: var(--im-slate, #4b5768);
 }
 
 .bulkNote span {
-  color: var(--ng-accent-blue);
+  color: var(--im-blue, #215cf6);
 }
 
-/* ── Add to quote: uniform primary CTA -> stepper ── */
+/* ── Add to quote: ghost → filled + "+→✓" morph ── */
 .actionRow {
   margin-top: auto;
   padding-top: 8px;
@@ -356,7 +428,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 7px;
+  gap: 8px;
   width: 100%;
   min-height: 44px;
   padding: 11px 14px;
@@ -364,18 +436,23 @@
   font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0.01em;
-  color: #ffffff;
-  background: var(--ng-accent-blue);
-  border: 1px solid transparent;
-  border-radius: var(--ng-radius-4);
+  color: var(--im-blue, #215cf6);
+  background: transparent;
+  border: 1.5px solid var(--im-blue, #215cf6);
+  border-radius: 999px;
   cursor: pointer;
+  overflow: hidden;
   transition:
-    filter 0.2s ease,
+    background 0.25s var(--im-ease),
+    color 0.25s var(--im-ease),
+    box-shadow 0.25s var(--im-ease),
     transform 0.15s ease;
 }
 
 .addBtn:hover {
-  filter: brightness(1.08);
+  background: var(--im-blue, #215cf6);
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(33, 92, 246, 0.3);
   transform: translateY(-1px);
 }
 
@@ -383,14 +460,45 @@
   transform: scale(0.97);
 }
 
-.addPlus {
-  display: inline-flex;
+.addBtnDone {
+  background: var(--im-blue, #215cf6);
+  color: #ffffff;
 }
 
-.addBtn svg,
-.addPlus svg {
+.addIcon {
+  position: relative;
   width: 14px;
   height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addPlus,
+.addCheck {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  transition: transform 0.35s var(--im-ease-spring), opacity 0.2s ease;
+}
+
+.addCheck {
+  transform: rotate(-45deg) scale(0);
+  opacity: 0;
+}
+
+.addBtnDone .addPlus {
+  transform: rotate(90deg) scale(0);
+  opacity: 0;
+}
+
+.addBtnDone .addCheck {
+  transform: rotate(0) scale(1);
+  opacity: 1;
+}
+
+.addLabel {
+  line-height: 1;
 }
 
 .stepper {
@@ -398,9 +506,9 @@
   grid-template-columns: minmax(44px, 1fr) auto minmax(44px, 1fr);
   align-items: center;
   gap: 4px;
-  background: color-mix(in srgb, var(--ng-accent-blue) 12%, #ffffff);
-  border: 1px solid color-mix(in srgb, var(--ng-accent-blue) 35%, transparent);
-  border-radius: var(--ng-radius-4);
+  background: color-mix(in srgb, var(--im-blue) 12%, #ffffff);
+  border: 1px solid color-mix(in srgb, var(--im-blue) 40%, transparent);
+  border-radius: 999px;
   overflow: hidden;
 }
 
@@ -410,16 +518,13 @@
   min-height: 44px;
   border: none;
   background: transparent;
-  color: var(--ng-accent-blue);
+  color: var(--im-blue, #215cf6);
   cursor: pointer;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    transform 0.12s ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.12s ease;
 }
 
 .stepperBtn:hover {
-  background: var(--ng-accent-blue);
+  background: var(--im-blue, #215cf6);
   color: #ffffff;
 }
 
@@ -438,9 +543,9 @@
   font-family: var(--ng-font-heading);
   font-size: 0.95rem;
   font-weight: 800;
-  color: var(--ng-accent-blue);
+  color: var(--im-blue, #215cf6);
   font-variant-numeric: tabular-nums;
-  animation: qty-bounce 0.25s var(--ng-ease-out-cubic);
+  animation: qty-bounce 0.25s var(--im-ease);
 }
 
 @keyframes qty-bounce {
@@ -466,25 +571,6 @@
   .cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .tabs {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    justify-content: flex-start;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-    max-width: 100%;
-    -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent);
-    mask-image: linear-gradient(90deg, #000 92%, transparent);
-  }
-
-  .tabs::-webkit-scrollbar {
-    display: none;
-  }
-
-  .tab {
-    flex: 0 0 auto;
-  }
 }
 
 @media (max-width: 640px) {
@@ -497,6 +583,20 @@
     align-items: flex-start;
     gap: 12px;
   }
+
+  .tabs {
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tabLabel {
+    padding: 10px 16px;
+  }
 }
 
 /* ── Reduced motion ── */
@@ -507,6 +607,11 @@
 
   .photo,
   .photoCross {
+    transition: none;
+  }
+
+  .addPlus,
+  .addCheck {
     transition: none;
   }
 }

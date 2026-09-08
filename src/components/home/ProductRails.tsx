@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { PRODUCT_RAILS, type ProductRail, type RailItem } from "@/data/home-content";
 import { useQuoteBasket } from "@/components/quote-basket/QuoteBasketContext";
 import { fireBurst } from "@/lib/burst";
@@ -11,28 +11,31 @@ import { Reveal } from "@/components/reveal/Reveal";
 import styles from "./ProductRails.module.css";
 
 /**
- * Add-to-quote control — a rectangular button in the range's accent
- * colour that transforms into an inline (− qty +) stepper once added.
- * Quantity bounces on change, a particle burst fires on the first add
- * and the basket fires a toast confirmation. Decrementing to zero
- * returns the control to its default "Add to quote" state.
+ * Add-to-quote control — ghost/outline pill that flips to a solid
+ * electric-blue pill on hover and, once added, does a quick "+ → ✓"
+ * morph before turning into an inline (− qty +) stepper. Quantity
+ * bounces on change, a particle burst fires on the first add and the
+ * basket fires a toast confirmation.
  */
 function AddToQuote({ item }: { item: RailItem }) {
   const { addItem, updateQty, removeItem } = useQuoteBasket();
   const [qty, setQty] = useState(0);
+  const [justAdded, setJustAdded] = useState(false);
   const btnRef = useRef<HTMLButtonElement>(null);
   const key = `${item.href}|${item.title}`;
 
   const handleAdd = () => {
     addItem({ title: item.title, href: item.href, image: item.image, alt: item.alt });
     setQty(1);
+    setJustAdded(true);
     if (btnRef.current) {
       fireBurst(btnRef.current, {
         count: 12,
         radius: 48,
-        colors: ["#155eef", "#ffffff", "#155eef", "#155eef", "#ffffff"],
+        colors: ["#215cf6", "#ffffff", "#215cf6", "#ffc72c", "#ffffff"],
       });
     }
+    window.setTimeout(() => setJustAdded(false), 700);
   };
 
   const dec = () => {
@@ -57,15 +60,18 @@ function AddToQuote({ item }: { item: RailItem }) {
       <button
         ref={btnRef}
         type="button"
-        className={styles.addBtn}
+        className={`${styles.addBtn}${justAdded ? ` ${styles.addBtnDone}` : ""}`}
         onClick={handleAdd}
       >
-        <span className={styles.addPlus} aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <span className={styles.addIcon} aria-hidden="true">
+          <svg className={styles.addPlus} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 5v14M5 12h14" />
           </svg>
+          <svg className={styles.addCheck} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+            <path d="m5 12 5 5 9-10" />
+          </svg>
         </span>
-        Add to quote
+        <span className={styles.addLabel}>Add to quote</span>
       </button>
     );
   }
@@ -77,7 +83,6 @@ function AddToQuote({ item }: { item: RailItem }) {
           <path d="M5 12h14" />
         </svg>
       </button>
-      {/* key re-mounts on qty change to replay the bounce + accent flash */}
       <span key={qty} className={styles.qty}>
         {qty}
       </span>
@@ -99,7 +104,7 @@ function Card({ item }: { item: RailItem }) {
             src={item.image}
             alt={item.alt}
             fill
-            sizes="(max-width: 640px) 74vw, (max-width: 1023px) 34vw, 18vw"
+            sizes="(max-width: 640px) 78vw, (max-width: 1023px) 32vw, 19vw"
             className={styles.photo}
           />
           {item.hoverImage && (
@@ -107,19 +112,19 @@ function Card({ item }: { item: RailItem }) {
               src={item.hoverImage}
               alt=""
               fill
-              sizes="(max-width: 640px) 74vw, (max-width: 1023px) 34vw, 18vw"
+              sizes="(max-width: 640px) 78vw, (max-width: 1023px) 32vw, 19vw"
               className={styles.photoCross}
               aria-hidden="true"
             />
           )}
         </Link>
-        {item.badge && (
-          <span
-            className={`${styles.badge} ${item.badge === "New" ? styles.badgeNew : ""}`}
-          >
-            {item.badge}
-          </span>
-        )}
+        {/* Quick-view affordance */}
+        <span className={styles.quickView} aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="7" />
+            <path d="m21 21-4.3-4.3" />
+          </svg>
+        </span>
         <div className={styles.revealCta}>
           <Link href={item.href}>View <span aria-hidden="true">→</span></Link>
         </div>
@@ -140,126 +145,190 @@ function Card({ item }: { item: RailItem }) {
   );
 }
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 22, scale: 0.98 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { delay: i * 0.06, duration: 0.4, ease: "easeOut" as const },
+  }),
+};
+
 function Rail({ rail }: { rail: ProductRail }) {
-  const c = { "--rail-accent": rail.accent } as React.CSSProperties;
+  const c = { "--rail-accent": rail.accent, "--rail-tint": rail.tint } as React.CSSProperties;
 
   return (
-    <section id={rail.id} className={styles.rail} style={c}>
-      {/* Category divider + row heading */}
-      <header className={styles.railHead}>
+    <div className={styles.rail} style={c}>
+      <motion.header
+        className={styles.railHead}
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
+      >
         <div className={styles.railHeadingBlock}>
           <span className={styles.eyebrowTab}>{rail.eyebrow}</span>
           <h3 className={styles.railTitle}>{rail.title}</h3>
         </div>
         <Link href={rail.viewAllHref} className={styles.viewAll}>
-          View all <span aria-hidden="true">→</span>
+          View all
+          <svg className={styles.viewAllArrow} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
         </Link>
-      </header>
+      </motion.header>
 
-      {/* Static 5-up grid of full cards — one row per range, no partial cards */}
-      <div className={styles.cards}>
+      <ul className={styles.cards}>
         {rail.items.slice(0, 5).map((item, i) => (
-          <Reveal key={item.title} delay={i * 50}>
+          <motion.li
+            key={item.title}
+            className={styles.cardCell}
+            variants={cardVariants}
+            custom={i}
+            initial="hidden"
+            animate="show"
+          >
             <Card item={item} />
-          </Reveal>
+          </motion.li>
         ))}
-      </div>
-    </section>
+      </ul>
+    </div>
   );
 }
 
-const railContainer = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
-};
+const TAB_TONES: string[] = ["#f2f6fd", "#f7f3ef", "#fdf8e8"];
+
+/* Auto-rotation constants */
+const ROTATE_INTERVAL_MS = 4500;
+const PAUSE_RESUME_MS = 6000;
 
 export function ProductRails() {
-  const [activeRail, setActiveRail] = useState(PRODUCT_RAILS[0].id);
-  const railRefs = useRef<Record<string, HTMLElement | null>>({});
+  const [activeRail, setActiveRail] = useState(0);
+  const [autoPaused, setAutoPaused] = useState(false);
+  /* Pause rotation entirely for users who prefer reduced motion */
+  const [respectReducedMotion] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const rail = PRODUCT_RAILS[activeRail];
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const resumeTimer = useRef<number | null>(null);
 
-  /* Scroll-spy: keep the quick-jump tab for the rail currently in view
-     highlighted in its own accent colour. Async observer callback (so it
-     doesn't violate the no-sync-setState-in-effect rule). */
-  useEffect(() => {
-    const els = PRODUCT_RAILS.map((r) => railRefs.current[r.id]).filter(
-      (el): el is HTMLElement => Boolean(el),
+  /* Pause auto-rotation for `ms`, resuming afterwards */
+  const pauseFor = (ms: number) => {
+    if (resumeTimer.current) window.clearTimeout(resumeTimer.current);
+    setAutoPaused(true);
+    resumeTimer.current = window.setTimeout(
+      () => setAutoPaused(false),
+      ms,
     );
-    if (els.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const inside = entries.filter((e) => e.isIntersecting);
-        if (inside.length === 0) return;
-        /* pick the rail closest to the top of the viewport centre band */
-        const top = inside.reduce((best, e) =>
-          e.boundingClientRect.top < best.boundingClientRect.top ? e : best,
-        );
-        const id = (top.target as HTMLElement).id;
-        if (id) setActiveRail(id);
-      },
-      { rootMargin: "-40% 0px -50% 0px", threshold: 0 },
-    );
-    els.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, []);
-
-  const jumpTo = (id: string) => {
-    railRefs.current[id]?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
+
+  /* Manual tab select → pause auto-rotation and resume after inactivity */
+  const selectRail = (i: number) => {
+    setActiveRail(i);
+    pauseFor(PAUSE_RESUME_MS);
+  };
+
+  /* Clear any pending resume timer on unmount */
+  useEffect(
+    () => () => {
+      if (resumeTimer.current) window.clearTimeout(resumeTimer.current);
+    },
+    [],
+  );
+
+  /* Auto-cycle the tabs every few seconds unless paused (click / hover /
+     focus / reduced motion) or the tab is hidden */
+  useEffect(() => {
+    if (autoPaused || respectReducedMotion) return;
+    const id = window.setInterval(() => {
+      if (document.hidden) return;
+      setActiveRail((i) => (i + 1) % PRODUCT_RAILS.length);
+    }, ROTATE_INTERVAL_MS);
+    return () => window.clearInterval(id);
+  }, [autoPaused, respectReducedMotion]);
 
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
-        <motion.div
-          className={styles.sectionHead}
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          <p className="ng-eyebrow" style={{ color: "var(--ng-accent-blue)" }}>
-            Who We Equip
-          </p>
-          <h2 className={styles.sectionTitle}>Shop the collections</h2>
-          <p className={styles.sectionSub}>
-            Three ranges, one standard — professional workwear, uniforms and
-            branding for every team in PNG.
-          </p>
+        <div className={styles.sectionHead}>
+          <Reveal>
+            <p className="im-eyebrow">Who We Equip</p>
+          </Reveal>
+          <Reveal delay={80}>
+            <span className={`im-accent-rule im-reveal-rule ${styles.headRule}`} aria-hidden="true" />
+          </Reveal>
+          <Reveal delay={140}>
+            <h2 className={styles.sectionTitle}>Shop the collections</h2>
+          </Reveal>
+          <Reveal delay={200}>
+            <p className={styles.sectionSub}>
+              Three ranges, one standard — professional workwear, uniforms and
+              branding for every team in PNG.
+            </p>
+          </Reveal>
 
-          {/* Quick-jump tabs — smooth-scroll to each range */}
-          <nav className={styles.tabs} aria-label="Shop ranges">
-            {PRODUCT_RAILS.map((rail) => {
-              const isActive = activeRail === rail.id;
+          {/* Segmented tab control with sliding thumb */}
+          <div
+            className={styles.tabs}
+            ref={tabsRef}
+            role="tablist"
+            aria-label="Shop ranges"
+            onMouseEnter={() => pauseFor(PAUSE_RESUME_MS)}
+            onMouseLeave={() => pauseFor(PAUSE_RESUME_MS)}
+            onFocus={() => pauseFor(PAUSE_RESUME_MS)}
+            onBlur={() => pauseFor(PAUSE_RESUME_MS)}
+          >
+            {PRODUCT_RAILS.map((r, i) => {
+              const isActive = activeRail === i;
               return (
                 <button
-                  key={rail.id}
+                  key={r.id}
                   type="button"
+                  role="tab"
+                  aria-selected={isActive}
                   className={`${styles.tab}${isActive ? ` ${styles.tabActive}` : ""}`}
-                  style={
-                    { "--tab-accent": rail.accent } as React.CSSProperties
-                  }
-                  aria-current={isActive ? "true" : undefined}
-                  onClick={() => jumpTo(rail.id)}
+                  onClick={() => selectRail(i)}
                 >
-                  {rail.eyebrow}
+                  {isActive && (
+                    <motion.span
+                      className={styles.tabThumb}
+                      layoutId="rail-tab-thumb"
+                      transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                    />
+                  )}
+                  <span className={styles.tabLabel}>{r.eyebrow}</span>
                 </button>
               );
             })}
-          </nav>
-        </motion.div>
+          </div>
+        </div>
 
-        <motion.div
-          variants={railContainer}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.15 }}
+        {/* Tinted zone belt behind the active rail.
+            While hovering the belt (cards/grid) we pause auto-rotation,
+            resuming after leaving. Background crossfades aren't needed here
+            because the rail itself drives the belt tint below. */}
+        <div
+          className={styles.belt}
+          style={{ background: TAB_TONES[activeRail % TAB_TONES.length] }}
+          onMouseEnter={() => pauseFor(PAUSE_RESUME_MS)}
+          onMouseLeave={() => pauseFor(PAUSE_RESUME_MS)}
         >
-          {PRODUCT_RAILS.map((rail) => (
-            <div key={rail.id} ref={(el) => { railRefs.current[rail.id] = el; }}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={rail.id}
+              className={styles.beltInner}
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -30 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
               <Rail rail={rail} />
-            </div>
-          ))}
-        </motion.div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );

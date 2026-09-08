@@ -48,7 +48,7 @@ export function NewsletterForm() {
           id="newsletter-email"
           type="email"
           className={styles.input}
-          placeholder="you@company.com.pg"
+          placeholder="erick_omar@gmail.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           autoComplete="email"

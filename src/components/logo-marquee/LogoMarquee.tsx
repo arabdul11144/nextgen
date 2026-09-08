@@ -41,15 +41,16 @@ export function LogoMarquee({
     return (
       <div className={styles.marqueeStatic}>
         {logos.map((src) => (
-          <Image
-            key={src}
-            src={src}
-            alt={`${altBase} ${brandName(src)}`}
-            width={260}
-            height={56}
-            className={styles.logo}
-            loading="eager"
-          />
+          <span key={src} className={styles.chip}>
+            <Image
+              src={src}
+              alt={`${altBase} ${brandName(src)}`}
+              width={260}
+              height={56}
+              className={styles.logo}
+              loading="eager"
+            />
+          </span>
         ))}
       </div>
     );
@@ -73,15 +74,20 @@ export function LogoMarquee({
         aria-label="Trusted partner brand logos"
       >
         {doubled.map((src, i) => (
-          <Image
+          <span
             key={`${src}-${i}`}
-            src={src}
-            alt={`${altBase} ${brandName(src)}`}
-            width={260}
-            height={56}
-            className={styles.logo}
-            loading={i < logos.length ? "eager" : "lazy"}
-          />
+            className={styles.chip}
+            style={{ animationDelay: `${(i % logos.length) * 0.15}s` }}
+          >
+            <Image
+              src={src}
+              alt={`${altBase} ${brandName(src)}`}
+              width={260}
+              height={56}
+              className={styles.logo}
+              loading={i < logos.length ? "eager" : "lazy"}
+            />
+          </span>
         ))}
       </div>
     </div>

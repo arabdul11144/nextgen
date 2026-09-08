@@ -480,6 +480,108 @@ p {
 }
 
 /* ------------------------------------------------------------
+   6.9 "Industrial Momentum" Design Tokens (homepage redesign brief)
+   Unified palette, shape + motion vocabulary shared by all
+   sections below the hero (category grid, brand strip, product
+   showcase, testimonials, CTA split, footer).
+   ------------------------------------------------------------ */
+:root {
+  /* Core dark / light surfaces */
+  --im-navy: #0a1a2f;        /* primary dark canvas */
+  --im-navy-alt: #0f2440;    /* elevated panel on dark */
+  --im-offwhite: #f6f8fb;    /* light section background */
+  --im-surface: #ffffff;
+
+  /* Brand + accents */
+  --im-blue: #215cf6;        /* primary CTA / links */
+  --im-yellow: #ffc72c;      /* high-vis, gold CTA */
+  --im-orange: #ff5a1f;      /* new/popular tags, hover glows */
+  --im-red: #ce1126;         /* PNG flag red — gradient only */
+  --im-green: #1aa260;       /* verified / ratings */
+
+  /* Text */
+  --im-ink: #0d1b2a;         /* headings on light bg */
+  --im-slate: #4b5768;       /* body copy on light bg */
+  --im-white: #ffffff;
+  --im-on-dark: #c7d4e8;     /* body on dark bg */
+  --im-on-dark-muted: #8da4c6;
+
+  /* Signature gradient accent rule (navy → red → gold) */
+  --im-accent-rule: linear-gradient(90deg, var(--im-navy) 0%, var(--im-red) 45%, var(--im-yellow) 100%);
+
+  /* Soft, accent-tinted ambient card shadows */
+  --im-shadow-card: 0 8px 24px rgba(13, 27, 42, 0.08);
+  --im-shadow-lift: 0 22px 44px rgba(13, 27, 42, 0.16);
+
+  /* Shape language */
+  --im-radius-card: 18px;
+  --im-radius-2: 24px;
+
+  /* Motion */
+  --im-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --im-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --im-dur-base: 0.35s;
+  --im-dur-slow: 0.6s;
+}
+
+/* Shared card surface + hover-lift logic (applies everywhere) */
+.im-card {
+  background: var(--im-surface);
+  border: 1px solid var(--ng-line);
+  border-radius: var(--im-radius-card);
+  box-shadow: var(--im-shadow-card);
+  transition: transform 0.35s var(--im-ease),
+    box-shadow 0.35s var(--im-ease),
+    border-color 0.35s var(--im-ease);
+}
+
+.im-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--im-shadow-lift);
+}
+
+/* Animated thin gradient accent rule that draws in from the left */
+.im-accent-rule {
+  height: 3px;
+  border: none;
+  border-radius: 999px;
+  background: var(--im-accent-rule);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.im-reveal-rule {
+  animation: im-draw-rule 0.9s var(--im-ease) forwards;
+}
+
+@keyframes im-draw-rule {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Section eyebrow choreography base */
+.im-eyebrow {
+  font-family: var(--ng-font-heading);
+  font-size: var(--ng-fs-eyebrow);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--im-blue);
+}
+
+/* Dark-surface variant — gold, for navy bands */
+.im-eyebrow-dark {
+  color: var(--im-yellow);
+}
+
+/* Tabular numerals so counters/stats align crisply */
+.im-numeral {
+  font-family: var(--ng-font-heading);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------
    7. Global utilities + motion keyframes
    ------------------------------------------------------------ */
 

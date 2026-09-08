@@ -58,28 +58,28 @@ export const TRUST_ITEMS = [
 
 
 /* ------------------------------------------------------------
-   3. Hero — Rotating Workforce Hero (workforce/heroleft1/2/3).
+   3. Hero — Rotating Workforce Hero (hero/hero1-3).
    The three PNG-specific cutout pairs cross-fade on a timed cycle,
    each paired with a matching headline variant.
    ------------------------------------------------------------ */
 export const HERO_ROTATION = [
   {
     id: "healthcare",
-    image: "/image/workforce/heroleft1.png",
+    image: "/image/hero/hero1.png",
     alt: "PNG healthcare workers in NextGen scrubs and medical wear",
     pill: "Healthcare",
     title: "Scrubs & Medical Wear Built for Long Shifts",
   },
   {
     id: "corporate",
-    image: "/image/workforce/heroleft2.webp",
+    image: "/image/hero/hero2.png",
     alt: "PNG corporate staff in branded executive uniforms",
     pill: "Corporate",
     title: "Executive & Corporate Wardrobes That Represent You",
   },
   {
     id: "mining",
-    image: "/image/workforce/heroleft3.webp",
+    image: "/image/hero/hero3.png",
     alt: "PNG mining and construction team in hi-vis safety workwear",
     pill: "Mining & Safety",
     title: "Certified Hi-Vis & Safety Workwear for the Field",
@@ -102,23 +102,23 @@ export const HERO_STATIC = {
    redesign; the hero now carries a condensed trust strip instead. */
 
 /* ------------------------------------------------------------
-   4. Category avatars — circular photo grid.
-   Uses customizationhub/ product photography (real PNG-context
-   product shots) instead of the generic /category/ stock photos.
+   4. Category avatars — photo grid.
+   Uses the renamed /image/category/ product photography
+   (real PNG-context product shots).
    ------------------------------------------------------------ */
 const SECTION2_IMAGES = [
-  "/image/category/fleeces.webp",
-  "/image/category/businesswear.webp",
-  "/image/category/shirts.webp",
-  "/image/category/bar.webp",
-  "/image/category/jacket.webp",
-  "/image/category/blouse.webp",
-  "/image/category/scrubs.webp",
-  "/image/category/labcoat.webp",
-  "/image/category/trouser.webp",
-  "/image/category/chef.webp",
-  "/image/category/spa.webp",
-  "/image/category/nurse.webp",
+  "/image/category/cat_workwear_safety.jpeg",
+  "/image/category/cat_corporate.jpeg",
+  "/image/category/cat_custom_apparel.jpeg",
+  "/image/category/cat_branding.jpeg",
+  "/image/category/cat_hivis.jpeg",
+  "/image/category/cat_executive.jpeg",
+  "/image/category/cat_sublimation.jpeg",
+  "/image/category/cat_embroidery.jpeg",
+  "/image/category/cat_ppe.jpeg",
+  "/image/category/cat_hospitality.jpeg",
+  "/image/category/cat_sportswear.jpeg",
+  "/image/category/cat_merchandise.jpeg",
 ];
 
 export interface CategoryAvatar {
@@ -220,17 +220,17 @@ export const CATEGORY_AVATARS: CategoryAvatar[] = [
    workforce photography).
    ------------------------------------------------------------ */
 const INDUSTRY_IMAGES: Record<string, string> = {
-  mining: "/image/workforce/heroleft3.webp",
-  construction: "/image/workforce/heroleft3.webp",
-  "logistics-transport": "/image/workforce/heroleft3.webp",
-  "energy-utilities": "/image/workforce/heroleft3.webp",
-  "hospitality-tourism": "/image/workforce/heroleft2.webp",
-  "agriculture-fisheries": "/image/workforce/heroleft2.webp",
-  healthcare: "/image/workforce/heroleft1.png",
-  education: "/image/workforce/heroleft2.webp",
-  corporate: "/image/workforce/heroleft2.webp",
-  security: "/image/workforce/heroleft3.webp",
-  sports: "/image/workforce/heroleft2.webp",
+  mining: "/image/sector/sec_mining.jpeg",
+  construction: "/image/sector/sec_construction.jpeg",
+  "logistics-transport": "/image/sector/sec_logistics.jpeg",
+  "energy-utilities": "/image/sector/sec_energy.jpeg",
+  "hospitality-tourism": "/image/sector/sec_hospitality.jpeg",
+  "agriculture-fisheries": "/image/sector/sec_agriculture.jpeg",
+  healthcare: "/image/sector/sec_healthcare.jpeg",
+  education: "/image/sector/sec_education.jpeg",
+  corporate: "/image/sector/sec_corporate_sector.jpeg",
+  security: "/image/sector/sec_security.jpeg",
+  sports: "/image/sector/sec_sports.jpeg",
 };
 
 const INDUSTRY_ACCENTS: Record<string, string> = {
@@ -270,10 +270,10 @@ export const ABOUT = {
   cta: "Speak to Our Team",
   ctaHref: "/contact",
   media: [
-    { src: "/image/workforce/miningandenergy.webp", alt: "Mining team in branded protective workwear" },
-    { src: "/image/workforce/healthcareandmedical.webp", alt: "Healthcare team in clinical scrubs" },
-    { src: "/image/workforce/hospitalityservice.webp", alt: "Hospitality staff in coordinated uniforms" },
-    { src: "/image/workforce/constructionandinfrastructure.webp", alt: "Construction crew in hi-vis apparel" },
+    { src: "/image/workforce/wf_mining.jpeg", alt: "Mining team in branded protective workwear" },
+    { src: "/image/workforce/wf_healthcare.jpeg", alt: "Healthcare team in clinical scrubs" },
+    { src: "/image/workforce/wf_hospitality.jpeg", alt: "Hospitality staff in coordinated uniforms" },
+    { src: "/image/workforce/wf_construction.jpeg", alt: "Construction crew in hi-vis apparel" },
   ],
 };
 
@@ -343,7 +343,7 @@ export const REVIEWS_PLACEHOLDER = {
 
 /* ------------------------------------------------------------
    8. Product/service carousels — one rail per major category.
-   Images from customizationhub + workforce (real site imagery).
+   Images from custumized + uniform + workforce (real site imagery).
    ------------------------------------------------------------ */
 export interface RailItem {
   title: string;
@@ -403,7 +403,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Hi-Vis Shirts",
         "/services/safety-wear-hi-vis-uniforms",
-        "/image/uniform/safetywear.webp",
+        "/image/uniform/uni_safety.jpeg",
         "High-visibility hi-vis shirts",
         "var(--ng-safety)",
         "AS/NZS hi-vis",
@@ -412,7 +412,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Mining & Industrial Workwear",
         "/services/mining-industrial-workwear",
-        "/image/uniform/miningworkwear.webp",
+        "/image/uniform/uni_mining.jpeg",
         "Heavy-duty mining and industrial workwear",
         "var(--ng-graphite)",
         "Heavy-duty build",
@@ -420,7 +420,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Safety Vests",
         "/services/safety-wear-hi-vis-uniforms",
-        "/image/category/5_f4254a1b-e2e9-4ce5-b43a-4ce13e53a4cf.webp",
+        "/image/category/cat_hivis.jpeg",
         "High-visibility safety vests",
         "var(--ng-safety)",
         "Reflective tape",
@@ -429,7 +429,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Hi-Vis Jackets",
         "/services/safety-wear-hi-vis-uniforms",
-        "/image/category/2255_saturn_jacket_1c648260-7e6e-40f2-9e36-b8a44546ae9c.webp",
+        "/image/category/cat_ppe.jpeg",
         "Weather-ready hi-vis jackets",
         "var(--ng-safety)",
         "Weather-ready",
@@ -437,7 +437,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Security Uniforms",
         "/services/security-uniforms",
-        "/image/uniform/securityuniforms.webp",
+        "/image/uniform/uni_security.jpeg",
         "Professional security uniforms",
         "var(--ng-graphite)",
         "Clear identification",
@@ -445,7 +445,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Work Trousers & Coveralls",
         "/services/mining-industrial-workwear",
-        "/image/category/6_4ab1bf0c-32df-4110-b33b-a362b2653153.webp",
+        "/image/category/cat_workwear_safety.jpeg",
         "Durable work trousers and coveralls",
         "var(--ng-graphite)",
         "Reinforced seams",
@@ -468,7 +468,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Executive & Corporate Uniforms",
         "/services/executive-corporate-uniforms",
-        "/image/uniform/exucutivewear.webp",
+        "/image/uniform/uni_corporate.jpeg",
         "Executive and corporate uniforms",
         "var(--ng-burgundy)",
         "Tailored fit",
@@ -477,7 +477,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Hospitality Uniforms & Linen",
         "/services/hospitality-uniforms-linen-supplies",
-        "/image/uniform/hospitalityservice.webp",
+        "/image/uniform/uni_hospitality.jpeg",
         "Hospitality uniforms and linen supplies",
         "var(--ng-burgundy)",
         "Guest-facing",
@@ -485,7 +485,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Hospital Wear & Scrubs",
         "/services/hospital-wear-scrubs",
-        "/image/category/7_2714e47d-5405-4280-b8a7-d40d7e6ef4eb.webp",
+        "/image/uniform/uni_medical.jpeg",
         "Comfortable clinical scrubs and hospital wear",
         "var(--ng-burgundy)",
         "Clinical comfort",
@@ -494,7 +494,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Kitchen & Chef Apparel",
         "/services/hospitality-uniforms-linen-supplies",
-        "/image/banners/ChefUniformsDesktop.webp",
+        "/image/category/cat_hospitality.jpeg",
         "Professional kitchen and chef apparel",
         "var(--ng-burgundy)",
         "Heat-safe fabrics",
@@ -502,7 +502,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "School Uniforms & Accessories",
         "/services/school-uniforms-accessories",
-        "/image/uniform/schooluniforms.webp",
+        "/image/uniform/uni_school.jpeg",
         "School uniforms and accessories",
         "var(--ng-gold)",
         "School colours",
@@ -510,7 +510,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Healthcare Teamwear",
         "/services/hospital-wear-scrubs",
-        "/image/banners/Healthcare_Desktop_Banner_3.webp",
+        "/image/workforce/wf_healthcare.jpeg",
         "Colour-coded healthcare teamwear",
         "var(--ng-burgundy)",
         "Department colours",
@@ -533,7 +533,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Sublimation Polos & T-Shirts",
         "/services/customized-sublimation-polos-tshirts",
-        "/image/customizationhub/shirt.webp",
+        "/image/custumized/cust_shirt.webp",
         "Full-colour sublimation polos and t-shirts",
         "var(--ng-gold)",
         "Edge-to-edge print",
@@ -542,7 +542,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Sportswear & Teamwear",
         "/services/sportswear",
-        "/image/uniform/sportswear.webp",
+        "/image/uniform/uni_sports.jpeg",
         "Custom jerseys and training wear",
         "var(--ng-accent)",
         "Team colours",
@@ -550,7 +550,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Embroidery & Printing",
         "/services/embroidery-printing",
-        "/image/customizationhub/cap.webp",
+        "/image/custumized/cust_cap.webp",
         "Embroidery, logo application and printing",
         "var(--ng-forest)",
         "Logo application",
@@ -558,7 +558,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Branded Merchandise",
         "/services/promotional-branded-merchandise",
-        "/image/customizationhub/bottle.webp",
+        "/image/custumized/cust_bottle.webp",
         "Promotional apparel and branded merchandise",
         "var(--ng-forest)",
         "Event giveaways",
@@ -567,7 +567,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Custom T-Shirts & Teamwear",
         "/services/customized-sublimation-polos-tshirts",
-        "/image/customizationhub/tshirt.webp",
+        "/image/custumized/cust_tshirt.webp",
         "Custom t-shirts and teamwear",
         "var(--ng-gold)",
         "Full-colour",
@@ -575,7 +575,7 @@ export const PRODUCT_RAILS: ProductRail[] = [
       railItem(
         "Branded Caps & Accessories",
         "/services/promotional-branded-merchandise",
-        "/image/customizationhub/umbrella.webp",
+        "/image/custumized/cust_umbrella.webp",
         "Branded caps, bags and accessories",
         "var(--ng-forest)",
         "Everyday carry",
@@ -599,10 +599,10 @@ export const BULK_BAND = {
   cta: "View Our Full Range",
   ctaHref: "/contact",
   collage: [
-    { src: "/image/workforce/heroleft3.webp", alt: "Mining crew in branded hi-vis workwear" },
-    { src: "/image/workforce/heroleft1.png", alt: "Healthcare team in clinical scrubs" },
-    { src: "/image/banners/ChefUniformsDesktop.webp", alt: "Hospitality staff in front-of-house uniforms" },
-    { src: "/image/uniform/miningworkwear.webp", alt: "Industrial team in protective workwear" },
+    { src: "/image/uniform/uni_security.jpeg", alt: "Security team in branded uniforms" },
+    { src: "/image/uniform/uni_school.jpeg", alt: "School students in branded uniforms" },
+    { src: "/image/uniform/uni_corporate.jpeg", alt: "Corporate staff in tailored uniforms" },
+    { src: "/image/uniform/uni_safety.jpeg", alt: "Industrial team in hi-vis safety workwear" },
   ],
 };
 
@@ -631,7 +631,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "Visibility standards, fabric choices and fit — what to look for when you equip a crew for roadside or site work.",
     readTime: "6 min read",
-    image: "/image/workforce/heroleft3.webp",
+    image: "/image/workforce/wf_mining.jpeg",
     alt: "Worker in a hi-vis vest at a busy worksite",
   },
   {
@@ -643,7 +643,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "From embroidered logos to full-colour sublimation — how consistent branding builds trust with your customers.",
     readTime: "5 min read",
-    image: "/image/customizationhub/cap.webp",
+    image: "/image/custumized/cust_cap.webp",
     alt: "Close-up of an embroidered company logo on a uniform shirt",
   },
   {
@@ -655,7 +655,7 @@ export const BLOG_POSTS: BlogPost[] = [
     excerpt:
       "Caps, bottles, bags and more — practical merchandise your team actually uses, and your customers remember.",
     readTime: "4 min read",
-    image: "/image/customizationhub/bottle.webp",
+    image: "/image/custumized/cust_bottle.webp",
     alt: "Branded promotional merchandise arranged on a table",
   },
 ];
@@ -729,9 +729,9 @@ export const NEWSLETTER = {
   eyebrow: "Stay in the loop",
   title: "Workwear, uniform and branding know-how for PNG organisations.",
   sub: "Product launches, seasonal ranges and practical advice — straight to your inbox. No spam, unsubscribe anytime.",
-  image: "/image/banners/Healthcare_Desktop_Banner_3.webp",
+  image: "/image/uniform/uni_corporate.jpeg",
   imageAlt: "NextGen branded apparel range on display",
-  placeholder: "you@company.com.pg",
+  placeholder: "erick_omar@gmail.com",
 };
 
 /* ------------------------------------------------------------
@@ -752,7 +752,7 @@ export const WORKFORCE_GALLERY = {
       name: "Education & School",
       description: "School uniforms, sportswear and stationery for the next generation.",
       href: "/services/school-uniforms-accessories",
-      image: "/image/workforce/educationandschool.webp",
+      image: "/image/sector/sec_education.jpeg",
       alt: "Teacher in business attire holding a notebook in a classroom",
       accent: "#7c3aed",
     },
@@ -761,7 +761,7 @@ export const WORKFORCE_GALLERY = {
       name: "Mining & Energy",
       description: "Hi-vis, FR coveralls and safety gear for extreme conditions.",
       href: "/services/mining-industrial-workwear",
-      image: "/image/workforce/miningandenergy.webp",
+      image: "/image/sector/sec_mining.jpeg",
       alt: "Mining worker in orange and navy hi-vis coverall and white hard hat",
       accent: "#f5a623",
     },
@@ -770,7 +770,7 @@ export const WORKFORCE_GALLERY = {
       name: "Healthcare & Medical",
       description: "Medical apparel, scrubs and lab coats built for long shifts.",
       href: "/services/hospital-wear-scrubs",
-      image: "/image/workforce/healthcareandmedical.webp",
+      image: "/image/sector/sec_healthcare.jpeg",
       alt: "Doctor in scrubs and lab coat with stethoscope in a hospital hallway",
       accent: "#10b981",
     },
@@ -779,7 +779,7 @@ export const WORKFORCE_GALLERY = {
       name: "Hospitality & Catering",
       description: "Chef wear, front-of-house uniforms and premium linen.",
       href: "/services/hospitality-uniforms-linen-supplies",
-      image: "/image/workforce/hospitalityservice.webp",
+      image: "/image/sector/sec_hospitality.jpeg",
       alt: "Chef in white coat and toque holding a tablet in a kitchen",
       accent: "#0f766e",
     },
@@ -788,7 +788,7 @@ export const WORKFORCE_GALLERY = {
       name: "Construction & Infrastructure",
       description: "Hi-vis jackets, helmets and heavy-duty workwear for the build site.",
       href: "/services/safety-wear-hi-vis-uniforms",
-      image: "/image/workforce/constructionandinfrastructure.webp",
+      image: "/image/sector/sec_construction.jpeg",
       alt: "Construction worker in hi-vis jacket and hard hat holding blueprints",
       accent: "#ff5a1f",
     },
@@ -809,7 +809,7 @@ export const CORPORATE_ACCOUNTS = {
     "Speak to our sales team to see how NextGen can support your business operations.",
   cta: "Enquire Today",
   ctaHref: "/contact",
-  image: "/image/banners/hero44.png",
+  image: "/image/misc/corp_accounts.jpeg",
   imageAlt: "NextGen branded corporate workwear range",
 };
 
@@ -862,23 +862,23 @@ export const COMMUNITY_NEWS = {
 /* ------------------------------------------------------------
     16. Branding & Customization Hub (Section B).
     Exact copy from the brief. Images mirror the
-    /image/customizationhub folder (single source of truth).
+    /image/custumized folder (single source of truth).
     ------------------------------------------------------------ */
 export const CUSTOMIZATION_HUB = {
   eyebrow: "Custom Solutions",
   intro:
     "Your complete source for branded apparel and merch — embroidered, sublimated and printed to give your people and products a standout identity.",
   images: [
-    "/image/customizationhub/bag.webp",
-    "/image/customizationhub/bottle.webp",
-    "/image/customizationhub/cap.webp",
-    "/image/customizationhub/mug.webp",
-    "/image/customizationhub/shirt.webp",
-    "/image/customizationhub/shirt2.webp",
-    "/image/customizationhub/shirt3.webp",
-    "/image/customizationhub/shirt4.webp",
-    "/image/customizationhub/tshirt.webp",
-    "/image/customizationhub/umbrella.webp",
+    "/image/custumized/cust_bag.webp",
+    "/image/custumized/cust_bottle.webp",
+    "/image/custumized/cust_cap.webp",
+    "/image/custumized/cust_mug.webp",
+    "/image/custumized/cust_shirt.webp",
+    "/image/custumized/cust_shirt2.webp",
+    "/image/custumized/cust_shirt3.webp",
+    "/image/custumized/cust_shirt4.webp",
+    "/image/custumized/cust_tshirt.webp",
+    "/image/custumized/cust_umbrella.webp",
   ],
 };
 
@@ -922,7 +922,7 @@ export const DISTRIBUTOR_BAND = {
     "Locate an authorized NextGen distributor for expert fitting advice and our full uniform and workwear range.",
   cta: "Find a Distributor",
   href: "/contact",
-  image: "/image/bg.png",
+  image: "/image/misc/dist_banner.jpeg",
   imageAlt: "NextGen branded workforce apparel on display",
 };
 
@@ -945,7 +945,7 @@ export const SHOP_BY_COLLECTION = {
       chip: "Industrial",
       icon: "vest",
       accent: "#ff5a1f",
-      image: "/image/uniform/safetywear.webp",
+      image: "/image/uniform/uni_safety.jpeg",
       alt: "Full high-visibility safety workwear with protective hi-vis jacket",
       href: "/services/safety-wear-hi-vis-uniforms",
     },
@@ -954,7 +954,7 @@ export const SHOP_BY_COLLECTION = {
       chip: "Corporate",
       icon: "blazer",
       accent: "#7c3aed",
-      image: "/image/uniform/exucutivewear.webp",
+      image: "/image/uniform/uni_corporate.jpeg",
       alt: "Full tailored executive corporate suit",
       href: "/services/executive-corporate-uniforms",
     },
@@ -963,7 +963,7 @@ export const SHOP_BY_COLLECTION = {
       chip: "School",
       icon: "cap",
       accent: "#0f766e",
-      image: "/image/uniform/schooluniforms.webp",
+      image: "/image/uniform/uni_school.jpeg",
       alt: "Complete school uniform polo and bottoms",
       href: "/services/school-uniforms-accessories",
     },
@@ -972,7 +972,7 @@ export const SHOP_BY_COLLECTION = {
       chip: "Medical",
       icon: "stethoscope",
       accent: "#10b981",
-      image: "/image/uniform/hospitawear.webp",
+      image: "/image/uniform/uni_medical.jpeg",
       alt: "Full clinical scrubs worn by a healthcare professional",
       href: "/services/hospital-wear-scrubs",
     },
@@ -981,7 +981,7 @@ export const SHOP_BY_COLLECTION = {
       chip: "Hospitality",
       icon: "chef",
       accent: "#f5a623",
-      image: "/image/uniform/hospitalityservice.webp",
+      image: "/image/uniform/uni_hospitality.jpeg",
       alt: "Full hospitality uniform and chef apparel",
       href: "/services/hospitality-uniforms-linen-supplies",
     },
@@ -990,7 +990,7 @@ export const SHOP_BY_COLLECTION = {
       chip: "Security",
       icon: "shield",
       accent: "#e11d48",
-      image: "/image/uniform/securityuniforms.webp",
+      image: "/image/uniform/uni_security.jpeg",
       alt: "Full security uniform with branded insignia",
       href: "/services/security-uniforms",
     },
@@ -999,7 +999,7 @@ export const SHOP_BY_COLLECTION = {
       chip: "Industrial",
       icon: "hardhat",
       accent: "#d97706",
-      image: "/image/uniform/miningworkwear.webp",
+      image: "/image/uniform/uni_mining.jpeg",
       alt: "Full mining and industrial workwear ensemble",
       href: "/services/mining-industrial-uniforms",
     },
@@ -1008,7 +1008,7 @@ export const SHOP_BY_COLLECTION = {
       chip: "Sports",
       icon: "jersey",
       accent: "#2563eb",
-      image: "/image/uniform/sportswear.webp",
+      image: "/image/uniform/uni_sports.jpeg",
       alt: "Complete sports uniform and activewear set",
       href: "/services/sports-uniforms",
     },

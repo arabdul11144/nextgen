@@ -5,14 +5,14 @@
    or removing a file in a folder changes the page with no other
    code changes. Order is alphabetical for a deterministic cycle.
 
-   Current folder layout (from the image.zip extraction):
-   - /image/workforce/        — PNG-specific cutout photographs
-     (heroleft1/2/3 + industry shots)
-   - /image/biz/              — supplier / partner logos (white BG)
-   - /image/banners/          — promotional banners (UK-branded
-     "Since 1950" family + US/UK scrub-blog thumbnails retired;
-     only PNG-branded banners remain)
-   - /image/customizationhub/ — neutral product photography
+   Current folder layout:
+   - /image/hero/           — hero cutout photography
+     (hero1/2/3 + hero111/222/333 + hero_corporate)
+   - /image/biz/            — supplier / partner logos (white BG)
+     (bizcare/bizcolab/bizcorporates/bizzcollection/syzmik/yeschef)
+   - /image/banners/        — promotional banners (bulkbanner,
+     hero44)
+   - /image/custumized/     — neutral product photography
    ============================================================ */
 
 import { readdirSync } from "node:fs";
@@ -34,14 +34,14 @@ function listImages(subdir: string): string[] {
   }
 }
 
-/** Rotating hero model cutouts (workforce/heroleft1-3) */
-export const heroLeftImages = listImages("workforce").filter((f) =>
-  /heroleft/i.test(f),
+/** Rotating hero model cutouts (hero/hero1-3 + variants) */
+export const heroLeftImages = listImages("hero").filter(
+  (f) => /\/(hero[123]|hero_corporate)\./i.test(f),
 );
 
-/** Process / manufacturing collage images (customizationhub + banners) */
+/** Process / manufacturing collage images (custumized + banners) */
 export const heroRightImages = [
-  ...listImages("customizationhub"),
+  ...listImages("custumized"),
   ...listImages("banners").filter(
     (f) => /Desktop_Boxes|ChefUniforms|BeatTheHeat|Healthcare_Desktop_Banner_3|bulkbanner/i.test(f),
   ),

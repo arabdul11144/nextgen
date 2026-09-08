@@ -108,7 +108,7 @@ export function ContactForm() {
             value={values.email}
             onChange={handleChange}
             aria-invalid={errors.email || undefined}
-            placeholder="you@company.com"
+            placeholder="erick_omar@gmail.com"
           />
           {errors.email && <span className={styles.error}>{requiredText}</span>}
         </div>

@@ -1,177 +1,314 @@
 /* ============================================================
-   Bulk & corporate CTA band + logo marquee
+   Bulk & corporate CTA band — "Every Uniform. One Trusted Supplier."
+   Deep navy ambient-glow band. A single compact rotating uniform
+   frame (accent-colored glow + border, cross-fade + slide carousel,
+   pill-dot progress) beside the headline/copy, and a gold
+   fill-sweep CTA.
    ============================================================ */
 
 .section {
-  background: var(--ng-navy-900);
-  padding: var(--ng-row) 0;
+  position: relative;
+  isolation: isolate;
+  background: var(--im-navy, #0a1a2f);
+  padding: clamp(64px, 8vw, 110px) 0;
+  overflow: hidden;
+  color: #ffffff;
+}
+
+/* ── Ambient glow fields ── */
+.glowTop {
+  position: absolute;
+  z-index: -1;
+  top: -30%;
+  right: -10%;
+  width: 55%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(33, 92, 246, 0.35), transparent 62%);
+  pointer-events: none;
+  animation: drift-glow-a 9s var(--im-ease) infinite alternate;
+}
+
+.glowSide {
+  position: absolute;
+  z-index: -1;
+  bottom: -35%;
+  left: -12%;
+  width: 60%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(255, 90, 31, 0.22), transparent 65%);
+  pointer-events: none;
+  animation: drift-glow-b 11s var(--im-ease) infinite alternate;
+}
+
+@keyframes drift-glow-a {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(6%, 8%) scale(1.12);
+  }
+}
+
+@keyframes drift-glow-b {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(-6%, -6%) scale(1.1);
+  }
+}
+
+/* faint "BULK" watermark in the corner */
+.watermark {
+  position: absolute;
+  z-index: -1;
+  bottom: clamp(-12px, -1vw, 8px);
+  right: clamp(8px, 2vw, 24px);
+  font-family: var(--ng-font-heading);
+  font-size: clamp(4rem, 10vw, 8rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  color: rgba(198, 215, 238, 0.045);
+  user-select: none;
+  pointer-events: none;
 }
 
 .inner {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 clamp(16px, 3vw, 32px);
+  position: relative;
 }
 
+/* The frame is a compact supporting visual — roughly image size +
+   fixed ~18px card padding. Footprint lands around 360–400px wide by
+   300–340px tall. The card shrink-wraps the image (no fixed/min
+   heights), so nothing can collapse or blow up. */
 .grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
   gap: clamp(28px, 4vw, 56px);
   align-items: center;
 }
 
-/* ── Collage ── */
-.collage {
+/* ── Single-frame rotating uniform panel ── */
+.frameWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Card + image geometry shared by the frame, label and arrows so they
+   all line up on the actual photo. */
+.frameShell {
+  --card-pad: 18px;
+  --img-w: clamp(300px, 32vw, 360px);
+  --img-h: 260px;
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 8px;
-  aspect-ratio: 4 / 3;
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 24px 60px rgba(4, 11, 24, 0.25);
+  width: fit-content;
 }
 
-.cell {
+/* soft, slow-pulsing accent glow drifting behind the frame */
+.frameGlow {
+  position: absolute;
+  inset: -14%;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(30px);
+  opacity: 0.5;
+  animation: frame-glow-pulse 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes frame-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.04);
+  }
+}
+
+/* the framed photo — portrait, tall enough for a full garment */
+.frame {
+  --frame-accent: #215cf6;
   position: relative;
-  overflow: hidden;
-  border-radius: 18px;
-  /* White tile surface — the contained garment sits centred on white, so
-     the letterbox/padding around the product photo reads as clean padding
-     rather than empty dark space. */
-  background: var(--ng-white, #ffffff);
-  isolation: isolate;
-}
-
-/* ── Tile shapes — each tile has one prominent diagonal cut that
-      alternates direction between tiles (top row + bottom row), so
-      the centre of the grid forms a folded chevron. The outer
-      corners stay subtly rounded via the collage's overflow clip. ── */
-.cell1 {
-  /* top-left: right edge cuts away top, toward centre of the grid */
-  clip-path: polygon(0 0, 76% 0, 100% 100%, 0 100%);
-}
-
-.cell2 {
-  /* top-right: left edge cuts away top, mirror of cell1 */
-  clip-path: polygon(24% 0, 100% 0, 100% 100%, 0 100%);
-}
-
-.cell3 {
-  /* bottom-left: right edge cuts away bottom — sawtooth reversed */
-  clip-path: polygon(0 0, 100% 0, 76% 100%, 0 100%);
-}
-
-.cell4 {
-  /* bottom-right: left edge cuts away bottom, mirror of cell3 */
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 24% 100%);
-}
-
-/* ── Image layers for crossfade ──
-   Fit = contain so the ENTIRE full-body garment is always visible
-   (head to foot) and never cropped by the fixed-size cell, regardless
-   of viewport. Width/height 100% keep it filling the cell as much as
-   possible without cropping; object-position center keeps the photo
-   centred within the cell's letterbox. The white `.cell` background
-   shows through as intentional padding. */
-.photo {
-  object-fit: contain;
-  object-position: center;
+  z-index: 1;
   width: 100%;
-  height: 100%;
-  transition: transform 0.6s var(--ng-ease-out-cubic, cubic-bezier(0.22, 0.61, 0.36, 1));
+  aspect-ratio: 4 / 5;
+  min-height: 480px;
+  max-height: 560px;
+  border-radius: 17px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ffffff 0%, #f0f3f8 100%);
+  transition: box-shadow 0.6s var(--im-ease);
 }
 
-.visible {
-  opacity: 1;
-}
-
-.fadeIn {
-  opacity: 0;
-  animation: ng-collage-fade-in 0.7s ease-in-out forwards;
-}
-
-.fadeOut {
-  opacity: 1;
-  animation: ng-collage-fade-out 0.7s ease-in-out forwards;
-}
-
-@keyframes ng-collage-fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes ng-collage-fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-/* ── Hover effects ── */
-.cell:hover .photo {
-  transform: scale(1.04);
-}
-
-.cellHover {
-  box-shadow: 0 16px 36px rgba(4, 11, 24, 0.45);
-  z-index: 2;
-}
-
-/* ── Vignette overlay ── */
-.vignette {
+.stage {
   position: absolute;
   inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(11, 18, 32, 0.05) 0%,
-    transparent 45%,
-    rgba(11, 18, 32, 0.35) 100%
-  );
-  border-radius: inherit;
 }
 
-/* ── Category chip — bottom-centred ──
-   Positioned along the bottom edge of each tile, horizontally centred.
-   The dark pill + blur scrim keep the label fully legible against the
-   white tile and any garment passing behind it (object-position stays
-   `center`, so the crop fix is untouched). */
-.chip,
-.chipTl,
-.chipTr,
-.chipBl,
-.chipBr {
+/* clean, soft studio backdrop behind the garment */
+.stageBackdrop {
   position: absolute;
-  bottom: clamp(12px, 1.6vw, 16px);
+  inset: 0;
+  background: radial-gradient(circle at 50% 38%, #ffffff 0%, #edf1f7 72%, #dfe6f0 100%);
+  pointer-events: none;
+}
+
+.framePhoto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  padding: 26px 18px;
+  filter: drop-shadow(0 14px 26px rgba(13, 27, 42, 0.18));
+}
+
+/* ── Floating category label pill ── */
+.frameLabel {
+  position: absolute;
   left: 50%;
-  transform: translateX(-50%);
-  top: auto;
-  right: auto;
+  bottom: 16px;
   z-index: 2;
-  padding: 5px 11px;
-  background: rgba(11, 18, 32, 0.82);
+  transform: translateX(-50%);
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.frameLabelRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px 7px 13px;
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(13, 27, 42, 0.06);
   border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(13, 27, 42, 0.18);
   font-family: var(--ng-font-heading);
   font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-weight: 800;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #ffffff;
+  color: var(--im-ink, #0d1b2a);
   white-space: nowrap;
-  pointer-events: none;
-  box-shadow: 0 4px 14px rgba(4, 11, 24, 0.45);
+}
+
+.frameDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+}
+
+/* ── Ghost arrows, visible only on hover ── */
+.frameArrow {
+  position: absolute;
+  top: 50%;
+  z-index: 3;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid rgba(198, 215, 238, 0.28);
+  background: rgba(10, 26, 47, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.85);
+  transition: opacity 0.25s var(--im-ease), transform 0.25s var(--im-ease), color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.frameArrow:hover {
+  color: #ffffff;
+  border-color: var(--frame-accent);
+  background: color-mix(in srgb, var(--frame-accent) 35%, rgba(10, 26, 47, 0.55));
+}
+
+.frameShell.hovered .frameArrow {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.frameArrow:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
+.frameArrow svg {
+  width: 15px;
+  height: 15px;
+}
+
+.frameArrowLeft {
+  left: -18px;
+}
+
+.frameArrowRight {
+  right: -18px;
+}
+
+/* ── Pill-dot progress bar ── */
+.frameProgress {
+  display: flex;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.pill {
+  height: 6px;
+  flex: 1;
+  max-width: 44px;
+  border: none;
+  padding: 0;
+  background: rgba(198, 215, 238, 0.18);
+  border-radius: 999px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  transition: flex 0.4s var(--im-ease), background 0.2s ease;
+}
+
+.pillActive {
+  flex: 2.4;
+  max-width: 104px;
+  background: rgba(198, 215, 238, 0.3);
+}
+
+/* active bar fills over the auto-advance duration; pauses on hover */
+.pillFill {
+  position: absolute;
+  inset: 0;
+  background: var(--frame-accent, #215cf6);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: frame-fill 3.8s linear forwards;
+}
+
+@keyframes frame-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.frameShell.hovered + .frameProgress .pillFill {
+  animation-play-state: paused;
 }
 
 /* ── Copy ── */
@@ -182,106 +319,155 @@
   gap: 14px;
 }
 
+.headRule {
+  display: block;
+  width: 84px;
+  margin: 4px 0 6px;
+}
+
 .title {
   margin: 0;
   font-family: var(--ng-font-heading);
-  font-size: var(--ng-fs-h2);
+  font-size: clamp(1.8rem, 3.6vw, 3rem);
   font-weight: 900;
-  line-height: 1.08;
-  letter-spacing: -0.015em;
-  color: var(--ng-white);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #ffffff;
   text-wrap: balance;
+}
+
+.titleGold {
+  display: block;
+  color: var(--im-yellow, #ffc72c);
+  text-shadow: 0 0 30px rgba(255, 199, 44, 0.3);
 }
 
 .paragraph {
   margin: 0;
   font-size: 0.96rem;
   line-height: 1.7;
-  color: var(--ng-on-dark);
+  color: var(--im-on-dark, #c7d4e8);
 }
 
+/* ── CTA — navy pill, white border, gold fill-sweep ── */
 .cta {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  overflow: hidden;
   margin-top: 6px;
-  padding: 14px 28px;
+  padding: 15px 32px 15px 34px;
   font-family: var(--ng-font-heading);
   font-size: 0.9rem;
   font-weight: 800;
+  letter-spacing: 0.02em;
   color: #ffffff;
-  background: var(--ng-accent-blue);
-  border-radius: var(--ng-radius-4);
-  transition:
-    background 0.2s ease,
-    transform 0.15s ease,
-    box-shadow 0.2s ease;
+  background: rgba(10, 26, 47, 0.55);
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
+  border-radius: 999px;
+  transition: color 0.3s var(--im-ease), border-color 0.3s var(--im-ease), transform 0.15s ease, box-shadow 0.3s var(--im-ease);
+  isolation: isolate;
+}
+
+.ctaFill {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--im-yellow, #ffc72c);
+  transform: translateX(-101%);
+  transition: transform 0.45s var(--im-ease);
 }
 
 .cta:hover {
-  background: #0c43b8;
+  color: var(--im-navy, #0a1a2f);
+  border-color: var(--im-yellow, #ffc72c);
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(21, 94, 239, 0.35);
+  box-shadow: 0 14px 36px rgba(255, 199, 44, 0.35);
+}
+
+.cta:hover .ctaFill {
+  transform: translateX(0);
+}
+
+.ctaLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.ctaArrow {
+  transition: transform 0.3s var(--im-ease);
+}
+
+.cta:hover .ctaArrow {
+  transform: translateX(4px);
 }
 
 /* ── Responsive ── */
 @media (max-width: 900px) {
   .grid {
     grid-template-columns: 1fr;
+    gap: 36px;
   }
 
-  .collage {
-    aspect-ratio: 16 / 10;
+  .frameWrap {
+    order: -1;
+    width: 100%;
+  }
+
+  /* full-width of the content column, proportional 3/4 height,
+     with an explicit fixed floor so it can never collapse small */
+  .frameShell {
+    width: 100%;
+    max-width: 440px;
+    min-width: 0;
+  }
+
+  .frame {
+    aspect-ratio: 3 / 4;
+    min-height: 400px;
+    max-height: 560px;
   }
 }
 
-/* ── Mobile (< 768px) ── */
 @media (max-width: 767px) {
-  .collage {
-    gap: 10px;
-    border-radius: 14px;
-    box-shadow: 0 16px 40px rgba(4, 11, 24, 0.2);
+  .frameLabel {
+    bottom: 12px;
   }
 
-  .cell {
-    border-radius: 14px;
+  .frameArrow {
+    width: 30px;
+    height: 30px;
   }
 
-  .chip,
-  .chipTl,
-  .chipTr,
-  .chipBl,
-  .chipBr {
-    bottom: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-    top: auto;
-    right: auto;
-    padding: 3px 8px;
-    font-size: 0.6rem;
+  .frameArrowLeft {
+    left: -12px;
+  }
+
+  .frameArrowRight {
+    right: -12px;
+  }
+
+  .cta {
+    width: 100%;
+    justify-content: center;
   }
 }
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
-  .fadeIn,
-  .fadeOut {
+  .glowTop,
+  .glowSide,
+  .frameGlow {
     animation: none;
   }
 
-  .fadeIn {
-    opacity: 1;
+  .pillFill {
+    animation: none;
   }
 
-  .fadeOut {
-    opacity: 0;
-  }
-
-  .photo {
+  .frameArrow {
     transition: none;
-  }
-
-  .cell:hover .photo {
-    transform: none;
   }
 }

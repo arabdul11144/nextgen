@@ -6,9 +6,9 @@
 
 export const IMAGES = {
   /** Hero people cut-out / hero background image */
-  hero: "/image/hero.png",
+  hero: "/image/hero/hero1.png",
   /** Generic placeholder used for every other image slot */
-  generic: "/image/image.png",
+  generic: "/image/uniform/uni_corporate.jpeg",
 } as const;
 
 export const HERO_IMAGE = IMAGES.hero;

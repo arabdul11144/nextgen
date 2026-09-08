@@ -7,14 +7,50 @@ import { CATEGORY_AVATARS } from "@/data/home-content";
 import styles from "./CategoryAvatars.module.css";
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 14 },
   show: { opacity: 1, y: 0 },
 };
 
+/* Colour-coded micro-tags — one accent chip per tile so categories are
+   distinguishable at a glance (echoes the "Industrial Momentum" palette). */
+const TAG_COLORS: Record<string, string> = {
+  "Workwear & Safety": "#ff5a1f",
+  "Corporate & Professional": "#215cf6",
+  "Custom Apparel & Branding": "#ffc72c",
+  "Branding & Merchandise": "#1aa260",
+  "Hi-Vis & Safety Wear": "#ff5a1f",
+  "Executive & Corporate": "#215cf6",
+  "Sublimation Polos & Tees": "#ffc72c",
+  "Embroidery & Printing": "#1aa260",
+  "PPE & Protective Wear": "#ce1126",
+  "Hospitality & Kitchen": "#f59e0b",
+  "Sportswear & Teamwear": "#10b981",
+  "Branded Merchandise": "#fbbf24",
+};
+
+function tagLabel(name: string): string {
+  const map: Record<string, string> = {
+    "Workwear & Safety": "Safety",
+    "Corporate & Professional": "Corporate",
+    "Custom Apparel & Branding": "Custom",
+    "Branding & Merchandise": "Branding",
+    "Hi-Vis & Safety Wear": "Hi-Vis",
+    "Executive & Corporate": "Corporate",
+    "Sublimation Polos & Tees": "Custom",
+    "Embroidery & Printing": "Print",
+    "PPE & Protective Wear": "PPE",
+    "Hospitality & Kitchen": "Kitchen",
+    "Sportswear & Teamwear": "Sport",
+    "Branded Merchandise": "Merch",
+  };
+  return map[name] ?? name;
+}
+
 /**
- * "Explore by Category" — clean card grid on a warm surface.
- * Each card has a circular avatar cut-out, accent-colored name,
- * and a "View collection" link with arrow hover animation.
+ * "Explore by Category" — dense, scannable category chip grid.
+ * Compact edge-to-edge photo cards: full-bleed thumbnail, slim tag
+ * pill, one-line title and an inline "View collection" link. Tight
+ * 12–16px gutters, no floating-card shadows at rest, subtle hover.
  */
 export function CategoryAvatars() {
   return (
@@ -22,18 +58,16 @@ export function CategoryAvatars() {
       <div className={styles.inner}>
         <motion.div
           className={styles.head}
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
         >
-          <p className="ng-eyebrow" style={{ color: "var(--ng-accent-coral)" }}>
-            Shop by Profession
-          </p>
+          <p className="im-eyebrow">Shop by Profession</p>
+          <span className={`im-accent-rule im-reveal-rule ${styles.headRule}`} aria-hidden="true" />
           <h2 className={styles.title}>Explore by Category</h2>
           <p className={styles.sub}>
-            From hi-vis safety wear to branded merchandise — find the range
-            that fits the way your team works.
+            Find the range that fits the way your team works.
           </p>
         </motion.div>
 
@@ -41,73 +75,64 @@ export function CategoryAvatars() {
           className={styles.grid}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ staggerChildren: 0.06 }}
+          viewport={{ once: true, amount: 0.12 }}
+          transition={{ staggerChildren: 0.04 }}
         >
-          {CATEGORY_AVATARS.map((cat) => (
-            <motion.div
-              key={cat.name}
-              className={styles.item}
-              variants={itemVariants}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-            >
-              <Link
-                href={cat.href}
-                className={styles.tile}
-                style={
-                  {
-                    "--cat-accent": "#2266f0",
-                    "--cat-accent-pastel": cat.accent,
-                  } as React.CSSProperties
-                }
-                aria-label={`${cat.name} — view collection`}
+          {CATEGORY_AVATARS.map((cat) => {
+            const tagColor = TAG_COLORS[cat.name] ?? "#215cf6";
+            return (
+              <motion.div
+                key={cat.name}
+                className={styles.item}
+                variants={itemVariants}
+                transition={{ duration: 0.35, ease: "easeOut" }}
               >
-                <span className={styles.stage}>
-                  <span className={styles.avatarBox}>
+                <Link
+                  href={cat.href}
+                  className={styles.tile}
+                  style={{ "--cat-accent": tagColor } as React.CSSProperties}
+                  aria-label={`${cat.name} — view collection`}
+                >
+                  {/* Edge-to-edge thumbnail — full card width, no frame */}
+                  <span className={styles.ph}>
                     <Image
                       src={cat.image}
                       alt={cat.alt}
                       fill
-                      sizes="(max-width: 640px) 30vw, (max-width: 1024px) 26vw, 170px"
-                      className={styles.avatar}
+                      sizes="(max-width: 640px) 46vw, (max-width: 1080px) 30vw, 23vw"
+                      className={styles.photo}
                     />
                   </span>
-                </span>
 
-                <span className={styles.meta}>
-                  <span className={styles.catName}>{cat.name}</span>
-                  <span className={styles.viewLink}>
-                    View collection
-                    <svg
-                      className={styles.arrow}
-                      viewBox="0 0 24 24"
-                      width="13"
-                      height="13"
-                      aria-hidden="true"
-                      focusable="false"
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.6"
-                      />
-                      <path
-                        d="M12 8l4 4-4 4M8 12h8"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                  {/* Tight body: tag pill, one-line title, inline link */}
+                  <span className={styles.body}>
+                    <span className={styles.tag}>{tagLabel(cat.name)}</span>
+                    <span className={styles.name}>{cat.name}</span>
+                    <span className={styles.view}>
+                      View collection
+                      <svg
+                        className={styles.arrow}
+                        viewBox="0 0 24 24"
+                        width="11"
+                        height="11"
+                        aria-hidden="true"
+                        focusable="false"
+                      >
+                        <path
+                          d="M12 8l4 4-4 4M8 12h8"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.4"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
                   </span>
-                </span>
-              </Link>
-            </motion.div>
-          ))}
+                </Link>
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

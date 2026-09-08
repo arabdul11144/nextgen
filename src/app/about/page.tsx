@@ -21,28 +21,28 @@ const values = [
     title: "Built for Real Work",
     text: "Engineered specifically for PNG's extreme terrain, high UV, wet climates, and tough industrial sites. No compromises on durability.",
     accent: "var(--ng-accent-orange, #ff5a1f)",
-    image: "/image/workforce/miningandenergy.webp",
+    image: "/image/featured/feat_quality.jpeg",
   },
   {
     index: "02",
     title: "Professional Finishing",
     text: "From tailored corporate suiting to crisp embroidery and high-res screen printing, our finishing represents your brand with pride.",
     accent: "var(--ng-accent-violet, #7c3aed)",
-    image: "/image/qualitycraftmanship.webp",
+    image: "/image/featured/feat_customization.jpeg",
   },
   {
     index: "03",
     title: "Reliable PNG Partner",
     text: "30+ years supporting PNG business. Dedicated account managers, transparent quotes, and dependable delivery to all 22 provinces.",
     accent: "var(--ng-accent-emerald, #10b981)",
-    image: "/image/tailoredservice.webp",
+    image: "/image/featured/feat_reliability.jpeg",
   },
   {
     index: "04",
     title: "Your Brand Everywhere",
     text: "Consistent identity across workwear, clinical scrubs, school wear, promotional merchandise, and sports strips.",
     accent: "var(--ng-accent-gold, #f5a623)",
-    image: "/image/creativecustomization.webp",
+    image: "/image/featured/feat_branding.jpeg",
   },
 ];
 

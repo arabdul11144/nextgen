@@ -76,6 +76,8 @@ export function Header() {
     null,
   );
   const [scrolled, setScrolled] = useState(false);
+  const [headerHidden, setHeaderHidden] = useState(false);
+  const lastYRef = useRef(0);
 
   /* Search */
   const [query, setQuery] = useState("");
@@ -104,7 +106,22 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = window.scrollY;
+        const delta = y - lastYRef.current;
+        lastYRef.current = y;
+        setScrolled(y > 8);
+        /* Hide while scrolling down (past a small guard)… */
+        if (delta > 1 && y > 96) setHeaderHidden(true);
+        /* …and reveal the nav row the moment we scroll up, even slightly. */
+        else if (delta < -1) setHeaderHidden(false);
+        ticking = false;
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -159,7 +176,9 @@ export function Header() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className={styles.headerWrap}>
+    <header
+      className={`${styles.headerWrap} ${headerHidden ? styles.headerHidden : ""}`}
+    >
       {/* ── Tier 1: Utility bar — rotating message + contact ── */}
       <div
         className={`${styles.utility} ${scrolled ? styles.utilityHidden : ""}`}
@@ -200,7 +219,7 @@ export function Header() {
             aria-label="NextGen Solutions PNG — home"
           >
             <Image
-              src="/image/logo2.png"
+              src="/image/logo1.webp"
               alt="NextGen Solutions PNG"
               width={200}
               height={80}

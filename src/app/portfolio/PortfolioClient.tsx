@@ -11,39 +11,39 @@ import styles from "./page.module.css";
 
 const PROJECT_MEDIA: Record<string, { image: string; accent: string }> = {
   "mining-workwear-program": {
-    image: "/image/workforce/miningandenergy.webp",
+    image: "/image/proven_tasks/mining_workwear_program.jpeg",
     accent: "#ff5a1f",
   },
   "corporate-uniform-rollout": {
-    image: "/image/banners/hero44.png",
+    image: "/image/proven_tasks/corporate_uniform_rollout.jpeg",
     accent: "#155eef",
   },
   "hospitality-front-of-house": {
-    image: "/image/workforce/hospitalityservice.webp",
+    image: "/image/proven_tasks/hospitality_front_of_house.jpeg",
     accent: "#0f766e",
   },
   "construction-hi-vis-crew": {
-    image: "/image/workforce/constructionandinfrastructure.webp",
+    image: "/image/proven_tasks/construction_hivis_crew.jpeg",
     accent: "#e11d48",
   },
   "school-sports-collection": {
-    image: "/image/workforce/educationandschool.webp",
+    image: "/image/proven_tasks/school_sports_collection.jpeg",
     accent: "#7c3aed",
   },
   "healthcare-team-scrubs": {
-    image: "/image/workforce/healthcareandmedical.webp",
+    image: "/image/proven_tasks/healthcare_team_scrubs.jpeg",
     accent: "#10b981",
   },
   "security-team-uniforms": {
-    image: "/image/uniform/securityuniforms.webp",
+    image: "/image/proven_tasks/security_team_uniforms.jpeg",
     accent: "#1e3a8a",
   },
   "event-merchandise-campaign": {
-    image: "/image/customizationhub/bottle.webp",
+    image: "/image/proven_tasks/event_merchandise_campaign.jpeg",
     accent: "#f5a623",
   },
   "sublimation-teamwear": {
-    image: "/image/pngwonderers/newkits.webp",
+    image: "/image/proven_tasks/sublimation_teamwear.jpeg",
     accent: "#ff5a1f",
   },
 };
@@ -118,7 +118,7 @@ export function PortfolioClient() {
           <div className={styles.grid}>
             {filteredProjects.map((project, i) => {
               const meta = PROJECT_MEDIA[project.slug] || {
-                image: "/image/workforce/miningandenergy.webp",
+                image: "/image/proven_tasks/mining_workwear_program.jpeg",
                 accent: "var(--ng-accent-blue)",
               };
 

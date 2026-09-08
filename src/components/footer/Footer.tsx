@@ -114,6 +114,12 @@ function SocialIcon({ label }: { label: string }) {
 export function Footer() {
   return (
     <footer className={styles.footer}>
+      {/* Top gradient fade + faint watermark */}
+      <span className={styles.fadeTop} aria-hidden="true" />
+      <span className={styles.watermark} aria-hidden="true">
+        NextGen<span className={styles.watermarkAccent}>X</span>
+      </span>
+
       {/* ── Service highlights bar ── */}
       <div className={styles.highlights}>
         <div className={styles.highlightsInner}>
@@ -187,12 +193,16 @@ export function Footer() {
 
           {/* Help & Advice */}
           <div className={styles.col}>
-            <span className={styles.colTitle}>Help &amp; Advice</span>
+            <span className={styles.colTitle}>
+              <span className={styles.colTick} aria-hidden="true" />
+              Help &amp; Advice
+            </span>
             <ul className={styles.links}>
               {HELP_LINKS.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className={styles.link}>
-                    {link.label}
+                    <span className={styles.linkText}>{link.label}</span>
+                    <span className={styles.linkArrow} aria-hidden="true">→</span>
                   </Link>
                 </li>
               ))}
@@ -201,12 +211,16 @@ export function Footer() {
 
           {/* Legal */}
           <div className={styles.col}>
-            <span className={styles.colTitle}>Legal</span>
+            <span className={styles.colTitle}>
+              <span className={styles.colTick} aria-hidden="true" />
+              Legal
+            </span>
             <ul className={styles.links}>
               {LEGAL_LINKS.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className={styles.link}>
-                    {link.label}
+                    <span className={styles.linkText}>{link.label}</span>
+                    <span className={styles.linkArrow} aria-hidden="true">→</span>
                   </Link>
                 </li>
               ))}
@@ -215,7 +229,10 @@ export function Footer() {
 
           {/* Newsletter mini-form */}
           <div className={styles.colNews}>
-            <span className={styles.colTitle}>Stay in the loop</span>
+            <span className={styles.colTitle}>
+              <span className={styles.colTick} aria-hidden="true" />
+              Stay in the loop
+            </span>
             <p className={styles.newsSub}>
               Workwear, uniform and branding know-how for PNG organisations.
             </p>

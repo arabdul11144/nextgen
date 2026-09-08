@@ -1,62 +1,112 @@
 /* ============================================================
-   BrandMarquee — dark-gradient brand-lines band above footer
-   Deep navy-to-slate gradient, gradient accent bar, white text
+   BrandMarquee — dark navy brand-lines band ("Industrial
+   Momentum"). Subtle diagonal sheen, gradient accent top line,
+   animated eyebrow + heading, auto-scrolling glass-chip logos.
    ============================================================ */
 
 .section {
   position: relative;
   overflow: hidden;
-  margin: 24px 0;
-  background: linear-gradient(
-    180deg,
-    #0f172a 0%,
-    #1e293b 50%,
-    #0f172a 100%
-  );
+  background: var(--im-navy, #0a1a2f);
+  isolation: isolate;
 }
 
-/* Top accent bar — gradient from brand cyan through gold to crimson */
-.accentBar {
-  height: 3px;
-  width: 100%;
+/* Slow diagonal light sheen moving across the navy */
+.sheen {
+  position: absolute;
+  inset: -60% -30%;
+  z-index: -1;
   background: linear-gradient(
-    90deg,
+    115deg,
     transparent 0%,
-    var(--ng-accent-sky) 15%,
-    var(--ng-accent-blue) 35%,
-    var(--ng-accent-gold) 65%,
-    var(--ng-accent-crimson) 85%,
+    rgba(255, 255, 255, 0.04) 30%,
+    rgba(255, 255, 255, 0.09) 50%,
+    rgba(255, 255, 255, 0.04) 70%,
     transparent 100%
   );
+  animation: im-sheen-drift 11s linear infinite;
+}
+
+@keyframes im-sheen-drift {
+  0% {
+    transform: translateY(-12%) rotate(0.5deg);
+  }
+  50% {
+    transform: translateY(12%) rotate(-0.5deg);
+  }
+  100% {
+    transform: translateY(-12%) rotate(0.5deg);
+  }
+}
+
+/* Signature gradient accent top line */
+.accentLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--im-accent-rule);
+  z-index: 2;
 }
 
 .inner {
-  padding: 40px 0 44px;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(40px, 5vw, 56px) clamp(16px, 3vw, 32px) clamp(44px, 5vw, 60px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 34px);
 }
 
-/* ---- heading ---- */
-.heading {
-  margin: 0 0 28px;
+.head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
   text-align: center;
+}
+
+.eyebrow {
+  margin: 0;
   font-family: var(--ng-font-heading);
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
+  font-size: var(--ng-fs-eyebrow);
+  font-weight: 800;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--im-yellow, #ffc72c);
+}
+
+.headRule {
+  width: 80px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--im-accent-rule);
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--ng-font-heading);
+  font-size: clamp(0.86rem, 1.4vw, 1.05rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
   line-height: 1.4;
 }
 
-/* ---- responsive ---- */
+.marqueeWrap {
+  width: 100%;
+}
+
+/* ── Responsive ── */
 @media (max-width: 768px) {
   .inner {
-    padding: 32px 0 36px;
+    padding: 32px 20px 38px;
   }
 
   .heading {
-    font-size: 0.7rem;
-    letter-spacing: 0.16em;
-    margin-bottom: 20px;
-    padding-inline: 20px;
+    letter-spacing: 0.06em;
+    font-size: 0.78rem;
   }
 }

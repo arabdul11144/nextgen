@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import styles from "./BulkCta.module.css";
 
 /* ── Types ── */
@@ -17,337 +17,215 @@ interface UniformCollageProps {
   pool: readonly PoolItem[];
 }
 
-/* ── Constants ── */
+/* ── Rotation schedule (from the brief) ──
+   Security → School → Corporate → Safety → repeat. Accents tie the
+   frame glow + label dot to whichever uniform is currently showing. */
+const ROTATION = [
+  { label: "Security Uniforms", short: "Security", accent: "#0f766e" },
+  { label: "School Uniforms", short: "School", accent: "#ffc72c" },
+  { label: "Corporate Wear", short: "Corporate", accent: "#215cf6" },
+  { label: "Safety & Hi-Vis", short: "Safety", accent: "#ff5a1f" },
+] as const;
 
-const SLOT_COUNT = 4;
-const STAGGER_MS = 900;
-const BASE_INTERVAL_MS = 5000;
-const INTERVAL_JITTER_MS = 800;
-const CROSSFADE_MS = 700;
-const MOBILE_EXTRA_DELAY_MS = 1000;
-const MOBILE_BREAKPOINT = 768;
-const HISTORY_SIZE = 4;
+const AUTO_INTERVAL_MS = 3800;
+const SLIDE_PX = 40;
 
-/* ── Helpers ── */
+type Frame = PoolItem & { short: string; accent: string };
 
-function shortLabel(label: string): string {
-  const map: Record<string, string> = {
-    "Safety & Hi-Vis": "Safety",
-    "Corporate Wear": "Corporate",
-    "School Uniforms": "School",
-    "Medical Scrubs": "Medical",
-    "Hospitality & Chef Wear": "Chef",
-    "Security Uniforms": "Security",
-    "Mining & Industrial Wear": "Industrial",
-    "Sports Uniforms": "Sports",
-  };
-  return map[label] ?? label;
-}
-
-function pickNext(
-  pool: readonly PoolItem[],
-  excludeImages: string[],
-  recentHistory: string[],
-): PoolItem | null {
-  let candidates = pool.filter((p) => !excludeImages.includes(p.image));
-  if (candidates.length === 0) {
-    candidates = pool.filter((p) => p.image !== excludeImages[0]);
-  }
-  if (candidates.length === 0) return pool[0] ?? null;
-
-  const scored = candidates
-    .map((item) => {
-      const idx = recentHistory.indexOf(item.image);
-      return { item, score: idx === -1 ? -1 : idx };
-    })
-    .sort((a, b) => a.score - b.score);
-
-  const bestScore = scored[0].score;
-  const topCandidates = scored.filter((s) => s.score === bestScore);
-  const chosen =
-    topCandidates[Math.floor(Math.random() * topCandidates.length)];
-
-  return chosen.item;
+/* Resolve the four scheduled frames from the pool, falling back to the
+   first four pool items if a scheduled label is missing. */
+function buildFrames(pool: readonly PoolItem[]): Frame[] {
+  return ROTATION.map((r) => {
+    const item = pool.find((p) => p.label === r.label);
+    const fallback = pool[ROTATION.findIndex((f) => f.label === r.label) % pool.length];
+    const chosen = item ?? fallback;
+    return { ...chosen, short: r.short, accent: r.accent };
+  });
 }
 
 function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
+  const mql = useMemo(
+    () =>
+      typeof window === "undefined"
+        ? null
+        : window.matchMedia("(prefers-reduced-motion: reduce)"),
+    [],
+  );
 
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setReduced(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  return reduced;
-}
-
-/* ── Slot component ── */
-
-interface SlotProps {
-  slotIndex: number;
-  item: PoolItem;
-  outgoing: PoolItem | null;
-  isTransitioning: boolean;
-  isHovered: boolean;
-  onHoverStart: () => void;
-  onHoverEnd: () => void;
-}
-
-function Slot({
-  slotIndex,
-  item,
-  outgoing,
-  isTransitioning,
-  isHovered,
-  onHoverStart,
-  onHoverEnd,
-}: SlotProps) {
-  const cellClass = [
-    styles.cell,
-    styles[`cell${slotIndex + 1}`],
-    isHovered ? styles.cellHover : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
-
-  /* Chip sits in the intact outer corner of each angled tile so the
-     slanted cut never clips it. */
-  const chipPositions = [
-    styles.chipTl,
-    styles.chipTr,
-    styles.chipBl,
-    styles.chipBr,
-  ];
-  const chipPos = chipPositions[slotIndex] ?? styles.chipTl;
-
-  return (
-    <span
-      className={cellClass}
-      onMouseEnter={onHoverStart}
-      onMouseLeave={onHoverEnd}
-    >
-      {/* Outgoing image (fading out) */}
-      {outgoing && isTransitioning && (
-        <Image
-          key={`out-${outgoing.image}`}
-          src={outgoing.image}
-          alt={outgoing.alt}
-          fill
-          sizes="(max-width: 900px) 92vw, 44vw"
-          className={`${styles.photo} ${styles.fadeOut}`}
-        />
-      )}
-
-      {/* Incoming image (fading in or fully visible) */}
-      <Image
-        key={`in-${item.image}`}
-        src={item.image}
-        alt={item.alt}
-        fill
-        sizes="(max-width: 900px) 92vw, 44vw"
-        className={`${styles.photo} ${isTransitioning ? styles.fadeIn : styles.visible}`}
-        loading={slotIndex < 2 ? "eager" : "lazy"}
-        priority={slotIndex < 2}
-      />
-
-      {/* Vignette overlay */}
-      <span className={styles.vignette} aria-hidden="true" />
-
-      {/* Category chip */}
-      <span className={styles.chip}>{shortLabel(item.label)}</span>
-    </span>
+  return useSyncExternalStore(
+    (onStoreChange) => {
+      if (!mql) return () => undefined;
+      mql.addEventListener("change", onStoreChange);
+      return () => mql.removeEventListener("change", onStoreChange);
+    },
+    () => mql?.matches ?? false,
+    () => false,
   );
 }
 
-/* ── Main component ── */
-
 /**
- * A 2×2 rotating image grid. Each of the 4 slots independently cycles
- * through the 8-item uniform pool on a staggered, randomized timer.
+ * Single-frame uniform carousel — replaces the old 2×2 grid with one
+ * compact framed photo that auto-rotates through the category lineup.
+ * Cross-fade + small slide, accent-colored glow/border that follows the
+ * active category, floating label pill, and pill-dot progress bar.
  */
 export function UniformCollage({ pool }: UniformCollageProps) {
   const reducedMotion = usePrefersReducedMotion();
+  const frames = useMemo(() => buildFrames(pool), [pool]);
 
-  /* Deterministic default for SSR: first 4 in array order.
-   * For reduced motion, pick a representative spread. */
-  const defaultItems = useRef<PoolItem[]>(
-    reducedMotion
-      ? [pool[0], pool[2], pool[4], pool[6]].filter(Boolean)
-      : pool.slice(0, 4),
-  ).current;
+  const [index, setIndex] = useState(0);
+  const [dir, setDir] = useState(1);
+  const [hovered, setHovered] = useState(false);
+  const pausedRef = useRef(false);
 
-  const [items, setItems] = useState<PoolItem[]>(defaultItems);
-  const [outgoing, setOutgoing] = useState<(PoolItem | null)[]>([
-    null,
-    null,
-    null,
-    null,
-  ]);
-  const [transitioning, setTransitioning] = useState<boolean[]>([
-    false,
-    false,
-    false,
-    false,
-  ]);
-  const [hovered, setHovered] = useState<boolean[]>([false, false, false, false]);
+  const frame = frames[index % frames.length];
 
-  /* Refs for timer coordination (avoid stale closures) */
-  const itemsRef = useRef(items);
-  itemsRef.current = items;
-  const hoveredRef = useRef(hovered);
-  hoveredRef.current = hovered;
-  const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
-  const intervalRefs = useRef<ReturnType<typeof setInterval>[]>([]);
-  const historyRef = useRef<string[][]>([[], [], [], []]);
-
-  /* Preload all pool images on mount */
-  useEffect(() => {
-    pool.forEach((item) => {
-      const img = new window.Image();
-      img.src = item.image;
-    });
-  }, [pool]);
-
-  /* Pick a new image for a given slot, respecting all constraints */
-  const swapSlot = useCallback(
-    (slotIndex: number) => {
-      const currentItems = itemsRef.current;
-      const currentImage = currentItems[slotIndex]?.image;
-
-      /* Exclude all OTHER slots' images + this slot's current */
-      const otherImages = currentItems
-        .map((item, i) => (i === slotIndex ? null : item?.image))
-        .filter((img): img is string => img !== null);
-      const excludeImages = [
-        ...otherImages,
-        ...(currentImage ? [currentImage] : []),
-      ];
-
-      const recentHistory = historyRef.current[slotIndex];
-      const next = pickNext(pool, excludeImages, recentHistory);
-      if (!next) return;
-
-      /* Set outgoing image for crossfade */
-      setOutgoing((prev) => {
-        const updated = [...prev];
-        updated[slotIndex] = currentItems[slotIndex] ?? null;
-        return updated;
-      });
-
-      /* Start crossfade */
-      setTransitioning((prev) => {
-        const updated = [...prev];
-        updated[slotIndex] = true;
-        return updated;
-      });
-
-      /* Mid-crossfade: swap the image */
-      const swapTimer = setTimeout(() => {
-        setItems((prev) => {
-          const updated = [...prev];
-          updated[slotIndex] = next;
-          return updated;
-        });
-        historyRef.current[slotIndex] = [
-          next.image,
-          ...recentHistory
-            .filter((img) => img !== next.image)
-            .slice(0, HISTORY_SIZE - 1),
-        ];
-      }, CROSSFADE_MS / 2);
-
-      /* End crossfade: clear outgoing */
-      const endTimer = setTimeout(() => {
-        setTransitioning((prev) => {
-          const updated = [...prev];
-          updated[slotIndex] = false;
-          return updated;
-        });
-        setOutgoing((prev) => {
-          const updated = [...prev];
-          updated[slotIndex] = null;
-          return updated;
-        });
-      }, CROSSFADE_MS);
-
-      timersRef.current.push(swapTimer, endTimer);
+  const goTo = useCallback(
+    (target: number, direction: number) => {
+      setDir(direction);
+      setIndex((target + frames.length) % frames.length);
     },
-    [pool],
+    [frames.length],
   );
 
-  /* Set up per-slot timers */
+  const next = useCallback(() => goTo(index + 1, 1), [goTo, index]);
+  const prev = useCallback(() => goTo(index - 1, -1), [goTo, index]);
+
+  /* Auto-advance on a fixed cadence; resets whenever the index changes
+     (manual controls included) and pauses while hovered/touched. */
   useEffect(() => {
     if (reducedMotion) return;
+    const id = window.setInterval(() => {
+      if (pausedRef.current) return;
+      goTo(index + 1, 1);
+    }, AUTO_INTERVAL_MS);
+    return () => window.clearInterval(id);
+  }, [index, reducedMotion, goTo]);
 
-    const isMobileNow =
-      typeof window !== "undefined" && window.innerWidth < MOBILE_BREAKPOINT;
-    const extraDelay = isMobileNow ? MOBILE_EXTRA_DELAY_MS : 0;
+  const dx = reducedMotion ? 0 : SLIDE_PX;
 
-    for (let slotIndex = 0; slotIndex < SLOT_COUNT; slotIndex++) {
-      const staggerDelay = slotIndex * STAGGER_MS;
+  const variants = {
+    enter: (d: number) => ({ opacity: 0, x: d > 0 ? dx : -dx }),
+    center: { opacity: 1, x: 0 },
+    exit: (d: number) => ({ opacity: 0, x: d > 0 ? -dx : dx }),
+  };
 
-      const staggerTimer = setTimeout(() => {
-        /* First swap when this slot's timer fires */
-        swapSlot(slotIndex);
-
-        /* Recurring interval with random jitter */
-        const interval = setInterval(() => {
-          if (!hoveredRef.current[slotIndex]) {
-            swapSlot(slotIndex);
-          }
-        }, BASE_INTERVAL_MS + extraDelay + (Math.random() * 2 - 1) * INTERVAL_JITTER_MS);
-
-        intervalRefs.current[slotIndex] = interval;
-      }, staggerDelay);
-
-      timersRef.current.push(staggerTimer);
-    }
-
-    return () => {
-      timersRef.current.forEach((t) => clearTimeout(t));
-      timersRef.current = [];
-      intervalRefs.current.forEach((i) => clearInterval(i));
-      intervalRefs.current = [];
-    };
-  }, [reducedMotion, swapSlot]);
-
-  /* Hover handlers */
-  const handleHoverStart = useCallback((slotIndex: number) => {
-    if (typeof window !== "undefined" && window.innerWidth < MOBILE_BREAKPOINT) {
-      return;
-    }
-    setHovered((prev) => {
-      const updated = [...prev];
-      updated[slotIndex] = true;
-      return updated;
-    });
-  }, []);
-
-  const handleHoverEnd = useCallback((slotIndex: number) => {
-    setHovered((prev) => {
-      const updated = [...prev];
-      updated[slotIndex] = false;
-      return updated;
-    });
-  }, []);
+  const onEnter = () => {
+    pausedRef.current = true;
+    setHovered(true);
+  };
+  const onLeave = () => {
+    pausedRef.current = false;
+    setHovered(false);
+  };
 
   return (
-    <div className={styles.collage}>
-      {items.map((item, i) => (
-        <Slot
-          key={`slot-${i}`}
-          slotIndex={i}
-          item={item}
-          outgoing={outgoing[i] ?? null}
-          isTransitioning={transitioning[i]}
-          isHovered={hovered[i]}
-          onHoverStart={() => handleHoverStart(i)}
-          onHoverEnd={() => handleHoverEnd(i)}
+    <div className={styles.frameWrap}>
+      <div
+        className={`${styles.frameShell} ${hovered ? styles.hovered : ""}`}
+        style={{ "--frame-accent": frame.accent } as React.CSSProperties}
+        onMouseEnter={onEnter}
+        onMouseLeave={onLeave}
+        onTouchStart={onEnter}
+        onTouchEnd={onLeave}
+        onTouchCancel={onLeave}
+      >
+        {/* Soft accent glow drifting behind the frame */}
+        <span
+          className={styles.frameGlow}
+          style={{ background: `radial-gradient(circle, ${frame.accent}2e, transparent 70%)` }}
+          aria-hidden="true"
         />
-      ))}
+
+        {/* The framed photo — border + glow follow the active accent */}
+        <div
+          className={styles.frame}
+          style={
+            {
+              boxShadow: `0 0 0 1px ${frame.accent}59, 0 0 26px ${frame.accent}33`,
+            } as React.CSSProperties
+          }
+        >
+          <div className={styles.stage}>
+            {/* Clean, soft studio backdrop behind the garment */}
+            <span className={styles.stageBackdrop} aria-hidden="true" />
+            <AnimatePresence initial={false} custom={dir}>
+              <motion.img
+                key={`${index}-${frame.image}`}
+                src={frame.image}
+                alt={frame.alt}
+                className={styles.framePhoto}
+                custom={dir}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ opacity: { duration: 0.5 }, x: { duration: 0.5, ease: "easeInOut" } }}
+              />
+            </AnimatePresence>
+          </div>
+
+          {/* Floating category pill — label announces a beat faster */}
+          <span className={styles.frameLabel}>
+            <AnimatePresence initial={false} mode="popLayout">
+              <motion.span
+                key={frame.short}
+                className={styles.frameLabelRow}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+              >
+                <span className={styles.frameDot} style={{ background: frame.accent }} aria-hidden="true" />
+                {frame.short}
+              </motion.span>
+            </AnimatePresence>
+          </span>
+        </div>
+
+        {/* Quiet ghost arrows, visible on hover only */}
+        <button
+          type="button"
+          className={`${styles.frameArrow} ${styles.frameArrowLeft}`}
+          onClick={prev}
+          aria-label="Previous category"
+          tabIndex={hovered ? 0 : -1}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+        <button
+          type="button"
+          className={`${styles.frameArrow} ${styles.frameArrowRight}`}
+          onClick={next}
+          aria-label="Next category"
+          tabIndex={hovered ? 0 : -1}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M9 6l6 6-6 6" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Pill-dot progress — active bar fills over the auto-advance duration */}
+      <div className={styles.frameProgress} role="group" aria-label="Uniform categories">
+        {frames.map((f, i) => {
+          const active = i === index;
+          return (
+            <button
+              key={f.short}
+              type="button"
+              className={`${styles.pill} ${active ? styles.pillActive : ""}`}
+              aria-pressed={active}
+              aria-label={`Show ${f.short}`}
+              onClick={() => goTo(i, i > index ? 1 : -1)}
+            >
+              {active && <span key={`${index}-fill`} className={styles.pillFill} />}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

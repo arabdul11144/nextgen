@@ -12,6 +12,14 @@
   top: 0;
   z-index: 1000;
   isolation: isolate;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+/* Scrolling down → whole header slides out of view; scrolling up
+   (even slightly) slides it back in with the nav row visible. */
+.headerHidden {
+  transform: translateY(-100%);
 }
 
 /* ── Tier 1: Utility bar ── */
@@ -92,25 +100,60 @@
 
 /* ── Tier 2: Main bar ── */
 .mainBar {
+  position: relative;
   background: linear-gradient(
     to right,
-    #ffffff 0%,
-    #e8edf5 18%,
-    #1a2d54 35%,
-    var(--ng-navy-900) 55%,
+    #f1f4f9 0%,
+    #e8edf5 10%,
+    #1a2d54 24%,
+    var(--ng-navy-900) 45%,
     var(--ng-navy-900) 100%
   );
   border-bottom: 1px solid var(--ng-line-dark);
   transition: background 0.25s ease;
 }
 
+/* Subtle woven wire-mesh texture over the gradient.
+   Tiled small (≈16–20 diamond units across the bar) and blended with a
+   soft overlay so the weave reads on the light left side while it fades
+   out into the dark navy on the right. Text/icons stay untouched on top. */
+.mainBar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/image/image.png");
+  background-repeat: repeat;
+  background-size: 80px 80px;
+  opacity: 0.16;
+  filter: saturate(0.15) contrast(1.08);
+  mix-blend-mode: multiply;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    rgba(0, 0, 0, 0.95) 35%,
+    rgba(0, 0, 0, 0.55) 60%,
+    rgba(0, 0, 0, 0.1) 80%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    #000 0%,
+    rgba(0, 0, 0, 0.95) 35%,
+    rgba(0, 0, 0, 0.55) 60%,
+    rgba(0, 0, 0, 0.1) 80%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  pointer-events: none;
+}
+
 .compact {
   background: linear-gradient(
     to right,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(232, 237, 245, 0.92) 18%,
-    rgba(26, 45, 84, 0.90) 35%,
-    rgba(16, 34, 74, 0.88) 55%,
+    rgba(241, 244, 249, 0.94) 0%,
+    rgba(232, 237, 245, 0.92) 10%,
+    rgba(26, 45, 84, 0.90) 24%,
+    rgba(16, 34, 74, 0.88) 45%,
     rgba(16, 34, 74, 0.88) 100%
   );
   backdrop-filter: blur(14px);
@@ -120,6 +163,8 @@
 }
 
 .mainInner {
+  position: relative;
+  z-index: 1;
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 clamp(16px, 3vw, 32px);
