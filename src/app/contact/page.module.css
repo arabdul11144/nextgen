@@ -1,134 +1,432 @@
 /* ============================================================
-   Contact / Request a Quote Page
+   Contact & Quote Page — Modern Retail-Hub & Corporate Navy Theme
    ============================================================ */
 
-/* Hero */
+/* ── Hero ── */
 .hero {
-  background: var(--color-graphite);
-  color: var(--color-text-inverse);
-  padding-top: var(--space-24);
-  padding-bottom: var(--space-16);
+  position: relative;
+  background: linear-gradient(180deg, var(--ng-navy-950) 0%, var(--ng-navy-900) 100%);
+  color: #ffffff;
+  padding-top: clamp(4rem, 8vw, 7rem);
+  padding-bottom: clamp(4rem, 8vw, 6.5rem);
+  overflow: hidden;
+  border-bottom: 1px solid rgba(148, 178, 220, 0.12);
 }
 
-@media (min-width: 768px) {
-  .hero {
-    padding-top: var(--space-32);
-    padding-bottom: var(--space-24);
-  }
+.heroMesh {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 18% 25%, rgba(21, 94, 239, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 82% 75%, rgba(16, 185, 129, 0.12) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .heroContent {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
-  max-width: 700px;
+  gap: 1.5rem;
+  max-width: 840px;
 }
 
-.heroContent :global(.label-technical) {
-  color: var(--color-accent-orange);
+.heroEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--ng-cyan-glow, #59d9ff);
+}
+
+.heroEyebrowDash {
+  display: inline-block;
+  width: 24px;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+}
+
+.heroHeadline {
+  font-family: var(--font-display);
+  font-size: var(--ng-fs-h1, clamp(2.4rem, 5.5vw, 4.2rem));
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #ffffff;
 }
 
 .heroSubhead {
-  color: var(--color-text-inverse);
-  opacity: 0.85;
-  line-height: var(--lh-body);
-  max-width: 56ch;
+  color: var(--ng-on-dark, #c7d4e8);
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  line-height: 1.6;
+  max-width: 68ch;
 }
 
-/* Body */
-.body {
-  padding-top: var(--space-24);
-  padding-bottom: var(--space-24);
+.heroBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
 }
 
-@media (min-width: 768px) {
-  .body {
-    padding-top: var(--space-32);
-    padding-bottom: var(--space-32);
-  }
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #e2f6fe;
+  backdrop-filter: blur(8px);
 }
 
-.bodyGrid {
+.heroBadgeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ng-accent, #0fb5ee);
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* ── Form & Contact Hub Section ── */
+.hubSection {
+  padding-top: clamp(4rem, 7vw, 6.5rem);
+  padding-bottom: clamp(4rem, 7vw, 6.5rem);
+  background: #ffffff;
+}
+
+.hubGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-16);
+  gap: 2.5rem;
 }
 
 @media (min-width: 1024px) {
-  .bodyGrid {
-    grid-template-columns: 1.6fr 1fr;
-    gap: var(--space-24);
+  .hubGrid {
+    grid-template-columns: 1.55fr 1fr;
+    gap: 3.5rem;
   }
 }
 
-.formColumn {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  max-width: 640px;
+.formCard {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  box-shadow: 0 4px 20px rgba(11, 18, 32, 0.04);
 }
 
-.formColumn :global(.label-technical) {
-  color: var(--color-accent-orange-active);
+.formHeader {
+  margin-bottom: 2rem;
+}
+
+.formEyebrow {
+  color: var(--ng-accent-blue, #155eef);
+}
+
+.formTitle {
+  font-family: var(--font-display);
+  font-size: var(--ng-fs-h2, clamp(1.75rem, 3vw, 2.25rem));
+  font-weight: 700;
+  color: var(--ng-ink, #0b1220);
+  line-height: 1.2;
+  margin-top: 0.4rem;
 }
 
 .formIntro {
-  color: var(--color-text-muted-light);
-  line-height: var(--lh-body);
-  margin-bottom: var(--space-6);
+  color: var(--ng-slate, #4a5568);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  margin-top: 0.5rem;
 }
 
-/* Details */
-.details {
+/* ── Contact Details Column ── */
+.detailsCol {
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
+  gap: 1.75rem;
 }
 
-@media (min-width: 1024px) {
-  .details {
-    padding-left: var(--space-8);
-    border-left: 1px solid var(--color-border-light);
+.contactCard {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 2rem;
+  background: var(--ng-cloud, #f4f6f9);
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+.contactCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.contactIconWrap {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e2f6fe;
+  color: var(--ng-accent-deep, #0a6eb4);
+  border-radius: 10px;
+}
+
+.contactCardTitle {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ng-ink, #0b1220);
+}
+
+.channelList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.channelItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.channelIcon {
+  color: var(--ng-accent-blue, #155eef);
+  margin-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+.channelBody {
+  display: flex;
+  flex-direction: column;
+}
+
+.channelLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ng-slate, #4a5568);
+}
+
+.channelVal {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ng-ink, #0b1220);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.channelVal:hover {
+  color: var(--ng-accent-blue, #155eef);
+}
+
+.channelSub {
+  font-size: 0.82rem;
+  color: var(--ng-slate, #4a5568);
+}
+
+.hoursCard {
+  padding: 1.5rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(11, 18, 32, 0.03);
+}
+
+.hoursTitle {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ng-ink, #0b1220);
+  margin-bottom: 0.6rem;
+}
+
+.hoursRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--ng-slate, #4a5568);
+  padding: 0.35rem 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.hoursRow:last-child {
+  border-bottom: none;
+}
+
+/* ── Regional Distributor Hubs ── */
+.distributorSection {
+  padding-top: clamp(4rem, 6vw, 5.5rem);
+  padding-bottom: clamp(4rem, 6vw, 5.5rem);
+  background: var(--ng-cloud, #f4f6f9);
+  border-top: 1px solid #e2e8f0;
+}
+
+.sectionHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 720px;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+
+.sectionEyebrow {
+  color: var(--ng-accent-blue, #155eef);
+}
+
+.sectionTitle {
+  font-family: var(--font-display);
+  font-size: var(--ng-fs-h2, clamp(1.8rem, 3.5vw, 2.75rem));
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--ng-ink, #0b1220);
+  letter-spacing: -0.015em;
+}
+
+.sectionDesc {
+  color: var(--ng-slate, #4a5568);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.hubsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .hubsGrid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-.detailBlock {
+@media (min-width: 1024px) {
+  .hubsGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.hubCard {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: 0.75rem;
+  padding: 1.75rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(11, 18, 32, 0.03);
+  transition: transform 0.25s ease, border-color 0.25s ease;
 }
 
-.detailBlock :global(.label-technical) {
-  color: var(--color-accent-orange-active);
+.hubCard:hover {
+  transform: translateY(-3px);
+  border-color: var(--ng-accent, #0fb5ee);
 }
 
-.detailTitle {
+.hubBadge {
+  align-self: flex-start;
+  padding: 0.25rem 0.6rem;
+  background: #e2f6fe;
+  color: var(--ng-accent-deep, #0a6eb4);
   font-family: var(--font-display);
-  font-size: var(--fs-h4);
-  font-weight: 600;
-  line-height: var(--lh-h3);
-}
-
-.detailText {
-  color: var(--color-text-muted-light);
-  font-size: var(--fs-body);
-  line-height: var(--lh-body);
-}
-
-.detailLink {
-  font-family: var(--font-body);
-  font-size: var(--fs-small);
-  font-weight: 600;
+  font-size: 0.72rem;
+  font-weight: 800;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-text-primary);
+  border-radius: 4px;
 }
 
-.detailLink span {
-  display: inline-block;
-  transition: transform var(--duration-fast) ease;
+.hubCity {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ng-ink, #0b1220);
 }
 
-.detailLink:hover span {
-  transform: translateX(4px);
+.hubDesc {
+  color: var(--ng-slate, #4a5568);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.hubAddress {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ng-ink, #0b1220);
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* ── Closing CTA ── */
+.cta {
+  position: relative;
+  background: linear-gradient(135deg, var(--ng-navy-950) 0%, var(--ng-navy-900) 60%, #0c1f3c 100%);
+  color: #ffffff;
+  padding-top: clamp(4rem, 7vw, 6rem);
+  padding-bottom: clamp(4rem, 7vw, 6rem);
+  overflow: hidden;
+}
+
+.ctaGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 300px;
+  background: radial-gradient(ellipse at center, rgba(15, 181, 238, 0.16) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ctaContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.ctaEyebrow {
+  color: var(--ng-cyan-glow, #59d9ff);
+}
+
+.ctaTitle {
+  font-family: var(--font-display);
+  font-size: var(--ng-fs-h2, clamp(1.8rem, 3.5vw, 2.75rem));
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+}
+
+.ctaSub {
+  color: var(--ng-on-dark, #c7d4e8);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.ctaActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
 }

@@ -1,95 +1,93 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Container } from "@/components";
 import { Button } from "@/components/button/Button";
-import { Heading } from "@/components/heading/Heading";
-import { portfolioProjects } from "@/data/portfolio";
-import { getServicesBySlugs } from "@/data/services";
+import { Reveal } from "@/components/reveal/Reveal";
+import { BrandMarquee } from "@/components/home/BrandMarquee";
+import { PortfolioClient } from "./PortfolioClient";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "Portfolio | NextGen Solutions PNG",
+  title: "Delivered Projects Portfolio | NextGen Solutions PNG",
   description:
-    "Explore a selection of uniform, workwear, branding and merchandise projects delivered by NextGen Solutions PNG.",
+    "Explore case studies of custom uniform rollouts, safety workwear programs, and branded merchandise delivered for teams across Papua New Guinea.",
 };
 
 export default function PortfolioPage() {
   return (
     <>
-      {/* ── Hero ── */}
+      {/* ── 1. Hero ── */}
       <section className={styles.hero}>
+        <span className={styles.heroMesh} aria-hidden="true" />
         <Container>
-          <div className={styles.heroContent}>
-            <span className="label-technical">Our Work</span>
-            <Heading level="display">Work that represents real teams.</Heading>
+          <Reveal className={styles.heroContent}>
+            <span className={`${styles.heroEyebrow} ng-eyebrow`}>
+              <span className={styles.heroEyebrowDash} aria-hidden="true" />
+              PROVEN TRACK RECORD ACROSS PNG
+            </span>
+            <h1 className={styles.heroHeadline}>
+              Work That Outfits Real PNG Teams.
+            </h1>
             <p className={styles.heroSubhead}>
-              A selection of uniform, workwear, branding and merchandise
-              projects we&apos;ve delivered for teams and organisations across
-              Papua New Guinea.
+              Explore our delivered projects — from comprehensive mining workwear rollouts and
+              tailored executive uniforms to school sportswear collections, clinical scrubs, and
+              custom merchandise campaigns.
             </p>
-          </div>
+            <div className={styles.heroBadges}>
+              <span className={styles.heroBadge}>
+                <span className={styles.heroBadgeDot} /> 500+ Projects Completed
+              </span>
+              <span className={styles.heroBadge}>
+                <span className={styles.heroBadgeDot} /> 30+ Years Track Record
+              </span>
+              <span className={styles.heroBadge}>
+                <span className={styles.heroBadgeDot} /> 100% Nationwide Delivery
+              </span>
+              <span className={styles.heroBadge}>
+                <span className={styles.heroBadgeDot} /> Multi-Sector Expertise
+              </span>
+            </div>
+            <div className={styles.heroActions}>
+              <Button href="/contact">Start Your Team&apos;s Project</Button>
+              <Button href="/services" variant="secondary" onDark>
+                Browse Our Services
+              </Button>
+            </div>
+          </Reveal>
         </Container>
       </section>
 
-      {/* ── Project grid ── */}
-      <section className={styles.gridSection}>
+      {/* ── 2. Interactive Filter & Projects ── */}
+      <PortfolioClient />
+
+      {/* ── 3. Brand & Supplier Marquee ── */}
+      <section className={styles.marqueeSection}>
         <Container>
-          <div className={styles.grid}>
-            {portfolioProjects.map((project, i) => {
-              const projectServices = getServicesBySlugs(
-                project.serviceSlugs,
-              );
-              return (
-                <article key={project.slug} className={styles.card}>
-                  <div
-                    className={`${styles.cardMeta} ${
-                      i % 3 === 0 ? styles.orange : i % 3 === 1 ? styles.yellow : styles.blue
-                    }`}
-                    aria-hidden="true"
-                  >
-                    <span className={styles.cardGlyph}>
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                  </div>
-                  <div className={styles.cardBody}>
-                    <span className={styles.cardClient}>{project.client}</span>
-                    <h3 className={styles.cardTitle}>{project.title}</h3>
-                    <p className={styles.cardSummary}>{project.summary}</p>
-                    <div className={styles.cardServices}>
-                      {projectServices.map((service) => (
-                        <Link
-                          key={service.slug}
-                          href={`/services/${service.slug}`}
-                          className={styles.serviceTag}
-                        >
-                          {service.title}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
+          <div className={styles.marqueeHeader}>
+            <span className={`${styles.marqueeEyebrow} ng-eyebrow`}>
+              TRUSTED APPAREL &amp; WORKWEAR BRANDS
+            </span>
           </div>
         </Container>
+        <BrandMarquee />
       </section>
 
-      {/* ── CTA ── */}
+      {/* ── 4. Closing CTA ── */}
       <section className={styles.cta}>
+        <span className={styles.ctaGlow} aria-hidden="true" />
         <Container>
           <div className={styles.ctaContent}>
-            <span className="label-technical">Your project next</span>
-            <Heading level="h2">
-              Ready to start your own uniform or branding project?
-            </Heading>
+            <span className={`${styles.ctaEyebrow} ng-eyebrow`}>YOUR PROJECT NEXT</span>
+            <h2 className={styles.ctaTitle}>
+              Ready to Equip Your Workforce with NextGen?
+            </h2>
             <p className={styles.ctaSub}>
-              Tell us what you need and we&apos;ll build a solution around your
-              team and your brand.
+              Whether you need 20 embroidered polo shirts or 1,000 full-site safety uniforms,
+              our team handles design, sizing sets, branding, and dispatch with precision.
             </p>
             <div className={styles.ctaActions}>
-              <Button href="/contact">Request a Quote</Button>
-              <Button href="/services" variant="secondary" onDark>
-                Explore Services
+              <Button href="/contact">Request a Custom Quote</Button>
+              <Button href="/about" variant="secondary" onDark>
+                About NextGen
               </Button>
             </div>
           </div>
