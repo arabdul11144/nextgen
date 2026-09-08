@@ -6,16 +6,17 @@
 
 .section {
   position: relative;
-  background: var(--ng-surface-warm);
-  padding: var(--section-padding) 0;
+  background: var(--ng-cloud, #f8fafc);
+  padding: clamp(56px, 7vw, 84px) 0;
   overflow: hidden;
+  border-bottom: 1px solid rgba(148, 178, 220, 0.18);
 }
 
 .inner {
   position: relative;
-  max-width: var(--container-max);
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0 var(--container-padding);
+  padding: 0 clamp(20px, 4vw, 32px);
 }
 
 /* ── Header block ── */
@@ -31,20 +32,20 @@
 .title {
   margin: 0;
   font-family: var(--ng-font-heading);
-  font-size: var(--ng-fs-h2);
-  font-weight: 900;
+  font-size: var(--ng-fs-h2, clamp(1.8rem, 3.5vw, 2.75rem));
+  font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.015em;
-  color: var(--ng-text-primary);
+  color: var(--ng-ink, #0b1220);
   text-wrap: balance;
 }
 
 .sub {
   margin: 0;
-  max-width: 48ch;
-  font-size: 0.95rem;
+  max-width: 54ch;
+  font-size: 1rem;
   line-height: 1.65;
-  color: var(--ng-text-secondary);
+  color: var(--ng-slate, #4a5568);
 }
 
 /* ── Grid: 6 columns ── */

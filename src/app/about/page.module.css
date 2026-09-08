@@ -99,9 +99,10 @@
 
 /* ── Values / Approach Section ── */
 .values {
-  padding-top: clamp(4rem, 7vw, 6.5rem);
-  padding-bottom: clamp(4rem, 7vw, 6.5rem);
-  background: #ffffff;
+  padding-top: clamp(4.5rem, 8vw, 7rem);
+  padding-bottom: clamp(4.5rem, 8vw, 7rem);
+  background: var(--ng-cloud, #f4f6f9);
+  position: relative;
 }
 
 .sectionHeader {
@@ -121,12 +122,13 @@
 
 .sectionEyebrow {
   color: var(--ng-accent-blue, #155eef);
+  letter-spacing: 0.16em;
 }
 
 .sectionTitle {
   font-family: var(--font-display);
   font-size: var(--ng-fs-h2, clamp(1.8rem, 3.5vw, 2.75rem));
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.15;
   color: var(--ng-ink, #0b1220);
   letter-spacing: -0.015em;
@@ -161,16 +163,19 @@
   display: flex;
   flex-direction: column;
   background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
+  border: 1px solid rgba(148, 178, 220, 0.2);
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(11, 18, 32, 0.04);
-  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+  box-shadow: 0 4px 20px rgba(11, 18, 32, 0.05);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease;
 }
 
 .valueCard:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 32px rgba(11, 18, 32, 0.09);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(11, 18, 32, 0.12);
+  border-color: rgba(21, 94, 239, 0.4);
 }
 
 .valueCardAccent {
@@ -181,33 +186,34 @@
 .valueMedia {
   position: relative;
   width: 100%;
-  height: 160px;
-  background: #f1f5f9;
+  height: 180px;
+  background: #0c1f3c;
   overflow: hidden;
 }
 
 .valueImg {
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .valueCard:hover .valueImg {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .valueBody {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  padding: 1.5rem;
+  padding: 1.6rem;
   flex: 1;
 }
 
 .valueIndex {
   font-family: var(--font-display);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .valueTitle {
@@ -221,22 +227,22 @@
 .valueText {
   color: var(--ng-slate, #4a5568);
   font-size: 0.925rem;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 /* ── 6-Step Process ── */
 .process {
-  background: var(--ng-cloud, #f4f6f9);
-  padding-top: clamp(4rem, 7vw, 6.5rem);
-  padding-bottom: clamp(4rem, 7vw, 6.5rem);
-  border-top: 1px solid #e2e8f0;
-  border-bottom: 1px solid #e2e8f0;
+  background: #ffffff;
+  padding-top: clamp(4.5rem, 8vw, 7rem);
+  padding-bottom: clamp(4.5rem, 8vw, 7rem);
+  border-top: 1px solid rgba(148, 178, 220, 0.18);
+  border-bottom: 1px solid rgba(148, 178, 220, 0.18);
 }
 
 .processGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 @media (min-width: 640px) {
@@ -256,17 +262,22 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 2rem;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(11, 18, 32, 0.03);
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  padding: 2.25rem;
+  background: var(--ng-cloud, #f8fafc);
+  border: 1px solid rgba(148, 178, 220, 0.22);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(11, 18, 32, 0.03);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease,
+              background-color 0.28s ease;
 }
 
 .processCard:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  background: #ffffff;
   border-color: var(--ng-accent, #0fb5ee);
+  box-shadow: 0 16px 36px rgba(15, 181, 238, 0.1);
 }
 
 .processTop {
@@ -277,34 +288,39 @@
 
 .processStepNum {
   font-family: var(--font-display);
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: 800;
   color: var(--ng-accent-blue, #155eef);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 .processIcon {
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: #e2f6fe;
   color: var(--ng-accent-deep, #0a6eb4);
-  border-radius: 8px;
+  border-radius: 10px;
+  transition: transform 0.28s ease;
+}
+
+.processCard:hover .processIcon {
+  transform: scale(1.08) rotate(3deg);
 }
 
 .processStepTitle {
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 700;
   color: var(--ng-ink, #0b1220);
 }
 
 .processStepDesc {
   color: var(--ng-slate, #4a5568);
-  font-size: 0.92rem;
-  line-height: 1.55;
+  font-size: 0.93rem;
+  line-height: 1.6;
 }
 
 /* ── Closing CTA ── */

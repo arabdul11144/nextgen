@@ -119,10 +119,10 @@
 
 .formCard {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-  box-shadow: 0 4px 20px rgba(11, 18, 32, 0.04);
+  border: 1px solid rgba(148, 178, 220, 0.22);
+  border-radius: 20px;
+  padding: clamp(1.75rem, 4vw, 3rem);
+  box-shadow: 0 8px 32px rgba(11, 18, 32, 0.06);
 }
 
 .formHeader {
@@ -131,12 +131,13 @@
 
 .formEyebrow {
   color: var(--ng-accent-blue, #155eef);
+  letter-spacing: 0.16em;
 }
 
 .formTitle {
   font-family: var(--font-display);
   font-size: var(--ng-fs-h2, clamp(1.75rem, 3vw, 2.25rem));
-  font-weight: 700;
+  font-weight: 800;
   color: var(--ng-ink, #0b1220);
   line-height: 1.2;
   margin-top: 0.4rem;
@@ -145,7 +146,7 @@
 .formIntro {
   color: var(--ng-slate, #4a5568);
   font-size: 0.95rem;
-  line-height: 1.55;
+  line-height: 1.6;
   margin-top: 0.5rem;
 }
 
@@ -159,47 +160,61 @@
 .contactCard {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  padding: 2rem;
-  background: var(--ng-cloud, #f4f6f9);
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
+  gap: 1.5rem;
+  padding: 2.25rem;
+  background: #ffffff;
+  border: 1px solid rgba(148, 178, 220, 0.22);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(11, 18, 32, 0.04);
 }
 
 .contactCardHeader {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .contactIconWrap {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #e2f6fe;
   color: var(--ng-accent-deep, #0a6eb4);
-  border-radius: 10px;
+  border-radius: 12px;
+  box-shadow: 0 0 16px rgba(15, 181, 238, 0.2);
 }
 
 .contactCardTitle {
   font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1.25rem;
+  font-weight: 800;
   color: var(--ng-ink, #0b1220);
 }
 
 .channelList {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .channelItem {
   display: flex;
   align-items: flex-start;
-  gap: 0.75rem;
+  gap: 0.85rem;
+  padding: 0.75rem;
+  border-radius: 12px;
+  background: var(--ng-cloud, #f8fafc);
+  border: 1px solid rgba(148, 178, 220, 0.15);
+  transition: all 0.2s ease;
+}
+
+.channelItem:hover {
+  background: #ffffff;
+  border-color: var(--ng-accent-blue, #155eef);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(21, 94, 239, 0.08);
 }
 
 .channelIcon {
@@ -215,15 +230,15 @@
 
 .channelLabel {
   font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--ng-slate, #4a5568);
 }
 
 .channelVal {
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: 0.98rem;
+  font-weight: 700;
   color: var(--ng-ink, #0b1220);
   text-decoration: none;
   transition: color 0.2s ease;
@@ -239,28 +254,28 @@
 }
 
 .hoursCard {
-  padding: 1.5rem;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
+  padding: 1.75rem;
+  background: var(--ng-cloud, #f8fafc);
+  border: 1px solid rgba(148, 178, 220, 0.2);
+  border-radius: 16px;
   box-shadow: 0 2px 8px rgba(11, 18, 32, 0.03);
 }
 
 .hoursTitle {
   font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 800;
   color: var(--ng-ink, #0b1220);
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.75rem;
 }
 
 .hoursRow {
   display: flex;
   justify-content: space-between;
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--ng-slate, #4a5568);
-  padding: 0.35rem 0;
-  border-bottom: 1px solid #f1f5f9;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(148, 178, 220, 0.15);
 }
 
 .hoursRow:last-child {
@@ -269,10 +284,10 @@
 
 /* ── Regional Distributor Hubs ── */
 .distributorSection {
-  padding-top: clamp(4rem, 6vw, 5.5rem);
-  padding-bottom: clamp(4rem, 6vw, 5.5rem);
-  background: var(--ng-cloud, #f4f6f9);
-  border-top: 1px solid #e2e8f0;
+  padding-top: clamp(4.5rem, 7vw, 6rem);
+  padding-bottom: clamp(4.5rem, 7vw, 6rem);
+  background: var(--ng-cloud, #f8fafc);
+  border-top: 1px solid rgba(148, 178, 220, 0.2);
 }
 
 .sectionHeader {
@@ -285,12 +300,13 @@
 
 .sectionEyebrow {
   color: var(--ng-accent-blue, #155eef);
+  letter-spacing: 0.16em;
 }
 
 .sectionTitle {
   font-family: var(--font-display);
   font-size: var(--ng-fs-h2, clamp(1.8rem, 3.5vw, 2.75rem));
-  font-weight: 700;
+  font-weight: 800;
   line-height: 1.15;
   color: var(--ng-ink, #0b1220);
   letter-spacing: -0.015em;
@@ -323,52 +339,56 @@
 .hubCard {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 1.75rem;
+  gap: 0.85rem;
+  padding: 2rem;
   background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(11, 18, 32, 0.03);
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  border: 1px solid rgba(148, 178, 220, 0.22);
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(11, 18, 32, 0.04);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease;
 }
 
 .hubCard:hover {
-  transform: translateY(-3px);
-  border-color: var(--ng-accent, #0fb5ee);
+  transform: translateY(-4px);
+  border-color: var(--ng-accent-blue, #155eef);
+  box-shadow: 0 16px 36px rgba(21, 94, 239, 0.1);
 }
 
 .hubBadge {
+  display: inline-block;
   align-self: flex-start;
-  padding: 0.25rem 0.6rem;
+  padding: 0.35rem 0.75rem;
   background: #e2f6fe;
   color: var(--ng-accent-deep, #0a6eb4);
   font-family: var(--font-display);
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.08em;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 .hubCity {
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 800;
   color: var(--ng-ink, #0b1220);
 }
 
 .hubDesc {
   color: var(--ng-slate, #4a5568);
-  font-size: 0.88rem;
-  line-height: 1.5;
+  font-size: 0.92rem;
+  line-height: 1.6;
 }
 
 .hubAddress {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--ng-ink, #0b1220);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ng-accent-deep, #0a6eb4);
   margin-top: auto;
   padding-top: 0.75rem;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid rgba(148, 178, 220, 0.15);
 }
 
 /* ── Closing CTA ── */

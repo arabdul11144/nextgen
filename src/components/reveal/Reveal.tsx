@@ -8,6 +8,7 @@ interface RevealProps {
   /** Stagger delay (ms) within a group */
   delay?: number;
   className?: string;
+  style?: React.CSSProperties;
 }
 
 /**
@@ -15,7 +16,7 @@ interface RevealProps {
  * it enters the viewport. One-shot per element. The delay prop
  * staggers members of a card group.
  */
-export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
+export function Reveal({ children, delay = 0, className = "", style }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
 
@@ -41,7 +42,10 @@ export function Reveal({ children, delay = 0, className = "" }: RevealProps) {
     <div
       ref={ref}
       className={`${styles.reveal} ${shown ? styles.shown : ""} ${className}`.trim()}
-      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+      style={{
+        ...(delay ? { transitionDelay: `${delay}ms` } : {}),
+        ...style,
+      }}
     >
       {children}
     </div>

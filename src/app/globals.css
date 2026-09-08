@@ -546,3 +546,70 @@ p {
     transform: translateX(-50%);
   }
 }
+
+/* ------------------------------------------------------------
+   8. Premium Design System Utilities
+   Glassmorphism, glow effects, refined cards and badges
+   ------------------------------------------------------------ */
+
+/* Glassmorphism surfaces */
+.ng-glass-dark {
+  background: rgba(8, 21, 40, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ng-glass-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 32px rgba(8, 21, 40, 0.06);
+}
+
+/* Glow effects */
+.ng-glow-cyan {
+  box-shadow: 0 0 24px rgba(15, 181, 238, 0.25);
+}
+
+.ng-glow-blue {
+  box-shadow: 0 0 24px rgba(21, 94, 239, 0.25);
+}
+
+.ng-glow-orange {
+  box-shadow: 0 0 24px rgba(255, 90, 31, 0.25);
+}
+
+/* Subtle gradient border effect on hover */
+.ng-card-interactive {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ng-card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(8, 21, 40, 0.12);
+}
+
+/* Smooth custom scrollbars for carousels and rails */
+.ng-custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.ng-custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(8, 21, 40, 0.04);
+  border-radius: 999px;
+}
+
+.ng-custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(148, 178, 220, 0.4);
+  border-radius: 999px;
+}
+
+.ng-custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--ng-accent, #0fb5ee);
+}
+

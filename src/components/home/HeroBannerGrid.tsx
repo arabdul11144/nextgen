@@ -129,119 +129,119 @@ export function HeroBannerGrid() {
   return (
     <>
       <section className={styles.section}>
-      <div
-        className={styles.stage}
-        style={{ "--rot": `${ROTATE_MS}ms`, "--fade": `${FADE_MS}ms` } as React.CSSProperties}
-        role="region"
-        aria-roledescription="carousel"
-        aria-label="Featured banner carousel"
-        tabIndex={0}
-        onKeyDown={onKeyDown}
-        onMouseEnter={() => setHovering(true)}
-        onMouseLeave={() => setHovering(false)}
-      >
-        {SLIDES.map((slide, i) => (
-          <Image
-            key={slide.src}
-            src={slide.src}
-            alt=""
-            fill
-            priority={i === 0}
-            sizes="100vw"
-            aria-hidden={i !== index}
-            className={i === index ? styles.slideActive : styles.slide}
-          />
-        ))}
-
-        {/* Per-slide promotional overlays (text, icons, CTA, bottom strips) */}
-        {HERO_OVERLAYS.map((Overlay, i) => (
-          <OverlayLayer key={`overlay-${i}`} active={i === index}>
-            <Overlay />
-          </OverlayLayer>
-        ))}
-
-        {/* Visually-hidden live region announcing slide changes */}
-        <p className={styles.srOnly} aria-live="polite">
-          {`Showing banner ${index + 1} of ${count}`}
-        </p>
-
-        <span className={styles.counter} aria-hidden="true">
-          {String(index + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
-        </span>
-
-        <button
-          type="button"
-          className={styles.playToggle}
-          onClick={() => setPaused((p) => !p)}
-          aria-label={paused ? "Play automatic rotation" : "Pause automatic rotation"}
-          title={paused ? "Play" : "Pause"}
+        <div
+          className={styles.stage}
+          style={{ "--rot": `${ROTATE_MS}ms`, "--fade": `${FADE_MS}ms` } as React.CSSProperties}
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Featured banner carousel"
+          tabIndex={0}
+          onKeyDown={onKeyDown}
+          onMouseEnter={() => setHovering(true)}
+          onMouseLeave={() => setHovering(false)}
         >
-          {paused ? <PlayGlyph /> : <PauseGlyph />}
-        </button>
-
-        <button
-          type="button"
-          className={`${styles.arrow} ${styles.arrowPrev}`}
-          onClick={() => goTo(index - 1)}
-          aria-label="Previous banner"
-        >
-          <ChevronGlyph direction="left" />
-        </button>
-        <button
-          type="button"
-          className={`${styles.arrow} ${styles.arrowNext}`}
-          onClick={() => goTo(index + 1)}
-          aria-label="Next banner"
-        >
-          <ChevronGlyph direction="right" />
-        </button>
-
-        <div className={styles.dots} role="group" aria-label="Choose banner">
           {SLIDES.map((slide, i) => (
-            <button
+            <Image
               key={slide.src}
-              type="button"
-              className={`${styles.dot}${i === index ? ` ${styles.dotActive}` : ""}`}
-              aria-label={`Go to banner ${i + 1}`}
-              aria-current={i === index ? "true" : undefined}
-              onClick={() => goTo(i)}
-            >
-              {i === index && (
-                <span
-                  key={`${index}-${autoplayOn}`}
-                  className={autoplayOn ? styles.dotFill : styles.dotFillIdle}
-                />
-              )}
-            </button>
+              src={slide.src}
+              alt=""
+              fill
+              priority={i === 0}
+              sizes="100vw"
+              aria-hidden={i !== index}
+              className={i === index ? styles.slideActive : styles.slide}
+            />
           ))}
-        </div>
 
-        <div className={styles.thumbRail} role="group" aria-label="Choose banner thumbnail">
-          {SLIDES.map((slide, i) => (
-            <button
-              key={slide.src}
-              type="button"
-              className={`${styles.thumb}${i === index ? ` ${styles.thumbActive}` : ""}`}
-              aria-label={`Go to banner ${i + 1}`}
-              aria-current={i === index ? "true" : undefined}
-              onClick={() => goTo(i)}
-            >
-              <Image src={slide.src} alt="" fill sizes="64px" />
-            </button>
+          {/* Per-slide promotional overlays (text, icons, CTA, bottom strips) */}
+          {HERO_OVERLAYS.map((Overlay, i) => (
+            <OverlayLayer key={`overlay-${i}`} active={i === index}>
+              <Overlay />
+            </OverlayLayer>
           ))}
+
+          {/* Visually-hidden live region announcing slide changes */}
+          <p className={styles.srOnly} aria-live="polite">
+            {`Showing banner ${index + 1} of ${count}`}
+          </p>
+
+          <span className={styles.counter} aria-hidden="true">
+            {String(index + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
+          </span>
+
+          <button
+            type="button"
+            className={styles.playToggle}
+            onClick={() => setPaused((p) => !p)}
+            aria-label={paused ? "Play automatic rotation" : "Pause automatic rotation"}
+            title={paused ? "Play" : "Pause"}
+          >
+            {paused ? <PlayGlyph /> : <PauseGlyph />}
+          </button>
+
+          <button
+            type="button"
+            className={`${styles.arrow} ${styles.arrowPrev}`}
+            onClick={() => goTo(index - 1)}
+            aria-label="Previous banner"
+          >
+            <ChevronGlyph direction="left" />
+          </button>
+          <button
+            type="button"
+            className={`${styles.arrow} ${styles.arrowNext}`}
+            onClick={() => goTo(index + 1)}
+            aria-label="Next banner"
+          >
+            <ChevronGlyph direction="right" />
+          </button>
+
+          <div className={styles.dots} role="group" aria-label="Choose banner">
+            {SLIDES.map((slide, i) => (
+              <button
+                key={slide.src}
+                type="button"
+                className={`${styles.dot}${i === index ? ` ${styles.dotActive}` : ""}`}
+                aria-label={`Go to banner ${i + 1}`}
+                aria-current={i === index ? "true" : undefined}
+                onClick={() => goTo(i)}
+              >
+                {i === index && (
+                  <span
+                    key={`${index}-${autoplayOn}`}
+                    className={autoplayOn ? styles.dotFill : styles.dotFillIdle}
+                  />
+                )}
+              </button>
+            ))}
+          </div>
+
+          <div className={styles.thumbRail} role="group" aria-label="Choose banner thumbnail">
+            {SLIDES.map((slide, i) => (
+              <button
+                key={slide.src}
+                type="button"
+                className={`${styles.thumb}${i === index ? ` ${styles.thumbActive}` : ""}`}
+                aria-label={`Go to banner ${i + 1}`}
+                aria-current={i === index ? "true" : undefined}
+                onClick={() => goTo(i)}
+              >
+                <Image src={slide.src} alt="" fill sizes="64px" />
+              </button>
+            ))}
+          </div>
         </div>
+      </section>
+
+      {/* Info band for the active slide — rendered outside the hero so it never covers it */}
+      <HeroInfoStrip slideIndex={index} />
+
+      {/* PNG-flag tri-colour stripe running directly below the hero */}
+      <div className={styles.flagStripe} aria-hidden="true">
+        <span className={`${styles.flagStripeSeg} ${styles.flagStripeBlack}`} />
+        <span className={`${styles.flagStripeSeg} ${styles.flagStripeRed}`} />
+        <span className={`${styles.flagStripeSeg} ${styles.flagStripeYellow}`} />
       </div>
-    </section>
-
-    {/* Info band for the active slide — rendered outside the hero so it never covers it */}
-    <HeroInfoStrip slideIndex={index} />
-
-    {/* PNG-flag tri-colour stripe running directly below the hero */}
-    <div className={styles.flagStripe} aria-hidden="true">
-      <span className={`${styles.flagStripeSeg} ${styles.flagStripeBlack}`} />
-      <span className={`${styles.flagStripeSeg} ${styles.flagStripeRed}`} />
-      <span className={`${styles.flagStripeSeg} ${styles.flagStripeYellow}`} />
-    </div>
     </>
   );
 }
