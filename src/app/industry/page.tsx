@@ -179,6 +179,7 @@ export default function IndustryPage() {
                       src={meta.image}
                       alt={ind.name}
                       fill
+                      quality={100}
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className={styles.cardImg}
                     />

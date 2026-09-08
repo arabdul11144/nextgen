@@ -57,7 +57,8 @@ export function WorkforceGallery() {
                 src={item.image}
                 alt={item.alt}
                 fill
-                sizes="(max-width: 768px) 100vw, 33vw"
+                quality={100}
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className={styles.photo}
               />
               <span className={styles.scrim} aria-hidden="true" />
